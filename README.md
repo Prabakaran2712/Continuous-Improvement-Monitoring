@@ -13,8 +13,8 @@ This is a web application that allows users to monitor and improve their perform
 2. Navigate to the `frontend` folder and run `npm install` to install the frontend dependencies.
 3. run `npm install` to install the backend dependencies.
 4. Create a `.env` file and add the following variables:
-    1. PORT=<your Port Number>
-    2. MONGODB_URI=<your MongoDB URI>
+    1. PORT=your Port Number
+    2. MONGODB_URI=your MongoDB URI
 5. Run `nodemon start` in  `Continuous-Improvement-Monitoring` folder and `npm run dev` in frontend folder.
    
 ## Contributing
