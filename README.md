@@ -28,7 +28,7 @@ We welcome any contributions that can improve this project. If you want to contr
 5. Create a pull request from your branch to the main branch of this repository.
 6. Wait for feedback from the maintainers.
 
-Please make sure that your code passes all tests and follows the code style guidelines before submitting a pull request. If you have any questions or suggestions, feel free to open an issue or contact us at example@example.com.
+Please make sure that your code passes all tests and follows the code style guidelines before submitting a pull request. If you have any questions or suggestions, feel free to open an issue or contact us at prabakaran271202@gmail.com
 
 Thank you for your interest in this project!
 
