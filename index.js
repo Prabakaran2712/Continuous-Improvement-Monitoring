@@ -30,13 +30,9 @@ if (process.env.NODE_ENV === "production") {
 
 //connect to mongoDB and start server
 mongoose.set("strictQuery", false);
-mongoose
-  .connect(
-    "mongodb+srv://prabakaran:Praba%4012345@cluster0.bu3ce.mongodb.net/?retryWrites=true&w=majority"
-  )
-  .then(() => {
-    console.log("Connected to Mongo DB");
-    app.listen(process.env.PORT, () => {
-      console.log("server listening on port " + process.env.PORT);
-    });
+mongoose.connect(process.env.MONGO_URI).then(() => {
+  console.log("Connected to Mongo DB");
+  app.listen(process.env.PORT, () => {
+    console.log("server listening on port " + process.env.PORT);
   });
+});
