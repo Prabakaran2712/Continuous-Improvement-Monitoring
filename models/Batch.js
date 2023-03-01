@@ -1,18 +1,15 @@
 const mongoose = require("mongoose");
 
-const CourseSchema = new mongoose.Schema({
-  subject_code: {
-    type: String,
-    required: true,
-    unique: true,
-  },
-  credits: {
+const BatchSchema = new mongoose.Schema({
+  start_year: {
     type: Number,
     required: true,
-    min: 0,
+  },
+  end_year: {
+    type: Number,
     required: true,
   },
-  name: {
+  degree: {
     type: String,
     required: true,
   },
@@ -23,4 +20,4 @@ const CourseSchema = new mongoose.Schema({
   },
 });
 
-module.exports = mongoose.model("Course", CourseSchema);
+module.exports = mongoose.model("Batch", BatchSchema);
