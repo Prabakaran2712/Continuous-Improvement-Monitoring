@@ -45,6 +45,10 @@ const ExamSchema = new mongoose.Schema({
     type: Number,
     required: true,
   },
+  semester: {
+    type: Number,
+    required: true,
+  },
 });
 
 module.exports = mongoose.model("Exam", ExamSchema);
