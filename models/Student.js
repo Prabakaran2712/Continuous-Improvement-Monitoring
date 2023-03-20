@@ -11,11 +11,6 @@ const StudentSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    address_id: {
-      type: mongoose.Types.ObjectId,
-      ref: "Address",
-      required: true,
-    },
     phone: {
       type: String,
       required: true,
@@ -54,3 +49,5 @@ const StudentSchema = new mongoose.Schema(
 );
 
 module.exports = mongoose.model("Student", StudentSchema);
+
+//add address later
