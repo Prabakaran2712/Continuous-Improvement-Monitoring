@@ -46,7 +46,7 @@ if (process.env.NODE_ENV === "production") {
   });
 }
 
-//connect to mongoDB and start server
+//connect to mongo DB and start server
 mongoose.set("strictQuery", false);
 mongoose.connect(process.env.MONGO_URI).then(() => {
   console.log("Connected to Mongo DB");
