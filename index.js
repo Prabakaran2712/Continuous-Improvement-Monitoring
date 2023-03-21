@@ -39,12 +39,10 @@ app.use("/api/marks", markRoutes);
 
 //production mode
 if (process.env.NODE_ENV === "production") {
-  app.use(express.static("client/dist"));
-
-  // Express serve up index.html file if it doesn't recognize route
+  app.use(express.static("frontend/dist"));
   const path = require("path");
   app.get("*", (req, res) => {
-    res.sendFile(path.resolve(__dirname, "client", "dist", "index.html"));
+    res.sendFile(path.resolve(__dirname, "frontend", "dist", "index.html"));
   });
 }
 
