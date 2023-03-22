@@ -16,6 +16,10 @@ import About from "./pages/about/About";
 import AdminLogin from "./pages/admin/AdminLogin";
 import TeacherLogin from "./pages/teacher/TeacherLogin";
 
+//layouts
+import StudentLayout from "./layouts/StudentLayout";
+import AdminLayout from "./layouts/AdminLayout";
+
 function App() {
   const router = createBrowserRouter([
     {
@@ -76,6 +80,14 @@ function App() {
         },
       ],
       errorElement: <Home />,
+    },
+    {
+      path: "/student",
+      element: <StudentLayout />,
+    },
+    {
+      path: "/admin",
+      element: <AdminLayout />,
     },
   ]);
   return <RouterProvider router={router} />;

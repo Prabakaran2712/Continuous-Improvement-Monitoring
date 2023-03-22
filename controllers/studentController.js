@@ -1,5 +1,18 @@
 const Student = require("../models/Student");
 
+//student registration
+const addNewStudent = async (req, res) => {
+  try {
+    const gensalt = bcrypt.genSaltSync(10);
+    const hpass = await bcrypt.hashSync(req.body.password, gensalt);
+    req.body.password = hpass;
+    const newUser = await Student.create(req.body);
+    res.status(200).json(newUser);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
 //get all students
 const getAllStudents = async (req, res) => {
   try {
@@ -45,17 +58,6 @@ const getStudentById = async (req, res) => {
       .populate("course")
       .populate("attendance")
       .populate("marks");
-    res.status(200).json(student);
-  } catch (error) {
-    res.status(500).json({ message: error.message });
-  }
-};
-
-//add new student
-const addNewStudent = async (req, res) => {
-  try {
-    const student = new Student(req.body);
-    await student.save();
     res.status(200).json(student);
   } catch (error) {
     res.status(500).json({ message: error.message });

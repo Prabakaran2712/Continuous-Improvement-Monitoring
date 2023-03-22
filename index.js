@@ -15,6 +15,7 @@ const classRoutes = require("./routes/classRoutes");
 const courseRoutes = require("./routes/courseRoutes");
 const examRoutes = require("./routes/examRoutes");
 const markRoutes = require("./routes/markRoutes");
+const adminRoutes = require("./routes/adminRoutes");
 
 //set up express app and middleware
 const app = express();
@@ -32,6 +33,7 @@ app.use("/api/attendances", attendanceRoutes);
 app.use("/api/batches", batchRoutes);
 app.use("/api/students", studentRoutes);
 app.use("/api/teachers", teacherRoutes);
+app.use("/api/admin", adminRoutes);
 app.use("/api/classes", classRoutes);
 app.use("/api/courses", courseRoutes);
 app.use("/api/exams", examRoutes);

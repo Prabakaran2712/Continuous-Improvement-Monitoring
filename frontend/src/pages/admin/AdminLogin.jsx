@@ -1,10 +1,25 @@
+import axios from "axios";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { NavLink } from "react-router-dom";
 const AdminLogin = () => {
   const { register, handleSubmit } = useForm();
+  const [successMessage, setSuccessMessage] = useState();
+  const [errorMessage, setErrorMessage] = useState();
   const onSubmit = (data) => {
-    alert(JSON.stringify(data));
+    console.log(data);
+    axios
+      .post("http://localhost:3000/api/admin/login", data)
+      .then((data) => {
+        if (data.status === 200) {
+          setSuccessMessage("Successfully Logged in");
+          setErrorMessage("");
+        }
+      })
+      .catch((err) => {
+        setSuccessMessage("");
+        setErrorMessage("Invalid Credentials");
+      });
   };
 
   return (
@@ -14,11 +29,11 @@ const AdminLogin = () => {
       </div>
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className="form-group mx-5 my-3">
-          <label className="my-3 ">Email address</label>
+          <label className="my-3 ">Username</label>
           <input
-            type="email"
+            type="text"
             className="form-control"
-            {...register("email", { required: true, maxLength: 100 })}
+            {...register("username", { required: true, maxLength: 100 })}
           />
         </div>
         <div className="form-group mx-5 my-3">
@@ -36,6 +51,16 @@ const AdminLogin = () => {
             value="login"
           />
         </div>
+        {errorMessage && (
+          <div className="alert alert-danger text-center" role="alert">
+            {errorMessage}
+          </div>
+        )}
+        {successMessage && (
+          <div className="alert alert-success text-center" role="alert">
+            {successMessage}
+          </div>
+        )}
         <div className="form-group text-center mx-5 my-3">
           <span>Not Having an account </span>
           <NavLink to={"auth/student/signup"}>Signup</NavLink>
