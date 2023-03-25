@@ -19,11 +19,14 @@ import TeacherLogin from "./pages/teacher/TeacherLogin";
 //layouts
 import StudentLayout from "./layouts/StudentLayout";
 import AdminLayout from "./layouts/AdminLayout";
+import TeacherLayout from "./layouts/TeacherLayout";
 
 //pages
 import Dashboard from "./pages/teacher/Dashboard";
 import Marks from "./pages/teacher/Marks";
 import Attendance from "./pages/teacher/Attendance";
+import Notifications from "./pages/teacher/Notifications";
+
 function App() {
   const router = createBrowserRouter([
     {
@@ -69,22 +72,6 @@ function App() {
                   path: "signup",
                   element: <StudentRegister />,
                 },
-                {
-                  path: "dashboard",
-                  element: <Dashboard />,
-                },
-                {
-                  path: "marks",
-                  element: <Marks />,
-                },
-                {
-                  path: "attendance",
-                  element: <Attendance />,
-                },
-                {
-                  path: "notifications",
-                  element: <StudentRegister />,
-                },
               ],
             },
             {
@@ -116,6 +103,28 @@ function App() {
     {
       path: "/admin",
       element: <AdminLayout />,
+    },
+    {
+      path: "teacher",
+      element: <TeacherLayout />,
+      children: [
+        {
+          path: "dashboard",
+          element: <Dashboard />,
+        },
+        {
+          path: "marks",
+          element: <Marks />,
+        },
+        {
+          path: "attendance",
+          element: <Attendance />,
+        },
+        {
+          path: "notifications",
+          element: <Notifications />,
+        },
+      ],
     },
   ]);
   return <RouterProvider router={router} />;
