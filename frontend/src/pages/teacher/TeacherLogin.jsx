@@ -38,7 +38,7 @@ const TeacherLogin = () => {
         </div>
         <div className="form-group text-center mx-5 my-3">
           <span>Not Having an account </span>
-          <NavLink to={"auth/student/signup"}>Signup</NavLink>
+          <NavLink to={"auth/teacher/signup"}>Signup</NavLink>
         </div>
       </form>
     </div>

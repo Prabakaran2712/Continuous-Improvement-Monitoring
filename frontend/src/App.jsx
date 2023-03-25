@@ -26,6 +26,7 @@ import Dashboard from "./pages/teacher/Dashboard";
 import Marks from "./pages/teacher/Marks";
 import Attendance from "./pages/teacher/Attendance";
 import Notifications from "./pages/teacher/Notifications";
+import TeacherSignup from "./pages/teacher/TeacherSignup";
 
 function App() {
   const router = createBrowserRouter([
@@ -70,7 +71,7 @@ function App() {
                 },
                 {
                   path: "signup",
-                  element: <StudentRegister />,
+                  element: <TeacherSignup />,
                 },
               ],
             },

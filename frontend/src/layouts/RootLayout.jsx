@@ -5,7 +5,9 @@ const RootLayout = () => {
   return (
     <div style={{ height: "100%", width: "100%" }}>
       <Header />
-      <Outlet />
+      <div className="min-h-screen">
+        <Outlet />
+      </div>
       <Footer />
     </div>
   );
