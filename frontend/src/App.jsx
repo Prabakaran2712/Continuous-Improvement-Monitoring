@@ -20,6 +20,10 @@ import TeacherLogin from "./pages/teacher/TeacherLogin";
 import StudentLayout from "./layouts/StudentLayout";
 import AdminLayout from "./layouts/AdminLayout";
 
+//pages
+import Dashboard from "./pages/teacher/Dashboard";
+import Marks from "./pages/teacher/Marks";
+import Attendance from "./pages/teacher/Attendance";
 function App() {
   const router = createBrowserRouter([
     {
@@ -44,6 +48,14 @@ function App() {
                   path: "signup",
                   element: <StudentRegister />,
                 },
+                {
+                  path: "dashboard",
+                  element: <StudentRegister />,
+                },
+                {
+                  path: "marks",
+                  element: <StudentRegister />,
+                },
               ],
             },
             {
@@ -55,6 +67,22 @@ function App() {
                 },
                 {
                   path: "signup",
+                  element: <StudentRegister />,
+                },
+                {
+                  path: "dashboard",
+                  element: <Dashboard />,
+                },
+                {
+                  path: "marks",
+                  element: <Marks />,
+                },
+                {
+                  path: "attendance",
+                  element: <Attendance />,
+                },
+                {
+                  path: "notifications",
                   element: <StudentRegister />,
                 },
               ],
