@@ -5,7 +5,7 @@ const getAllExams = async (req, res) => {
   try {
     const exams = await Exam.find({})
       .populate("course")
-      .populate("teacher")
+      .populate("batch")
       .populate("department");
     res.status(200).json(exams);
   } catch (error) {

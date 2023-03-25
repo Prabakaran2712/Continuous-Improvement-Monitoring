@@ -26,3 +26,10 @@ const AddressSchema = new mongoose.Schema({
 });
 
 module.exports = mongoose.model("Address", AddressSchema);
+
+// "city": "Chennai",
+// "state": "Tamil Nadu",
+// "country": "India",
+// "pincode": "600002",
+// "address_line_1": "Chennai",
+// "address_line_2": ""

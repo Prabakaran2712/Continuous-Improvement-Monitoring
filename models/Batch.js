@@ -21,3 +21,10 @@ const BatchSchema = new mongoose.Schema({
 });
 
 module.exports = mongoose.model("Batch", BatchSchema);
+
+// "start_year": 2002,
+//   "end_year":2028,
+//   "degree":"B.Tech",
+//   "department":{
+//     "$oid":"6401ef691c39630f2527dcad"
+//   }

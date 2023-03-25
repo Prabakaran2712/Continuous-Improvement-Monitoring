@@ -5,8 +5,17 @@ const getAllMarks = async (req, res) => {
   try {
     const marks = await Mark.find({})
       .populate("student")
-      .populate("teacher")
-      .populate("exam");
+      .populate([{ path: "teacher", populate: { path: "department" } }])
+      .populate([
+        {
+          path: "exam",
+          populate: { path: "course" },
+        },
+        {
+          path: "exam",
+          populate: { path: "department" },
+        },
+      ]);
     res.status(200).json(marks);
   } catch (error) {
     res.status(500).json({ message: error.message });
