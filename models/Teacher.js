@@ -14,7 +14,7 @@ const TeacherSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  satff_id: {
+  staff_id: {
     type: String,
     required: true,
     unique: true,
@@ -28,12 +28,26 @@ const TeacherSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  courses: {
-    type: [mongoose.Types.ObjectId],
-    ref: "Course",
-  },
+  courses: [{ type: mongoose.Types.ObjectId, ref: "Course" }],
   department: {
     type: mongoose.Types.ObjectId,
     ref: "Department",
   },
 });
+
+module.exports = mongoose.model("Teacher", TeacherSchema);
+
+// "name": "Pradesh",
+// "email": "pradeshgv@gmail.com",
+// "password": "123456",
+// "staff_id": "ST5001",
+// "address": {
+//   "$oid": "641e8ca2ad661ed7a6db76ba"
+// },
+// "phone_number": "8877663355",
+// "courses": {
+//   "$oid": ["641e7e87ad661ed7a6db76b3"]
+// },
+// "department": {
+//   "$oid":"6401ef691c39630f2527dcad"
+// }

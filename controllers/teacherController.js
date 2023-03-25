@@ -6,7 +6,8 @@ const getAllTeachers = async (req, res) => {
     const teachers = await Teacher.find({})
       .populate("department")
       .populate("address")
-      .populate("course");
+      .populate({ path: "courses" });
+    res.status(200).json(teachers);
   } catch (error) {
     res.status(500).json({ message: error.message });
   }

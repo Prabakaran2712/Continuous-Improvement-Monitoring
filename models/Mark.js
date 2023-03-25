@@ -15,7 +15,7 @@ const MarkSchema = new mongoose.Schema({
     ref: "Exam",
     required: true,
   },
-  staff: {
+  teacher: {
     type: mongoose.Types.ObjectId,
     ref: "Teacher",
   },
