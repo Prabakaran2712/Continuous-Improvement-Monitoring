@@ -1,4 +1,12 @@
+require("dotenv").config();
 const Teacher = require("../models/Teacher");
+const jwt = require("jsonwebtoken");
+
+const createToken = (_id) => {
+  return jwt.sign({ _id }, process.env.SECRET, {
+    expiresIn: "3d",
+  });
+};
 
 //get all teachers
 const getAllTeachers = async (req, res) => {
@@ -37,12 +45,16 @@ const getTeacherById = async (req, res) => {
   }
 };
 
-//add new teacher
+//add new teacher and hash password using bcrypt
 const addNewTeacher = async (req, res) => {
   try {
     const teacher = new Teacher(req.body);
+    teacher.password = await bcrypt.hash(teacher.password, 10);
     await teacher.save();
-    res.status(200).json(teacher);
+
+    //create token
+    const token = createToken(teacher._id);
+    res.status(200).json(teacher, token);
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
@@ -104,6 +116,26 @@ const getTeachersByCourse = async (req, res) => {
       .populate("department")
       .populate("address")
       .populate("course");
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+//login teacher
+const loginTeacher = async (req, res) => {
+  try {
+    const exists = await Teacher.findOne({ email: req.body.email });
+    if (!exists) {
+      throw new Error("User does not exist");
+    } else {
+      bcrypt.compare(req.body.password, exists.password).then((result) => {
+        if (result) {
+          res.status(200).json({ message: "Login successful" });
+        } else {
+          throw new Error("Invalid Login Credentials");
+        }
+      });
+    }
   } catch (error) {
     res.status(500).json({ message: error.message });
   }

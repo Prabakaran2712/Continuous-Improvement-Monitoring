@@ -18,7 +18,7 @@ const TeacherLayout = () => {
   return (
     <div
       style={{ height: "100%", width: "100%" }}
-      className={`row m-0 ${styles.bg}`}
+      className={`row m-0 g-0 ${styles.bg}`}
     >
       <SideBar
         elements={[

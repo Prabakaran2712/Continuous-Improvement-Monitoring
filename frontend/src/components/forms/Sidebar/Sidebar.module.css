@@ -53,3 +53,32 @@
   transition: 0.3s;
   background-color: var(--secondary);
 }
+.menu {
+  margin: 10px;
+  display: none;
+  font-size: 25px;
+  color: var(--secondary);
+}
+
+.wrapper {
+  background-color: var(--primary);
+}
+@media (max-width: 1056px) {
+  .menu {
+    display: flex;
+    justify-content: center;
+  }
+  .wrapper {
+    height: max-content;
+  }
+  .closeMenu {
+    position: absolute;
+    z-index: 1;
+  }
+  .close {
+    display: none;
+  }
+  .open {
+    display: block;
+  }
+}

@@ -16,7 +16,7 @@ const Courses = () => {
       });
   }, []);
   return (
-    <div className="col-10 my-5 p-5 ">
+    <div className="col-lg-10 col-sm-12 my-5 p-5 ">
       <div className=" d-flex  flex-row justify-content-between align-items-center">
         <h1 className="display-6">Courses</h1>
         <button
@@ -29,7 +29,7 @@ const Courses = () => {
           Add Course
         </button>
       </div>
-      <div className="row">
+      <div className="row   table-responsive">
         <table className="table table-striped">
           <thead>
             <tr>
