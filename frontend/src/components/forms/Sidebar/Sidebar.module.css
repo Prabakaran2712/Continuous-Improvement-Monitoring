@@ -1,0 +1,55 @@
+.text {
+  font-size: 18px;
+  font-weight: 100;
+}
+.logo {
+  font-size: 40px;
+  font-weight: 300;
+
+  margin: 10px;
+}
+.main {
+  margin-right: 0px;
+  padding-top: 10px;
+  padding-left: 10px;
+  background-color: var(--primary);
+  color: var(--secondary);
+  height: 100%;
+  transition: 1s;
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 100%;
+  height: 100%;
+  list-style-type: none;
+  padding: 0px;
+  margin-top: 30px;
+}
+
+.list a {
+  margin: 2px;
+  margin-right: 0px;
+  padding: 5px;
+  padding-left: 10px;
+  text-decoration: none;
+  width: 100%;
+  display: block;
+  color: var(--secondary);
+  border-top-left-radius: 10rem;
+  border-bottom-left-radius: 10rem;
+}
+.list li {
+  border-top-left-radius: 10rem;
+  border-bottom-left-radius: 10rem;
+}
+.list a:hover {
+  color: var(--primary);
+  transition: 0.3s;
+  background-color: var(--secondary);
+}

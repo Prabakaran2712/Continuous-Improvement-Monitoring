@@ -23,6 +23,11 @@ const getCourseById = async (req, res) => {
 //add new course
 const addNewCourse = async (req, res) => {
   try {
+    await Course.find({
+      subject_code: req.body.subject_code,
+    }).then((data) => {
+      if (data.length > 0) throw new Error("Subject code already exists");
+    });
     const course = new Course(req.body);
     await course.save();
     res.status(200).json(course);

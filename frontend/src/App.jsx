@@ -17,16 +17,19 @@ import AdminLogin from "./pages/admin/AdminLogin";
 import TeacherLogin from "./pages/teacher/TeacherLogin";
 
 //layouts
-import StudentLayout from "./layouts/StudentLayout";
+import StudentLayout from "./layouts/StudentLayout/StudentLayout";
 import AdminLayout from "./layouts/AdminLayout";
-import TeacherLayout from "./layouts/TeacherLayout";
+import TeacherLayout from "./layouts/TeacherLayout/TeacherLayout";
 
 //pages
 import Dashboard from "./pages/teacher/Dashboard";
 import Marks from "./pages/teacher/Marks";
 import Attendance from "./pages/teacher/Attendance";
 import Notifications from "./pages/teacher/Notifications";
-import TeacherSignup from "./pages/teacher/TeacherSignup";
+import TeacherSignup from "./pages/teacher/teacherSignup/TeacherSignup";
+import Courses from "./pages/admin/Courses/Courses";
+import UpdateCourses from "./pages/admin/Courses/updateCourses";
+import AddCourses from "./pages/admin/Courses/AddCourses/AddCourses";
 
 function App() {
   const router = createBrowserRouter([
@@ -124,6 +127,23 @@ function App() {
         {
           path: "notifications",
           element: <Notifications />,
+        },
+        {
+          path: "course",
+          children: [
+            {
+              path: "",
+              element: <Courses />,
+            },
+            {
+              path: "add",
+              element: <AddCourses />,
+            },
+            {
+              path: "update:id",
+              element: <UpdateCourses />,
+            },
+          ],
         },
       ],
     },
