@@ -1,6 +1,8 @@
 require("dotenv").config();
 const Teacher = require("../models/Teacher");
+const Address = require("../models/Address");
 const jwt = require("jsonwebtoken");
+const bcrypt = require("bcrypt");
 
 const createToken = (_id) => {
   return jwt.sign({ _id }, process.env.SECRET, {
@@ -48,13 +50,35 @@ const getTeacherById = async (req, res) => {
 //add new teacher and hash password using bcrypt
 const addNewTeacher = async (req, res) => {
   try {
+    const address = await Address({
+      city: req.body.city,
+      state: req.body.state,
+      country: req.body.country,
+      pincode: req.body.pincode,
+      address_line_1: req.body.address_line_1,
+      address_line_2: req.body.address_line_2,
+    });
+    address.save();
+    console.log(address);
+    delete req.body.city;
+    delete req.body.state;
+    delete req.body.country;
+    delete req.body.pincode;
+    delete req.body.address_line_1;
+    delete req.body.address_line_2;
+    delete req.body.cpassword;
+    req.body.address = address._id;
     const teacher = new Teacher(req.body);
-    teacher.password = await bcrypt.hash(teacher.password, 10);
+    teacher.password = await bcrypt.hash(req.body.password, 10).then((data) => {
+      return data;
+    });
+    console.log(teacher);
+
     await teacher.save();
 
     //create token
     const token = createToken(teacher._id);
-    res.status(200).json(teacher, token);
+    res.status(200).json({ teacher, token });
   } catch (error) {
     res.status(500).json({ message: error.message });
   }

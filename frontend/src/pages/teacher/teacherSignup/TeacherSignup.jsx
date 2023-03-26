@@ -2,13 +2,15 @@ import axios from "axios";
 import { useEffect } from "react";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { NavLink, Link } from "react-router-dom";
+import { NavLink, Link, useNavigate } from "react-router-dom";
+import { Store } from "react-notifications-component";
 
 //form elements
 import Input from "../../../components/forms/Input";
 import Select from "../../../components/forms/Select";
 const TeacherSignup = () => {
   const { register, handleSubmit } = useForm();
+  const navigate = useNavigate();
 
   //getting data for department and course
   const [department, setDepartment] = useState([]);
@@ -17,6 +19,40 @@ const TeacherSignup = () => {
   const [departmentValues, setDepartmentValues] = useState([]);
   const [courseNames, setCourseNames] = useState([]);
   const [courseValues, setCourseValues] = useState([]);
+
+  //notifications
+  const notify = (option) => {
+    if (option == "success") {
+      Store.addNotification({
+        title: "Success!",
+        message: `Welcome aboard! 😇`,
+        type: "success",
+        insert: "top",
+        container: "top-right",
+        animationIn: ["animate__animated", "animate__fadeIn"],
+        animationOut: ["animate__animated", "animate__fadeOut"],
+        dismiss: {
+          duration: 3500,
+          onScreen: true,
+        },
+      });
+    } else {
+      Store.addNotification({
+        title: "Error!",
+        message: `Error while Registering 😢`,
+        type: "danger",
+        insert: "top",
+        container: "top-right",
+        animationIn: ["animate__animated", "animate__fadeIn"],
+        animationOut: ["animate__animated", "animate__fadeOut"],
+        dismiss: {
+          duration: 3500,
+          onScreen: true,
+        },
+      });
+    }
+  };
+
   useEffect(() => {
     const loadData = async () => {
       await axios
@@ -54,7 +90,17 @@ const TeacherSignup = () => {
   }
 
   const onSubmit = (data) => {
-    console.log(data);
+    axios
+      .post("http://localhost:3000/api/teachers", data)
+      .then((res) => {
+        console.log(res);
+        navigate("/teacher/dashboard");
+        notify("success");
+      })
+      .catch((err) => {
+        notify("error");
+        console.log(err);
+      });
   };
   return (
     <div className="card  w-75 mx-auto m-5 p-5 shadow rounded">
