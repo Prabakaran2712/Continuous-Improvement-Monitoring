@@ -28,7 +28,7 @@ import Attendance from "./pages/teacher/Attendance";
 import Notifications from "./pages/teacher/Notifications";
 import TeacherSignup from "./pages/teacher/teacherSignup/TeacherSignup";
 import Courses from "./pages/admin/Courses/Courses";
-import UpdateCourses from "./pages/admin/Courses/updateCourses";
+import UpdateCourses from "./pages/admin/Courses/UpdateCourses";
 import AddCourses from "./pages/admin/Courses/AddCourses/AddCourses";
 
 function App() {
