@@ -14,7 +14,6 @@ import "bootstrap/dist/js/bootstrap.bundle.min";
 import StudentLogin from "./pages/student/StudentLogin";
 import About from "./pages/about/About";
 import AdminLogin from "./pages/admin/AdminLogin";
-import TeacherLogin from "./pages/teacher/TeacherLogin";
 
 //layouts
 import StudentLayout from "./layouts/StudentLayout/StudentLayout";
@@ -30,6 +29,7 @@ import TeacherSignup from "./pages/teacher/teacherSignup/TeacherSignup";
 import Courses from "./pages/admin/Courses/Courses";
 import UpdateCourses from "./pages/admin/Courses/UpdateCourses";
 import AddCourses from "./pages/admin/Courses/AddCourses/AddCourses";
+import TeacherLogin from "./pages/teacher/teacherLogin/TeacherLogin";
 
 function App() {
   const router = createBrowserRouter([

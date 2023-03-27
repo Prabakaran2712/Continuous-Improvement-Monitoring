@@ -7,6 +7,7 @@ const {
   deleteTeacher,
   getTeachersByDepartment,
   getTeachersByCourse,
+  loginTeacher,
 } = require("../controllers/teacherController");
 
 const router = require("express").Router();
@@ -34,5 +35,8 @@ router.get("/department/:id", getTeachersByDepartment);
 
 //get teachers by course
 router.get("/course/:id", getTeachersByCourse);
+
+//login teacher
+router.post("/login", loginTeacher);
 
 module.exports = router;

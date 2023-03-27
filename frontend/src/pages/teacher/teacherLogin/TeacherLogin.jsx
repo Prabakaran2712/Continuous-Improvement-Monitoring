@@ -1,10 +1,59 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
+import { Store } from "react-notifications-component";
+import axios from "axios";
+
 const TeacherLogin = () => {
   const { register, handleSubmit } = useForm();
+
+  const navigate = useNavigate();
+
+  //notifications
+  const notify = (option) => {
+    if (option == "success") {
+      Store.addNotification({
+        title: "Success!",
+        message: `Successfully Logged in! 😇`,
+        type: "success",
+        insert: "top",
+        container: "top-right",
+        animationIn: ["animate__animated", "animate__fadeIn"],
+        animationOut: ["animate__animated", "animate__fadeOut"],
+        dismiss: {
+          duration: 3500,
+          onScreen: true,
+        },
+      });
+    } else {
+      Store.addNotification({
+        title: "Error!",
+        message: `Invalid Creditionsals😢`,
+        type: "danger",
+        insert: "top",
+        container: "top-right",
+        animationIn: ["animate__animated", "animate__fadeIn"],
+        animationOut: ["animate__animated", "animate__fadeOut"],
+        dismiss: {
+          duration: 3500,
+          onScreen: true,
+        },
+      });
+    }
+  };
+
   const onSubmit = (data) => {
-    alert(JSON.stringify(data));
+    axios
+      .post("http://localhost:3000/api/teachers/login", data)
+      .then((res) => {
+        console.log(res);
+        notify("success");
+        navigate("/teacher/dashboard");
+      })
+      .catch((err) => {
+        notify("error");
+        console.log(err);
+      });
   };
 
   return (

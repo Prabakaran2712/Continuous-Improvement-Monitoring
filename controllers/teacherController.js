@@ -154,7 +154,8 @@ const loginTeacher = async (req, res) => {
     } else {
       bcrypt.compare(req.body.password, exists.password).then((result) => {
         if (result) {
-          res.status(200).json({ message: "Login successful" });
+          const token = createToken(result._id);
+          res.status(200).json({ message: "Login successful", token: token });
         } else {
           throw new Error("Invalid Login Credentials");
         }
@@ -174,4 +175,5 @@ module.exports = {
   deleteTeacher,
   getTeachersByDepartment,
   getTeachersByCourse,
+  loginTeacher,
 };
