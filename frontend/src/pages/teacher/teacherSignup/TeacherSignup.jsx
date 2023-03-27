@@ -6,7 +6,7 @@ import { NavLink, Link, useNavigate } from "react-router-dom";
 import { Store } from "react-notifications-component";
 
 //form elements
-import Input from "../../../components/forms/Input";
+import Input from "../../../components/forms/Input/Input";
 import Select from "../../../components/forms/Select";
 const TeacherSignup = () => {
   const { register, handleSubmit } = useForm();

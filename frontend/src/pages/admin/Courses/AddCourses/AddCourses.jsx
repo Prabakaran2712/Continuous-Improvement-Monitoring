@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { Store } from "react-notifications-component";
 
 //form elements
-import Input from "../../../../components/forms/Input";
+import Input from "../../../../components/forms/Input/Input";
 import Select from "../../../../components/forms/Select";
 import Title from "../../../../components/forms/Title/Title";
 import Submit from "../../../../components/forms/Submit/Submit";

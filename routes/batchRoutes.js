@@ -3,7 +3,6 @@ const {
   addNewBatch,
   deleteBatch,
   updateBatch,
-  getBatchByDepartment,
   getBatchById,
   getBatchByDegree,
   getBatchByStartYear,
@@ -23,9 +22,6 @@ router.delete("/:id", deleteBatch);
 
 //update batch
 router.put("/:id", updateBatch);
-
-//batch by department
-router.get("/department/:id", getBatchByDepartment);
 
 //batch by id
 router.get("/:id", getBatchById);

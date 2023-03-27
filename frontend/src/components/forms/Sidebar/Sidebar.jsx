@@ -21,7 +21,7 @@ const SideBar = (props) => {
   const openClass = isopen ? style.open : style.close;
   const closeMenu = !isopen ? style.closeMenu : {};
   return (
-    <div className={`  col-lg-2 ${style.wrapper} ${closeMenu}`}>
+    <div className={`  col-lg-2 gx-0 ${style.wrapper} ${closeMenu}`}>
       <div className={`${style.menu}`} onClick={toggle}>
         <FontAwesomeIcon icon={faBars} />
       </div>

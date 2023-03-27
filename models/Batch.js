@@ -13,11 +13,6 @@ const BatchSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  department: {
-    type: mongoose.Types.ObjectId,
-    ref: "Department",
-    required: true,
-  },
 });
 
 module.exports = mongoose.model("Batch", BatchSchema);

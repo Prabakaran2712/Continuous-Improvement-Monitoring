@@ -16,6 +16,7 @@ const courseRoutes = require("./routes/courseRoutes");
 const examRoutes = require("./routes/examRoutes");
 const markRoutes = require("./routes/markRoutes");
 const adminRoutes = require("./routes/adminRoutes");
+const teachesRoutes = require("./routes/teachesRoutes");
 
 //set up express app and middleware
 const app = express();
@@ -38,6 +39,7 @@ app.use("/api/classes", classRoutes);
 app.use("/api/courses", courseRoutes);
 app.use("/api/exams", examRoutes);
 app.use("/api/marks", markRoutes);
+app.use("/api/teaches", teachesRoutes);
 
 //production mode
 if (process.env.NODE_ENV === "production") {

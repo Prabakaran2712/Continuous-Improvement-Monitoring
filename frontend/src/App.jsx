@@ -30,6 +30,9 @@ import Courses from "./pages/admin/Courses/Courses";
 import UpdateCourses from "./pages/admin/Courses/UpdateCourses";
 import AddCourses from "./pages/admin/Courses/AddCourses/AddCourses";
 import TeacherLogin from "./pages/teacher/teacherLogin/TeacherLogin";
+import CreateClass from "./pages/teacher/CreateClass/CreateClass";
+import Class from "./pages/teacher/Class/Class";
+import StudentDasboard from "./pages/student/StudentDasboard/StudentDasboard";
 
 function App() {
   const router = createBrowserRouter([
@@ -103,6 +106,12 @@ function App() {
     {
       path: "/student",
       element: <StudentLayout />,
+      children: [
+        {
+          path: "dashboard",
+          element: <StudentDasboard />,
+        },
+      ],
     },
     {
       path: "/admin",
@@ -127,6 +136,27 @@ function App() {
         {
           path: "notifications",
           element: <Notifications />,
+        },
+        {
+          path: "class",
+          children: [
+            {
+              path: "",
+              element: <Class />,
+            },
+            {
+              path: "create",
+              element: <CreateClass />,
+            },
+            {
+              path: "update",
+              element: <CreateClass />,
+            },
+            {
+              path: "delete",
+              element: <CreateClass />,
+            },
+          ],
         },
         {
           path: "course",

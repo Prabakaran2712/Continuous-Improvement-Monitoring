@@ -39,15 +39,16 @@ const Courses = () => {
             </tr>
           </thead>
           <tbody>
-            {courses.map((course) => {
-              return (
-                <tr key={course._id}>
-                  <td>{course.name}</td>
-                  <td>{course.subject_code}</td>
-                  <td>{course.department.dept_name}</td>
-                </tr>
-              );
-            })}
+            {courses &&
+              courses.map((course) => {
+                return (
+                  <tr key={course._id}>
+                    <td>{course.name}</td>
+                    <td>{course.subject_code}</td>
+                    <td>{course.department.dept_name}</td>
+                  </tr>
+                );
+              })}
           </tbody>
         </table>
       </div>

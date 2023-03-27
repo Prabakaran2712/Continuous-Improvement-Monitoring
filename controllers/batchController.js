@@ -3,7 +3,7 @@ const Batch = require("../models/Batch");
 //get all batches
 const getAllBatches = async (req, res) => {
   try {
-    const batches = await Batch.find({}).populate("department");
+    const batches = await Batch.find({});
     res.status(200).json(batches);
   } catch (error) {
     res.status(500).json({ message: error.message });
@@ -43,18 +43,6 @@ const updateBatch = async (req, res) => {
     } else {
       res.status(404).json({ message: "Batch not found" });
     }
-  } catch (error) {
-    res.status(500).json({ message: error.message });
-  }
-};
-
-//batch by department
-const getBatchByDepartment = async (req, res) => {
-  try {
-    const batch = await Batch.find({ department: req.params.id }).populate(
-      "department"
-    );
-    res.status(200).json(batch);
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
@@ -111,7 +99,6 @@ module.exports = {
   addNewBatch,
   deleteBatch,
   updateBatch,
-  getBatchByDepartment,
   getBatchById,
   getBatchByDegree,
   getBatchByStartYear,
