@@ -48,12 +48,11 @@ const StudentAuth = () => {
     axios
       .post("http://localhost:3000/api/students/login", data)
       .then((data) => {
-        console.log(res);
         notify("success");
         navigate("/student/dashboard");
       })
       .catch((err) => {
-        console.log(err);
+        setError(err.response.data.message);
         notify("error");
       });
   };
@@ -87,7 +86,11 @@ const StudentAuth = () => {
             value="login"
           />
         </div>
-
+        {error && (
+          <div className="alert alert-danger mx-auto mt-3 text-center w-75">
+            {error}
+          </div>
+        )}
         <div className="form-group text-center mx-5 my-3">
           <span>Not Having an account </span>
           <NavLink to="/auth/student/signup">Student</NavLink>
