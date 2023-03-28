@@ -214,6 +214,32 @@ const deleteMarksFromStudent = async (req, res) => {
   }
 };
 
+// student login
+const studentLogin = async (req, res) => {
+  try {
+    const exists = await Student.findOne({ email: req.body.email });
+    if (!exists) {
+      throw new Error("User does not exist");
+    } else {
+      bcrypt
+        .compare(req.body.password, exists.password)
+        .then((result) => {
+          if (result) {
+            const token = createToken(result._id);
+            res.status(200).json({ message: "Login successful", token: token });
+          } else {
+            throw new Error("Invalid Login Credentials");
+          }
+        })
+        .catch((error) => {
+          res.status(500).json({ message: error.message });
+        });
+    }
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
 module.exports = {
   getAllStudents,
   getStudentByRollNumber,
@@ -227,4 +253,5 @@ module.exports = {
   deleteAttendanceFromStudent,
   addMarksToStudent,
   deleteMarksFromStudent,
+  studentLogin,
 };

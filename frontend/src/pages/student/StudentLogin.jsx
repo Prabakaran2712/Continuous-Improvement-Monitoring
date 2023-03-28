@@ -1,10 +1,61 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { NavLink, Link } from "react-router-dom";
+import { NavLink, Link, useNavigate } from "react-router-dom";
+import { Store } from "react-notifications-component";
+import axios from "axios";
+
 const StudentAuth = () => {
   const { register, handleSubmit } = useForm();
+  const [error, setError] = useState();
+
+  //navigate
+  const navigate = useNavigate();
+
+  //notifications
+  const notify = (option) => {
+    if (option == "success") {
+      Store.addNotification({
+        title: "Success!",
+        message: `Successfully Logged in! 😇`,
+        type: "success",
+        insert: "top",
+        container: "top-right",
+        animationIn: ["animate__animated", "animate__fadeIn"],
+        animationOut: ["animate__animated", "animate__fadeOut"],
+        dismiss: {
+          duration: 3500,
+          onScreen: true,
+        },
+      });
+    } else {
+      Store.addNotification({
+        title: "Error!",
+        message: `Invalid Creditionsals😢`,
+        type: "danger",
+        insert: "top",
+        container: "top-right",
+        animationIn: ["animate__animated", "animate__fadeIn"],
+        animationOut: ["animate__animated", "animate__fadeOut"],
+        dismiss: {
+          duration: 3500,
+          onScreen: true,
+        },
+      });
+    }
+  };
+
   const onSubmit = (data) => {
-    alert(JSON.stringify(data));
+    axios
+      .post("http://localhost:3000/api/students/login", data)
+      .then((data) => {
+        console.log(res);
+        notify("success");
+        navigate("/student/dashboard");
+      })
+      .catch((err) => {
+        console.log(err);
+        notify("error");
+      });
   };
 
   return (
@@ -36,6 +87,7 @@ const StudentAuth = () => {
             value="login"
           />
         </div>
+
         <div className="form-group text-center mx-5 my-3">
           <span>Not Having an account </span>
           <NavLink to="/auth/student/signup">Student</NavLink>

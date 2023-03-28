@@ -11,6 +11,7 @@ const {
   deleteAttendanceFromStudent,
   addMarksToStudent,
   deleteMarksFromStudent,
+  studentLogin,
 } = require("../controllers/studentController");
 
 const router = require("express").Router();
@@ -50,5 +51,8 @@ router.put("/:id/marks", addMarksToStudent);
 
 //delete marks from student
 router.put("/:id/marks/delete", deleteMarksFromStudent);
+
+//student login
+router.post("/login", studentLogin);
 
 module.exports = router;
