@@ -1,12 +1,35 @@
 import { Outlet } from "react-router";
-import Header from "../../components/Header";
-import Footer from "../../components/Footer";
 import SideBar from "../../components/forms/Sidebar/Sidebar";
+import { useLogout } from "../../hooks/useLogout";
+import { useNavigate } from "react-router-dom";
+
+import { useEffect, useState } from "react";
+import { useAuthContext } from "../../hooks/useAuthContext";
 
 //styles
 import styles from "./StudentLayout.module.css";
 
 const StudentLayout = () => {
+  const { logout } = useLogout();
+  const [loading, setLoading] = useState(false);
+  const auth = useAuthContext();
+
+  //navigate
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    setLoading(true);
+    console.log(auth);
+    if (!auth.isAuthenticated || auth.userType !== "student") {
+      console.log("redirecting");
+      navigate("/auth/student/signin");
+    }
+    setLoading(false);
+  }, []);
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
   return (
     <div
       style={{ height: "100%", width: "100%" }}
@@ -32,6 +55,14 @@ const StudentLayout = () => {
           {
             name: "Notifications",
             link: "/student/notifications",
+            icon: <i className="fas fa-bell"></i>,
+          },
+          {
+            name: "Logout",
+            type: "button",
+            action: () => {
+              logout();
+            },
             icon: <i className="fas fa-bell"></i>,
           },
         ]}

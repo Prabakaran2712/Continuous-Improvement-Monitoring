@@ -33,6 +33,11 @@ const TeacherSchema = new mongoose.Schema({
     type: mongoose.Types.ObjectId,
     ref: "Department",
   },
+  isadmin: {
+    type: Boolean,
+    default: false,
+    required: true,
+  },
 });
 
 module.exports = mongoose.model("Teacher", TeacherSchema);

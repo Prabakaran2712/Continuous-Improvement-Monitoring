@@ -3,7 +3,10 @@ const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 
 const createToken = (_id) => {
-  return jwt.sign({ _id }, process.env.SECRET, {
+  const payload = {
+    _id: _id,
+  };
+  return jwt.sign(payload, process.env.SECRET, {
     expiresIn: "3d",
   });
 };
@@ -225,8 +228,8 @@ const studentLogin = async (req, res) => {
         .compare(req.body.password, exists.password)
         .then((result) => {
           if (result) {
-            const token = createToken(result._id);
-            res.status(200).json({ message: "Login successful", token: token });
+            const token = createToken(exists._id);
+            res.status(200).json({ user: exists, token: token });
           } else {
             throw new Error("Invalid Login Credentials");
           }
@@ -234,6 +237,24 @@ const studentLogin = async (req, res) => {
         .catch((error) => {
           res.status(500).json({ message: error.message });
         });
+    }
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+//verify token and send user details
+const verifyToken = async (req, res) => {
+  try {
+    const token = req.body.token;
+    const decoded = jwt.verify(token, process.env.SECRET);
+
+    const user = await Student.findById(decoded._id);
+
+    if (user) {
+      res.status(200).json({ user: user, token: token });
+    } else {
+      res.status(404).json({ message: "User not found" });
     }
   } catch (error) {
     res.status(500).json({ message: error.message });
@@ -254,4 +275,5 @@ module.exports = {
   addMarksToStudent,
   deleteMarksFromStudent,
   studentLogin,
+  verifyToken,
 };

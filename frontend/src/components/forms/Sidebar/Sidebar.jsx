@@ -34,7 +34,20 @@ const SideBar = (props) => {
         <div className={""}>
           <ul className={`${style.list}`}>
             {props.elements.map((item, i) => {
-              return (
+              return item.type === "button" ? (
+                <li
+                  key={i}
+                  className={`${style.list - item}`}
+                  onClick={() => {
+                    item.action();
+                  }}
+                >
+                  <Link>
+                    <span className="mx-2">{item.icon}</span>
+                    {item.name}
+                  </Link>
+                </li>
+              ) : (
                 <li key={i} className={`${style.list - item}`}>
                   <Link to={item.link}>
                     <span className="mx-2">{item.icon}</span>

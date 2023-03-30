@@ -155,7 +155,7 @@ const loginTeacher = async (req, res) => {
       bcrypt.compare(req.body.password, exists.password).then((result) => {
         if (result) {
           const token = createToken(result._id);
-          res.status(200).json({ message: "Login successful", token: token });
+          res.status(200).json({ user: exists, token: token });
         } else {
           throw new Error("Invalid Login Credentials");
         }

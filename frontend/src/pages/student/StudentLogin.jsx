@@ -1,12 +1,15 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { NavLink, Link, useNavigate } from "react-router-dom";
 import { Store } from "react-notifications-component";
 import axios from "axios";
+import { useAuthContext } from "../../hooks/useAuthContext";
 
-const StudentAuth = () => {
+const StudentLogin = () => {
   const { register, handleSubmit } = useForm();
   const [error, setError] = useState();
+  const [loading, setLoading] = useState(false);
+  const { user, dispatch } = useAuthContext();
 
   //navigate
   const navigate = useNavigate();
@@ -44,18 +47,36 @@ const StudentAuth = () => {
     }
   };
 
+  useEffect(() => {
+    if (user) {
+      navigate("/student/dashboard");
+    }
+  }, [user]);
+
   const onSubmit = (data) => {
     axios
       .post("http://localhost:3000/api/students/login", data)
       .then((data) => {
+        localStorage.setItem("token", data.data.token);
+        dispatch({
+          type: "LOGIN",
+          payload: data.data.user,
+          userType: "student",
+        });
+        console.log(user);
         notify("success");
         navigate("/student/dashboard");
       })
       .catch((err) => {
         setError(err.response.data.message);
+        dispatch({ type: "LOGOUT" });
         notify("error");
       });
   };
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <div className="card  w-50 mx-auto m-5 p-5">
@@ -99,5 +120,4 @@ const StudentAuth = () => {
     </div>
   );
 };
-
-export default StudentAuth;
+export default StudentLogin;
