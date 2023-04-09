@@ -15,4 +15,10 @@ const TeacherSchema = new mongoose.Schema({
       ref: "Student",
     },
   ],
+  batch: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Batch",
+  },
 });
+
+module.exports = mongoose.model("Teaches", TeacherSchema);

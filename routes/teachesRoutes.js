@@ -1,5 +1,7 @@
 const {
+  getAllTeaches,
   getTeachesByStaffId,
+  getTeachesById,
   getTeachesByCourseId,
   addNewTeaches,
   addStudentsToTeaches,
@@ -10,8 +12,14 @@ const {
 
 const router = require("express").Router();
 
+//get all teaches
+router.get("/", getAllTeaches);
+
 //get teaches by staff id
 router.get("/staff/:staff_id", getTeachesByStaffId);
+
+//get teaches by id
+router.get("/:id", getTeachesById);
 
 //get teaches by course id
 router.get("/course/:course_id", getTeachesByCourseId);

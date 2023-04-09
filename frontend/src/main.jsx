@@ -39,6 +39,8 @@ import StudentDasboard from "./pages/student/StudentDasboard/StudentDasboard";
 import StudentLogin from "./pages/student/StudentLogin";
 import About from "./pages/about/About";
 import AdminLogin from "./pages/admin/AdminLogin";
+import TeacherCourses from "./pages/teacher/Courses/Courses";
+import ViewCourse from "./pages/teacher/Courses/ViewCourse/ViewCourse";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -116,7 +118,7 @@ const router = createBrowserRouter([
         element: <TestLayout />,
         children: [
           {
-            path: "Dashboard",
+            path: "dashboard",
             element: <StudentDasboard />,
           },
         ],
@@ -154,6 +156,20 @@ const router = createBrowserRouter([
           {
             path: "notifications",
             element: <Notifications />,
+          },
+          {
+            path: "courses",
+            element: <TeacherCourses />,
+          },
+          {
+            path: "courses/add",
+            element: <AddCourses />,
+          },
+
+          //view course on id
+          {
+            path: "courses/view/:id",
+            element: <ViewCourse />,
           },
           {
             path: "class",

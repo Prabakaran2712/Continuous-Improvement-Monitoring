@@ -16,7 +16,7 @@ const router = require("express").Router();
 router.get("/", getAllTeachers);
 
 //get teacher by staff id
-router.get("/staffId/:staffId", getTeacherByStaffId);
+router.get("/:staffId", getTeacherByStaffId);
 
 //get teacher by id
 router.get("/:id", getTeacherById);

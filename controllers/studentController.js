@@ -53,6 +53,20 @@ const getAllStudents = async (req, res) => {
   }
 };
 
+//get student by batch
+const getStudentByBatch = async (req, res) => {
+  try {
+    const student = await Student.find({ batch: req.params.batch_id })
+      .populate("batch")
+      .populate("department")
+      .populate("attendance")
+      .populate("marks");
+    res.status(200).json(student);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
 //get student by roll number
 const getStudentByRollNumber = async (req, res) => {
   try {
@@ -265,6 +279,7 @@ module.exports = {
   getAllStudents,
   getStudentByRollNumber,
   getStudentById,
+  getStudentByBatch,
   addNewStudent,
   updateStudent,
   deleteStudent,

@@ -43,6 +43,11 @@ const TeacherLayout = () => {
             icon: <FontAwesomeIcon icon={faEnvelope} size="sm" />,
           },
           {
+            name: "Courses",
+            link: "/teacher/courses",
+            icon: <FontAwesomeIcon icon={faEnvelope} size="sm" />,
+          },
+          {
             name: "Logout",
             link: "/Logout",
             icon: <FontAwesomeIcon icon={faRightFromBracket} size="sm" />,

@@ -26,10 +26,11 @@ const getAllTeachers = async (req, res) => {
 //get teacher by staff_id
 const getTeacherByStaffId = async (req, res) => {
   try {
-    const teacher = await Teacher.find({ staff_id: req.params.staff_id })
+    const teachers = await Teacher.find({ staff_id: req.params.staffId })
       .populate("department")
       .populate("address")
-      .populate("course");
+      .populate({ path: "courses" });
+    res.status(200).json(teachers);
   } catch (error) {
     res.status(500).json({ message: error.message });
   }

@@ -2,6 +2,7 @@ const {
   getAllStudents,
   getStudentByRollNumber,
   getStudentById,
+  getStudentByBatch,
   addNewStudent,
   updateStudent,
   deleteStudent,
@@ -58,5 +59,8 @@ router.post("/login", studentLogin);
 
 //verify token
 router.post("/verify", verifyToken);
+
+//get student by batch
+router.get("/batch/:batch_id", getStudentByBatch);
 
 module.exports = router;

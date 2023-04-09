@@ -1,12 +1,69 @@
 const Teaches = require("../models/Teaches");
 
+//get all Teaches
+const getAllTeaches = async (req, res) => {
+  try {
+    const teaches = await Teaches.find()
+      .populate({
+        path: "teacher",
+        populate: { path: "department address" },
+      })
+      .populate({
+        path: "course",
+        populate: { path: "department" },
+      })
+      .populate({
+        path: "students",
+        populate: { path: "department batch" },
+      })
+      .populate("batch");
+    res.status(200).json(teaches);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+//get Teaches by id
+const getTeachesById = async (req, res) => {
+  try {
+    const teaches = await Teaches.findById(req.params.id)
+      .populate({
+        path: "teacher",
+        populate: { path: "department address" },
+      })
+      .populate({
+        path: "course",
+        populate: { path: "department" },
+      })
+      .populate({
+        path: "students",
+        populate: { path: "department batch" },
+      })
+      .populate("batch");
+    res.status(200).json(teaches);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
 // get Teaches by a staff
 const getTeachesByStaffId = async (req, res) => {
   try {
-    const teaches = await Teaches.find({ Teacher: req.params.staff_id })
-      .populate("teacher")
-      .populate("course")
-      .populate("students");
+    const teaches = await Teaches.find({ teacher: req.params.staff_id })
+      .populate({
+        path: "teacher",
+        populate: { path: "department address" },
+      })
+      .populate({
+        path: "course",
+        populate: { path: "department" },
+      })
+      .populate({
+        path: "students",
+        populate: { path: "department batch" },
+      })
+      .populate("batch");
+
     res.status(200).json(teaches);
   } catch (error) {
     res.status(500).json({ message: error.message });
@@ -17,9 +74,19 @@ const getTeachesByStaffId = async (req, res) => {
 const getTeachesByCourseId = async (req, res) => {
   try {
     const teaches = await Teaches.find({ Course: req.params.course_id })
-      .populate("teacher")
-      .populate("course")
-      .populate("students");
+      .populate({
+        path: "teacher",
+        populate: { path: "department address" },
+      })
+      .populate({
+        path: "course",
+        populate: { path: "department" },
+      })
+      .populate({
+        path: "students",
+        populate: { path: "department batch" },
+      })
+      .populate("batch");
     res.status(200).json(teaches);
   } catch (error) {
     res.status(500).json({ message: error.message });
@@ -31,6 +98,7 @@ const addNewTeaches = async (req, res) => {
   const teaches = new Teaches({
     teacher: req.body.teacher,
     course: req.body.course,
+    batch: req.body.batch,
   });
   try {
     const newTeaches = await teaches.save();
@@ -45,9 +113,26 @@ const addStudentsToTeaches = async (req, res) => {
   try {
     const teaches = await Teaches.findById(req.params.id);
     if (teaches) {
+      if (teaches.students.includes(req.body.student)) {
+        throw new Error("Student already exists");
+      }
       teaches.students.push(req.body.student);
       const updatedTeaches = await teaches.save();
-      res.status(200).json(updatedTeaches);
+      const updatedTeachesPopulated = await Teaches.findById(updatedTeaches._id)
+        .populate({
+          path: "teacher",
+          populate: { path: "department address" },
+        })
+        .populate({
+          path: "course",
+          populate: { path: "department" },
+        })
+        .populate({
+          path: "students",
+          populate: { path: "department batch" },
+        })
+        .populate("batch");
+      res.status(200).json(updatedTeachesPopulated);
     } else {
       res.status(404).json({ message: "Teaches not found" });
     }
@@ -65,7 +150,21 @@ const removeStudentsFromTeaches = async (req, res) => {
         (student) => student._id != req.body.student
       );
       const updatedTeaches = await teaches.save();
-      res.status(200).json(updatedTeaches);
+      const updatedTeachesPopulated = await Teaches.findById(updatedTeaches._id)
+        .populate({
+          path: "teacher",
+          populate: { path: "department address" },
+        })
+        .populate({
+          path: "course",
+          populate: { path: "department" },
+        })
+        .populate({
+          path: "students",
+          populate: { path: "department batch" },
+        })
+        .populate("batch");
+      res.status(200).json(updatedTeachesPopulated);
     } else {
       res.status(404).json({ message: "Teaches not found" });
     }
@@ -106,7 +205,9 @@ const transferTeacher = async (req, res) => {
 };
 
 module.exports = {
+  getAllTeaches,
   getTeachesByStaffId,
+  getTeachesById,
   getTeachesByCourseId,
   addNewTeaches,
   addStudentsToTeaches,
