@@ -1,10 +1,6 @@
 const mongoose = require("mongoose");
 
 const ExamSchema = new mongoose.Schema({
-  exam_name: {
-    type: String,
-    required: true,
-  },
   exam_code: {
     type: String,
     required: true,
@@ -25,6 +21,7 @@ const ExamSchema = new mongoose.Schema({
   exam_type: {
     type: String,
     required: true,
+    enum: ["Assessment-1", "Assessment-2", "End-Semester"],
   },
   course: {
     type: mongoose.Types.ObjectId,

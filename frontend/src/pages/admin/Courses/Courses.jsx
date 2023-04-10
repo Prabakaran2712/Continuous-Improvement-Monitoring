@@ -42,7 +42,7 @@ const Courses = () => {
             {courses &&
               courses.map((course) => {
                 return (
-                  <tr key={course._id}>
+                  <tr key={Math.random()}>
                     <td>{course.name}</td>
                     <td>{course.subject_code}</td>
                     <td>{course.department.dept_name}</td>

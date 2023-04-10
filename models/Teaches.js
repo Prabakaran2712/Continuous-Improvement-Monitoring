@@ -19,6 +19,10 @@ const TeacherSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: "Batch",
   },
+  semester: {
+    type: Number,
+    required: true,
+  },
 });
 
 module.exports = mongoose.model("Teaches", TeacherSchema);

@@ -99,12 +99,37 @@ const addNewTeaches = async (req, res) => {
     teacher: req.body.teacher,
     course: req.body.course,
     batch: req.body.batch,
+    semester: req.body.semester,
   });
   try {
     const newTeaches = await teaches.save();
     res.status(201).json(newTeaches);
   } catch (error) {
     res.status(400).json({ message: error.message });
+  }
+};
+
+//get all teaches having a particular student in student array
+
+const getTeachesByStudentId = async (req, res) => {
+  try {
+    const teaches = await Teaches.find({ students: req.params.student_id })
+      .populate({
+        path: "teacher",
+        populate: { path: "department address" },
+      })
+      .populate({
+        path: "course",
+        populate: { path: "department" },
+      })
+      .populate({
+        path: "students",
+        populate: { path: "department batch" },
+      })
+      .populate("batch");
+    res.status(200).json(teaches);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
   }
 };
 
@@ -209,6 +234,7 @@ module.exports = {
   getTeachesByStaffId,
   getTeachesById,
   getTeachesByCourseId,
+  getTeachesByStudentId,
   addNewTeaches,
   addStudentsToTeaches,
   removeStudentsFromTeaches,

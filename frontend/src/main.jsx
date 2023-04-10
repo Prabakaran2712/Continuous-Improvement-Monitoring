@@ -41,6 +41,9 @@ import About from "./pages/about/About";
 import AdminLogin from "./pages/admin/AdminLogin";
 import TeacherCourses from "./pages/teacher/Courses/Courses";
 import ViewCourse from "./pages/teacher/Courses/ViewCourse/ViewCourse";
+import AddCourse from "./pages/teacher/Courses/AddCourse/AddCourse";
+import ViewStudentCourses from "./pages/student/Courses/ViewStudentCourses";
+import CreateExam from "./pages/teacher/Exam/CreateExam/CreateExam";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -124,12 +127,16 @@ const router = createBrowserRouter([
         ],
       },
       {
-        path: "/student",
+        path: "student",
         element: <StudentLayout />,
         children: [
           {
             path: "dashboard",
             element: <StudentDasboard />,
+          },
+          {
+            path: "courses",
+            element: <ViewStudentCourses />,
           },
         ],
       },
@@ -150,6 +157,10 @@ const router = createBrowserRouter([
             element: <Marks />,
           },
           {
+            path: "createExam",
+            element: <CreateExam />,
+          },
+          {
             path: "attendance",
             element: <Attendance />,
           },
@@ -163,7 +174,7 @@ const router = createBrowserRouter([
           },
           {
             path: "courses/add",
-            element: <AddCourses />,
+            element: <AddCourse />,
           },
 
           //view course on id

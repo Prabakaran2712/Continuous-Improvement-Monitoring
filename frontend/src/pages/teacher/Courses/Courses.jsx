@@ -36,7 +36,7 @@ const Courses = () => {
             <button
               className="btn btn-outline-success h-50 "
               onClick={() => {
-                navigate("/teacher/course/add");
+                navigate("/teacher/courses/add");
               }}
             >
               {" "}
@@ -47,20 +47,29 @@ const Courses = () => {
             <table className="table table-striped">
               <thead>
                 <tr>
+                  <th>#</th>
                   <th>Course Name</th>
                   <th>Subject Code</th>
                   <th>Department</th>
+                  <th>Batch</th>
+                  <th>Delete</th>
+                  <th>View</th>
                 </tr>
               </thead>
               <tbody>
                 {userData &&
-                  userData.map((data) => {
+                  userData.map((data, indx) => {
                     var course = data.course;
                     return (
-                      <tr key={course._id}>
+                      <tr key={Math.random()}>
+                        <td>{indx + 1}</td>
                         <td>{course.name}</td>
                         <td>{course.subject_code}</td>
                         <td>{course.department.dept_name}</td>
+                        <td>
+                          {data.batch.start_year + " - " + data.batch.end_year}
+                        </td>
+
                         <td>
                           <DeleteButton />
                         </td>

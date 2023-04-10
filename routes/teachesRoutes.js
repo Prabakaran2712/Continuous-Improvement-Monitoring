@@ -3,6 +3,7 @@ const {
   getTeachesByStaffId,
   getTeachesById,
   getTeachesByCourseId,
+  getTeachesByStudentId,
   addNewTeaches,
   addStudentsToTeaches,
   removeStudentsFromTeaches,
@@ -23,6 +24,9 @@ router.get("/:id", getTeachesById);
 
 //get teaches by course id
 router.get("/course/:course_id", getTeachesByCourseId);
+
+//get teaches by student id
+router.get("/student/:student_id", getTeachesByStudentId);
 
 //add new teaches
 router.post("/", addNewTeaches);

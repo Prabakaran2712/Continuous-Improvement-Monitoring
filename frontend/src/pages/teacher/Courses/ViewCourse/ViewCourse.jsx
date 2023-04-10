@@ -122,7 +122,7 @@ const ViewCourse = () => {
                       {newStudents &&
                         newStudents.map((student) => {
                           return (
-                            <tr key={student._id}>
+                            <tr key={Math.random()}>
                               <td>{student.name}</td>
                               <td>{student.roll_number}</td>
                               <td>
@@ -165,7 +165,7 @@ const ViewCourse = () => {
                       {yourStudents &&
                         yourStudents.map((student) => {
                           return (
-                            <tr key={student._id}>
+                            <tr key={Math.random()}>
                               <td>{student.name}</td>
                               <td>{student.roll_number}</td>
                               <td>
