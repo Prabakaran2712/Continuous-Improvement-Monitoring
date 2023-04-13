@@ -8,6 +8,7 @@ import {
   faEnvelope,
   faEnvelopesBulk,
   faHouse,
+  faUser,
   faRightFromBracket,
 } from "@fortawesome/free-solid-svg-icons";
 import { faStar } from "@fortawesome/free-solid-svg-icons";
@@ -46,6 +47,11 @@ const TeacherLayout = () => {
             name: "Courses",
             link: "/teacher/courses",
             icon: <FontAwesomeIcon icon={faEnvelope} size="sm" />,
+          },
+          {
+            name: "Profile",
+            link: "/teacher/profile",
+            icon: <FontAwesomeIcon icon={faUser} size="sm" />,
           },
           {
             name: "Logout",
