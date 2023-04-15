@@ -7,6 +7,8 @@ import { ReactNotifications } from "react-notifications-component";
 import "react-notifications-component/dist/theme.css";
 import { AuthContextProvider } from "./context/AuthContext";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { LocalizationProvider } from "@mui/x-date-pickers";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 
 //pages
 import Home from "./pages/Home";
@@ -45,6 +47,7 @@ import ViewCourse from "./pages/teacher/Courses/ViewCourse/ViewCourse";
 import AddCourse from "./pages/teacher/Courses/AddCourse/AddCourse";
 import ViewStudentCourses from "./pages/student/Courses/ViewStudentCourses";
 import CreateExam from "./pages/teacher/Exam/CreateExam/CreateExam";
+import ViewExam from "./pages/teacher/Exam/ViewExam/ViewExam";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -162,6 +165,10 @@ const router = createBrowserRouter([
             element: <Marks />,
           },
           {
+            path: "exams",
+            element: <ViewExam />,
+          },
+          {
             path: "createExam",
             element: <CreateExam />,
           },
@@ -234,8 +241,10 @@ const router = createBrowserRouter([
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     <AuthContextProvider>
-      <ReactNotifications />
-      <RouterProvider router={router} />
+      <LocalizationProvider dateAdapter={AdapterDayjs}>
+        <ReactNotifications />
+        <RouterProvider router={router} />
+      </LocalizationProvider>
     </AuthContextProvider>
   </React.StrictMode>
 );

@@ -7,6 +7,7 @@ const Input = (props) => {
         type={props.type}
         className={`form-control ${styles.input} `}
         {...props.register(props.name, props.conditions)}
+        step={"any"}
       />
     </div>
   );

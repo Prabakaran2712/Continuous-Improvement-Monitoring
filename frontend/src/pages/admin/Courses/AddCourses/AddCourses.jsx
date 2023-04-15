@@ -137,6 +137,7 @@ const AddCourses = () => {
               type="number"
               conditions={{ required: true, maxLength: 100 }}
             />
+
             <Select
               options={departmentNames}
               values={departmentValues}

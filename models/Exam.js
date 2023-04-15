@@ -15,7 +15,7 @@ const ExamSchema = new mongoose.Schema({
     required: true,
   },
   exam_duration: {
-    type: String,
+    type: Number,
     required: true,
   },
   exam_type: {
@@ -23,26 +23,12 @@ const ExamSchema = new mongoose.Schema({
     required: true,
     enum: ["Assessment-1", "Assessment-2", "End-Semester"],
   },
-  course: {
+  teaches: {
     type: mongoose.Types.ObjectId,
-    ref: "Course",
-    required: true,
-  },
-  batch: {
-    type: mongoose.Types.ObjectId,
-    ref: "Batch",
-    required: true,
-  },
-  department: {
-    type: mongoose.Types.ObjectId,
-    ref: "Department",
+    ref: "Teaches",
     required: true,
   },
   total_marks: {
-    type: Number,
-    required: true,
-  },
-  semester: {
     type: Number,
     required: true,
   },
