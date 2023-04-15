@@ -4,9 +4,22 @@ const Exam = require("../models/Exam");
 const getAllExams = async (req, res) => {
   try {
     const exams = await Exam.find({})
-      .populate("course")
-      .populate("batch")
-      .populate("department");
+      .populate({
+        path: "teaches",
+        populate: { path: "course", populate: { path: "department" } },
+        // populate: { path: "teacher", populate: { path: "department address" } },
+        // populate: { path: "students", populate: { path: "department batch" } },
+        // populate: { path: "batch" },
+      })
+      .populate({
+        path: "teaches",
+        populate: { path: "teacher", populate: { path: "department address" } },
+      })
+      .populate({
+        path: "teaches",
+        populate: { path: "students", populate: { path: "department batch" } },
+      })
+      .populate({ path: "teaches", populate: { path: "batch" } });
     res.status(200).json(exams);
   } catch (error) {
     res.status(500).json({ message: error.message });
