@@ -6,6 +6,7 @@ const {
   getMarkByCourse,
   getMarkByExam,
   addNewMark,
+  addNewMarks,
   updateMark,
   deleteMark,
 } = require("../controllers/markController");
@@ -32,6 +33,9 @@ router.get("/exam/:id", getMarkByExam);
 
 //add new mark
 router.post("/", addNewMark);
+
+//add new marks
+router.post("/marks", addNewMarks);
 
 //update mark
 router.put("/:id", updateMark);

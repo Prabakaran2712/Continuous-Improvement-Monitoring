@@ -7,9 +7,6 @@ const getAllExams = async (req, res) => {
       .populate({
         path: "teaches",
         populate: { path: "course", populate: { path: "department" } },
-        // populate: { path: "teacher", populate: { path: "department address" } },
-        // populate: { path: "students", populate: { path: "department batch" } },
-        // populate: { path: "batch" },
       })
       .populate({
         path: "teaches",
@@ -30,9 +27,19 @@ const getAllExams = async (req, res) => {
 const getExamById = async (req, res) => {
   try {
     const exam = await Exam.findById(req.params.id)
-      .populate("course")
-      .populate("teacher")
-      .populate("department");
+      .populate({
+        path: "teaches",
+        populate: { path: "course", populate: { path: "department" } },
+      })
+      .populate({
+        path: "teaches",
+        populate: { path: "teacher", populate: { path: "department address" } },
+      })
+      .populate({
+        path: "teaches",
+        populate: { path: "students", populate: { path: "department batch" } },
+      })
+      .populate({ path: "teaches", populate: { path: "batch" } });
     res.status(200).json(exam);
   } catch (error) {
     res.status(500).json({ message: error.message });
@@ -44,7 +51,58 @@ const addNewExam = async (req, res) => {
   try {
     const exam = new Exam(req.body);
     await exam.save();
-    res.status(200).json(exam);
+    const examResponse = await Exam.findById(exam._id)
+      .populate({
+        path: "teaches",
+        populate: { path: "course", populate: { path: "department" } },
+      })
+      .populate({
+        path: "teaches",
+        populate: { path: "teacher", populate: { path: "department address" } },
+      })
+      .populate({
+        path: "teaches",
+        populate: { path: "students", populate: { path: "department batch" } },
+      })
+      .populate({ path: "teaches", populate: { path: "batch" } });
+    res.status(200).json(examResponse);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+// get all exams by teacher id in teaches
+const getExamsByTeacherId = async (req, res) => {
+  try {
+    const exams = await Exam.find()
+      .populate({
+        path: "teaches",
+        populate: { path: "course", populate: { path: "department" } },
+      })
+      .populate({
+        path: "teaches",
+
+        populate: {
+          path: "teacher",
+          populate: { path: "department address" },
+          match: { _id: req.params.id },
+        },
+      })
+      .populate({
+        path: "teaches",
+        populate: { path: "students", populate: { path: "department batch" } },
+      })
+      .populate({ path: "teaches", populate: { path: "batch" } });
+
+    //remove values that have teacher null
+    for (let i = 0; i < exams.length; i++) {
+      if (exams[i].teaches.teacher == null) {
+        exams.splice(i, 1);
+        i--;
+      }
+    }
+
+    res.status(200).json(exams);
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
@@ -106,6 +164,7 @@ const getExamsBetweenDates = async (req, res) => {
 module.exports = {
   getAllExams,
   getExamById,
+  getExamsByTeacherId,
   addNewExam,
   updateExam,
   deleteExam,

@@ -9,10 +9,10 @@ import Input from "../../../../components/forms/Input/Input";
 import Submit from "../../../../components/forms/Submit/Submit";
 import TimeComponent from "../../../../components/forms/Time/TimeComponent";
 import Select from "../../../../components/forms/Select";
-const CreateExam = () => {
+const CreateClass = () => {
   const { register, handleSubmit } = useForm();
-  const [examDate, setExamDate] = useState();
-  const [examTime, setExamTime] = useState();
+  const [classDate, setClassDate] = useState();
+  const [classTime, setClassTime] = useState();
   const [loading, setLoading] = useState(true);
   const [userData, setUserData] = useState({});
   const [teachesOption, setTeachesOption] = useState([]);
@@ -35,7 +35,7 @@ const CreateExam = () => {
     if (option == "success") {
       Store.addNotification({
         title: "Success!",
-        message: `New Exam has been created`,
+        message: `New Class has been created`,
         type: "success",
         insert: "top",
         container: "top-right",
@@ -49,7 +49,7 @@ const CreateExam = () => {
     } else {
       Store.addNotification({
         title: "Error!",
-        message: `Error while creating  Exam`,
+        message: `Error while creating  Class`,
         type: "danger",
         insert: "top",
         container: "top-right",
@@ -100,101 +100,80 @@ const CreateExam = () => {
     });
   }, []);
   const onSubmit = (data) => {
-    data.exam_date = examDate.$d;
+    data.date = classDate.$d;
     //get only time from examTime
-    const time12 = examTime.$d.toLocaleTimeString("en-US", {
+    const time12 = classTime.$d.toLocaleTimeString("en-US", {
       hour: "numeric",
       minute: "2-digit",
       hour12: true,
     });
-    data.exam_time = time12;
+    data.time = time12;
 
     //send data to backend
     axios
-      .post("http://localhost:3000/api/exams", data)
+      .post("http://localhost:3000/api/classes", data)
       .then((res) => {
-        //create mark for each student
-        console.log(res.data.teaches.students);
-        var marksData = [];
-        for (let i = 0; i < res.data.teaches.students.length; i++) {
-          const markData = {
-            student: res.data.teaches.students[i]._id,
-            exam: res.data._id,
-          };
-          marksData.push(markData);
-        }
-        console.log(marksData);
-        axios
-          .post("http://localhost:3000/api/marks/marks", marksData)
-          .then((res) => {
-            console.log(res);
-            notify("success");
-          })
-          .catch((err) => {
-            console.log(err);
-            notify("error");
-          });
+        notify("success");
       })
       .catch((err) => {
-        console.log(err);
         notify("error");
       });
   };
   return (
     <Container>
       <div className="  w-100 mx-auto my-5 ">
-        <Title title="Create Exam" />
-        <div className="form-body w-50 ">
+        <Title title="Create Class" />
+        <div className="form-body w-75 mx-2 my-3">
           <form onSubmit={handleSubmit(onSubmit)}>
-            <Input
-              name="exam_code"
-              label="Exam Code"
-              register={register}
-              type="text"
-              conditions={{ required: true, maxLength: 100 }}
-            />
+            <div className="row">
+              <div className="col-6">
+                <Input
+                  name="topic"
+                  label="Topic"
+                  register={register}
+                  type="text"
+                  conditions={{ required: true, maxLength: 100 }}
+                />
 
-            <DateComponent
-              value={examDate}
-              onChange={setExamDate}
-              label={"Exam Date"}
-            />
-            <TimeComponent
-              value={examTime}
-              onChange={setExamTime}
-              label={"Exam Time"}
-            />
-            <Input
-              name="exam_duration"
-              label="Exam Duration"
-              register={register}
-              type="Number"
-              conditions={{ required: true, maxLength: 100 }}
-            />
-            <Select
-              name="exam_type"
-              label="Exam Type"
-              register={register}
-              options={["Assessment-1", "Assessment-2", "End-Semester"]}
-              values={["Assessment-1", "Assessment-2", "End-Semester"]}
-            />
-            <Select
-              name="teaches"
-              label="Class"
-              register={register}
-              options={teachesOption}
-              values={teachesValue}
-            />
-            <Input
-              name="total_marks"
-              label="Total Marks"
-              register={register}
-              type="Number"
-              conditions={{ required: true }}
-            />
+                <DateComponent
+                  value={classDate}
+                  onChange={setClassDate}
+                  label={"Class Date"}
+                />
+                <TimeComponent
+                  value={classTime}
+                  onChange={setClassTime}
+                  label={"Class Time"}
+                />
+              </div>
+              <div className="col-6">
+                <Input
+                  name="duration"
+                  label="Class Duration"
+                  register={register}
+                  type="Number"
+                  conditions={{ required: true, maxLength: 100 }}
+                />
 
-            <div className="w-50 mx-auto">
-              <Submit name="Create" />
+                <Select
+                  name="teaches"
+                  label="Class"
+                  register={register}
+                  options={teachesOption}
+                  values={teachesValue}
+                />
+                <Input
+                  name="unit"
+                  label="Unit"
+                  register={register}
+                  type="number"
+                />
+              </div>
+            </div>
+            <div className="row">
+              <div className="w-50 text-center my-4 mx-auto">
+                <Submit name="Create" />
+              </div>
             </div>
           </form>
         </div>
@@ -203,4 +182,4 @@ const CreateExam = () => {
   );
 };
 
-export default CreateExam;
+export default CreateClass;

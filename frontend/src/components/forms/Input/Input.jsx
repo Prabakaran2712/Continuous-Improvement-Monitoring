@@ -8,6 +8,7 @@ const Input = (props) => {
         className={`form-control ${styles.input} `}
         {...props.register(props.name, props.conditions)}
         step={"any"}
+        disabled={props.disabled ? props.disabled : false}
       />
     </div>
   );

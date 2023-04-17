@@ -110,6 +110,17 @@ const addNewMark = async (req, res) => {
   }
 };
 
+//add new marks for many students
+const addNewMarks = async (req, res) => {
+  try {
+    const marks = req.body;
+    await Mark.insertMany(marks);
+    res.status(200).json(marks);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
 //update mark by id
 const updateMark = async (req, res) => {
   try {
@@ -152,6 +163,7 @@ module.exports = {
   getMarkByCourse,
   getMarkByExam,
   addNewMark,
+  addNewMarks,
   updateMark,
   deleteMark,
 };

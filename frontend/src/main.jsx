@@ -36,7 +36,7 @@ import Courses from "./pages/admin/Courses/Courses";
 import UpdateCourses from "./pages/admin/Courses/UpdateCourses";
 import AddCourses from "./pages/admin/Courses/AddCourses/AddCourses";
 import TeacherLogin from "./pages/teacher/teacherLogin/TeacherLogin";
-import CreateClass from "./pages/teacher/CreateClass/CreateClass";
+import CreateClass from "./pages/teacher/Class/CreateClass/CreateClass";
 import Class from "./pages/teacher/Class/Class";
 import StudentDasboard from "./pages/student/StudentDasboard/StudentDasboard";
 import StudentLogin from "./pages/student/StudentLogin";
@@ -48,6 +48,7 @@ import AddCourse from "./pages/teacher/Courses/AddCourse/AddCourse";
 import ViewStudentCourses from "./pages/student/Courses/ViewStudentCourses";
 import CreateExam from "./pages/teacher/Exam/CreateExam/CreateExam";
 import ViewExam from "./pages/teacher/Exam/ViewExam/ViewExam";
+import ExamDetails from "./pages/teacher/Exam/ExamDetails/ExamDetails";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -167,6 +168,10 @@ const router = createBrowserRouter([
           {
             path: "exams",
             element: <ViewExam />,
+          },
+          {
+            path: "exam/:id",
+            element: <ExamDetails />,
           },
           {
             path: "createExam",

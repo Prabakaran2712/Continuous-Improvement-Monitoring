@@ -11,6 +11,7 @@ import {
   faUser,
   faPen,
   faRightFromBracket,
+  faSchool,
 } from "@fortawesome/free-solid-svg-icons";
 import { faStar } from "@fortawesome/free-solid-svg-icons";
 
@@ -38,6 +39,11 @@ const TeacherLayout = () => {
             name: "Exams",
             link: "/teacher/exams",
             icon: <FontAwesomeIcon icon={faPen} size="sm" />,
+          },
+          {
+            name: "Classes",
+            link: "/teacher/class",
+            icon: <FontAwesomeIcon icon={faSchool} size="sm" />,
           },
           {
             name: "Attendance",

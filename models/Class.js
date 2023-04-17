@@ -1,20 +1,9 @@
 const mongoose = require("mongoose");
 
 const ClassSchema = new mongoose.Schema({
-  course: {
+  teaches: {
     type: mongoose.Types.ObjectId,
-    ref: "Course",
-    required: true,
-  },
-  teacher: {
-    type: mongoose.Types.ObjectId,
-    ref: "Teacher",
-    required: true,
-  },
-  batch: {
-    type: mongoose.Types.ObjectId,
-    ref: "Batch",
-    required: true,
+    ref: "Teaches",
   },
   topic: {
     type: String,
@@ -34,11 +23,6 @@ const ClassSchema = new mongoose.Schema({
   },
   duration: {
     type: String,
-    required: true,
-  },
-  department: {
-    type: mongoose.Types.ObjectId,
-    ref: "Department",
     required: true,
   },
 });

@@ -8,16 +8,11 @@ const MarkSchema = new mongoose.Schema({
   },
   mark: {
     type: Number,
-    required: true,
   },
   exam: {
     type: mongoose.Types.ObjectId,
     ref: "Exam",
     required: true,
-  },
-  teacher: {
-    type: mongoose.Types.ObjectId,
-    ref: "Teacher",
   },
 });
 

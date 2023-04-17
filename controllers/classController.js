@@ -79,10 +79,34 @@ const getClassesByBatch = async (req, res) => {
 //get classes by teacher
 const getClassesByTeacher = async (req, res) => {
   try {
-    const classes = await Class.find({ staff_id: req.params.id }).populate(
-      "teacher"
-    );
-    res.status(200).json(classes);
+    const classes = await Class.find()
+      .populate({
+        path: "teaches",
+        populate: { path: "course", populate: { path: "department" } },
+      })
+      .populate({
+        path: "teaches",
+
+        populate: {
+          path: "teacher",
+          populate: { path: "department address" },
+          match: { _id: req.params.id },
+        },
+      })
+      .populate({
+        path: "teaches",
+        populate: { path: "students", populate: { path: "department batch" } },
+      })
+      .populate({ path: "teaches", populate: { path: "batch" } });
+
+    //remove values that have teacher null
+    for (let i = 0; i < classes.length; i++) {
+      if (classes[i].teaches.teacher == null) {
+        classes.splice(i, 1);
+        i--;
+      }
+      res.status(200).json(classes);
+    }
   } catch (error) {
     res.status(500).json({ message: error.message });
   }

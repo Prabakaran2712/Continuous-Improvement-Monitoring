@@ -1,6 +1,7 @@
 const {
   getAllExams,
   getExamById,
+  getExamsByTeacherId,
   addNewExam,
   updateExam,
   deleteExam,
@@ -14,6 +15,9 @@ router.get("/", getAllExams);
 
 //get exam by id
 router.get("/:id", getExamById);
+
+//get exams by teacher id
+router.get("/teacher/:id", getExamsByTeacherId);
 
 //add new exam
 router.post("/", addNewExam);
