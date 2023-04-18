@@ -1,6 +1,7 @@
 const {
   getAllAttendances,
   addNewAttendance,
+  addMoreAttendances,
   deleteAttendance,
   updateAttendance,
   getAttendanceByStudent,
@@ -17,6 +18,9 @@ router.get("/", getAllAttendances);
 
 //add new attendance
 router.post("/", addNewAttendance);
+
+//add more attendances
+router.post("/add", addMoreAttendances);
 
 //delete attendance
 router.delete("/:id", deleteAttendance);

@@ -17,7 +17,7 @@ const CreateClass = () => {
   const [userData, setUserData] = useState({});
   const [teachesOption, setTeachesOption] = useState([]);
   const [teachesValue, setTeachesValue] = useState([]);
-  const [user, setUser] = useState("641e9b56a732849ef7efd5a8");
+  const [user, setUser] = useState("64212913263de2cbfa095205");
   //function to select properties from an object
   function selectProps(...props) {
     return function (obj) {
@@ -113,9 +113,24 @@ const CreateClass = () => {
     axios
       .post("http://localhost:3000/api/classes", data)
       .then((res) => {
-        notify("success");
+        //create attendance for each student
+        var students = res.data.teaches.students;
+        students = students.map((x) => {
+          return {
+            student: x._id,
+            class: res.data._id,
+            present: false,
+          };
+        });
+        console.log(students);
+        axios
+          .post("http://localhost:3000/api/attendances/add", students)
+          .then((res) => {
+            notify("success");
+          });
       })
       .catch((err) => {
+        console.log(err);
         notify("error");
       });
   };

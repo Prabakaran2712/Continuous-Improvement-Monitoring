@@ -1,5 +1,6 @@
 const {
   getAllClasses,
+  getClassById,
   addNewClass,
   deleteClass,
   updateClass,
@@ -16,6 +17,10 @@ const router = require("express").Router();
 
 //get all classes
 router.get("/", getAllClasses);
+
+//get class by id
+
+router.get("/:id", getClassById);
 
 //add new class
 router.post("/", addNewClass);

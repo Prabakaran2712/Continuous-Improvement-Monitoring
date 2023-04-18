@@ -23,6 +23,34 @@ const addNewAttendance = async (req, res) => {
   }
 };
 
+//add or update more attendances
+const addMoreAttendances = async (req, res) => {
+  try {
+    const attendances = req.body;
+
+    attendances.forEach(async (item) => {
+      console.log(
+        await Attendance.updateOne(
+          { _id: item._id },
+          {
+            $set: {
+              student: item.student,
+              present: item.present,
+              class: item.class,
+            },
+            $setOnInsert: { item },
+          },
+          { upsert: true }
+        )
+      );
+    });
+
+    res.status(201).json(attendances);
+  } catch (error) {
+    res.status(400).json({ message: error.message });
+  }
+};
+
 //delete attendance
 const deleteAttendance = async (req, res) => {
   try {
@@ -55,8 +83,32 @@ const updateAttendance = async (req, res) => {
 const getAttendanceByStudent = async (req, res) => {
   try {
     const attendance = await Attendance.find({ student: req.params.id })
-      .populate("student")
-      .populate("class");
+      .populate({ path: "student", populate: "department batch" })
+      .populate({
+        path: "class",
+        populate: {
+          path: "teaches",
+          populate: { path: "course", populate: { path: "department" } },
+        },
+      })
+      .populate({
+        path: "class",
+        populate: {
+          path: "teaches",
+          populate: { path: "teacher", populate: "address department" },
+          match: { _id: req.params.id },
+        },
+      });
+    populate({
+      path: "class",
+      populate: {
+        path: "teaches",
+        populate: { path: "students", populate: { path: "department batch" } },
+      },
+    }).populate({
+      path: "class",
+      populate: { path: "teaches", populate: { path: "batch" } },
+    });
     res.status(200).json(attendance);
   } catch (error) {
     res.status(500).json({ message: error.message });
@@ -67,8 +119,36 @@ const getAttendanceByStudent = async (req, res) => {
 const getAttendanceByClass = async (req, res) => {
   try {
     const attendance = await Attendance.find({ class: req.params.id })
-      .populate("student")
-      .populate("class");
+      .populate({ path: "student", populate: "department batch" })
+      .populate({
+        path: "class",
+        populate: {
+          path: "teaches",
+          populate: { path: "course", populate: { path: "department" } },
+        },
+      })
+      .populate({
+        path: "class",
+        populate: {
+          path: "teaches",
+          populate: { path: "teacher", populate: "address department" },
+          match: { _id: req.params.id },
+        },
+      })
+      .populate({
+        path: "class",
+        populate: {
+          path: "teaches",
+          populate: {
+            path: "students",
+            populate: { path: "department batch" },
+          },
+        },
+      })
+      .populate({
+        path: "class",
+        populate: { path: "teaches", populate: { path: "batch" } },
+      });
     res.status(200).json(attendance);
   } catch (error) {
     res.status(500).json({ message: error.message });
@@ -132,6 +212,7 @@ const getAttendancePercentageByClassForAllStudents = async (req, res) => {
 module.exports = {
   getAllAttendances,
   addNewAttendance,
+  addMoreAttendances,
   deleteAttendance,
   updateAttendance,
   getAttendanceByStudent,

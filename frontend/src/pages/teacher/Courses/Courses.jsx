@@ -6,7 +6,7 @@ import DeleteButton from "../../../components/DeleteButton";
 import View from "../../../components/Courses/Teacher/View";
 
 const Courses = () => {
-  const user = "641e9b56a732849ef7efd5a8";
+  const user = "64212913263de2cbfa095205";
   const [userData, setUserData] = useState({});
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();

@@ -14,12 +14,52 @@ const getAllClasses = async (req, res) => {
   }
 };
 
+//get class by ID
+const getClassById = async (req, res) => {
+  try {
+    const classes = await Class.findById({ _id: req.params.id })
+      .populate({
+        path: "teaches",
+        populate: { path: "course", populate: { path: "department" } },
+      })
+      .populate({
+        path: "teaches",
+        populate: { path: "teacher", populate: "address department" },
+        match: { _id: req.params.id },
+      })
+      .populate({
+        path: "teaches",
+        populate: { path: "students", populate: { path: "department batch" } },
+      })
+      .populate({ path: "teaches", populate: { path: "batch" } });
+
+    res.status(200).json(classes);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
 //add new class
 const addNewClass = async (req, res) => {
   const classs = new Class(req.body);
   try {
     const newClass = await classs.save();
-    res.status(201).json(newClass);
+    const responseClass = await Class.findById({ _id: newClass._id })
+      .populate({
+        path: "teaches",
+        populate: { path: "course", populate: { path: "department" } },
+      })
+      .populate({
+        path: "teaches",
+        populate: { path: "teacher", populate: "address department" },
+        match: { _id: req.params.id },
+      })
+      .populate({
+        path: "teaches",
+        populate: { path: "students", populate: { path: "department batch" } },
+      })
+      .populate({ path: "teaches", populate: { path: "batch" } });
+    res.status(201).json(responseClass);
   } catch (error) {
     res.status(400).json({ message: error.message });
   }
@@ -86,12 +126,8 @@ const getClassesByTeacher = async (req, res) => {
       })
       .populate({
         path: "teaches",
-
-        populate: {
-          path: "teacher",
-          populate: { path: "department address" },
-          match: { _id: req.params.id },
-        },
+        populate: { path: "teacher", populate: "address department" },
+        match: { _id: req.params.id },
       })
       .populate({
         path: "teaches",
@@ -105,8 +141,8 @@ const getClassesByTeacher = async (req, res) => {
         classes.splice(i, 1);
         i--;
       }
-      res.status(200).json(classes);
     }
+    res.status(200).json(classes);
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
@@ -162,6 +198,7 @@ const getClassesByTime = async (req, res) => {
 
 module.exports = {
   getAllClasses,
+  getClassById,
   addNewClass,
   deleteClass,
   updateClass,

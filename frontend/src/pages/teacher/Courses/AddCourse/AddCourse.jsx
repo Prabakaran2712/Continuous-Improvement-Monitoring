@@ -21,7 +21,7 @@ const AddCourse = () => {
   const navigate = useNavigate();
 
   //user details neeeds to be changed after authentication
-  const [user, setUser] = useState("641e9b56a732849ef7efd5a8");
+  const [user, setUser] = useState("64212913263de2cbfa095205");
 
   //toast notification
   const notify = (option) => {

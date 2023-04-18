@@ -49,6 +49,7 @@ import ViewStudentCourses from "./pages/student/Courses/ViewStudentCourses";
 import CreateExam from "./pages/teacher/Exam/CreateExam/CreateExam";
 import ViewExam from "./pages/teacher/Exam/ViewExam/ViewExam";
 import ExamDetails from "./pages/teacher/Exam/ExamDetails/ExamDetails";
+import ClassDetails from "./pages/teacher/Class/ClassDetails/ClassDetails";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -173,6 +174,7 @@ const router = createBrowserRouter([
             path: "exam/:id",
             element: <ExamDetails />,
           },
+
           {
             path: "createExam",
             element: <CreateExam />,
@@ -205,6 +207,10 @@ const router = createBrowserRouter([
               {
                 path: "",
                 element: <Class />,
+              },
+              {
+                path: ":id",
+                element: <ClassDetails />,
               },
               {
                 path: "create",
