@@ -2,6 +2,7 @@ import { useNavigate } from "react-router-dom";
 import Container from "../../../components/Container/Container";
 import Button from "../../../components/forms/Button/Button";
 import Title from "../../../components/forms/Title/Title";
+import moment from "moment";
 import { useEffect } from "react";
 import { useState } from "react";
 import axios from "axios";
@@ -57,7 +58,12 @@ const Class = () => {
                     <tr key={Math.random()}>
                       <td>{classData.teaches.course.name}</td>
                       <td>{classData.topic}</td>
-                      <td>{classData.date}</td>
+                      <td>
+                        {
+                          //convert to date string
+                          moment(classData.date).format("DD-MM-YYYY")
+                        }
+                      </td>
                       <td>{classData.time}</td>
                       <td>
                         <Button
