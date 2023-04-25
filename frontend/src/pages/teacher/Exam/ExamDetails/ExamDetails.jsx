@@ -2,20 +2,53 @@ import { useParams } from "react-router";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import moment from "moment";
-import DateComponent from "../../../../components/forms/Date/DateComponent";
-import TimeComponent from "../../../../components/forms/Time/TimeComponent";
+import { Store } from "react-notifications-component";
 import { useForm } from "react-hook-form";
 import Container from "../../../../components/Container/Container";
 import Title from "../../../../components/forms/Title/Title";
 import Input from "../../../../components/forms/Input/Input";
-import Button from "../../../../components/forms/Button/Button";
+
+import { Switch } from "@mui/material";
 
 const ExamDetails = () => {
   const [examData, setExamData] = useState();
   const [examDate, setExamDate] = useState();
   const [examTime, setExamTime] = useState();
+  const [students, setStudents] = useState([]);
   const { id } = useParams();
   const { register, handleSubmit, setValue } = useForm();
+
+  const notify = (option) => {
+    if (option == "success") {
+      Store.addNotification({
+        title: "Success!",
+        message: ` Marks has been updated successfully`,
+        type: "success",
+        insert: "top",
+        container: "top-right",
+        animationIn: ["animate__animated", "animate__fadeIn"],
+        animationOut: ["animate__animated", "animate__fadeOut"],
+        dismiss: {
+          duration: 3500,
+          onScreen: true,
+        },
+      });
+    } else {
+      Store.addNotification({
+        title: "Error!",
+        message: `Error while updating Marks`,
+        type: "danger",
+        insert: "top",
+        container: "top-right",
+        animationIn: ["animate__animated", "animate__fadeIn"],
+        animationOut: ["animate__animated", "animate__fadeOut"],
+        dismiss: {
+          duration: 3500,
+          onScreen: true,
+        },
+      });
+    }
+  };
 
   useEffect(() => {
     //set default values to form fields
@@ -43,13 +76,37 @@ const ExamDetails = () => {
         //only date no time
         setValue("exam_date", moment(res.data.exam_date).format("YYYY-MM-DD"));
         setValue("exam_time", res.data.exam_time);
-        console.log(res.data.exam_date.toLocaleString());
+        //get marks for exam
+        axios.get(`http://localhost:3000/api/marks/exam/${id}`).then((res) => {
+          console.log(res.data);
+          setStudents(res.data);
+        });
       })
       .catch((err) => {
         console.log(err);
       });
   }, []);
 
+  const save = () => {
+    var data = students.map((x) => {
+      return {
+        student: x.student._id,
+        exam: x.exam,
+        mark: x.mark,
+        published: x.published,
+      };
+    });
+    console.log(data);
+    axios
+      .post("http://localhost:3000/api/marks/marks", data)
+      .then((res) => {
+        notify("success");
+      })
+      .catch((err) => {
+        console.log(err);
+        notify("error");
+      });
+  };
   return (
     <Container>
       <div className="header">
@@ -151,9 +208,76 @@ const ExamDetails = () => {
                 conditions={{ required: true, maxLength: 100 }}
                 disabled={true}
               />
-              <div className="form-group mx-5 my-4 py-5  text-center ">
-                <button className="btn btn-outline-success btn-lg">
-                  Marks
+            </div>
+          </div>
+          <div className="student-list m-2">
+            <div className="row   table-responsive p-5">
+              <div className="header">
+                <p className="display-6 my-3">Students</p>
+              </div>
+              <table className="table table-striped w-75 mx-auto">
+                <thead>
+                  <tr>
+                    <th>#</th>
+                    <th>Name</th>
+                    <th>Roll Number</th>
+                    <td>Marks</td>
+                    <th>Status</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {students &&
+                    students.map((student, indx) => {
+                      return (
+                        <tr key={Math.random()}>
+                          <td>{indx + 1}</td>
+                          <td>{student.student.name}</td>
+                          <td>{student.student.roll_number}</td>
+                          <td>
+                            <input
+                              type="number"
+                              className="form-control w-25  "
+                              name="marks"
+                              value={student.mark}
+                              max={examData.total_marks}
+                              onChange={(event) => {
+                                //update a value in the array and then set the array
+                                var temp = [...students];
+                                temp[indx].mark = event.target.value;
+                                setStudents(temp);
+                              }}
+                            />
+                          </td>
+
+                          <td>
+                            <Switch
+                              color="warning"
+                              checked={student.published}
+                              onChange={(event) => {
+                                //update a value in the array and then set the array
+                                var temp = [...students];
+                                temp[indx].published = event.target.checked;
+
+                                setStudents(temp);
+                              }}
+                            />
+                            <br />
+                            {student.published
+                              ? "    Published"
+                              : "Not Published"}
+                          </td>
+                        </tr>
+                      );
+                    })}
+                </tbody>
+              </table>
+              <div className="mx-auto my-5 p-2 text-center">
+                <button
+                  type="button"
+                  className="btn btn-success"
+                  onClick={save}
+                >
+                  Save
                 </button>
               </div>
             </div>

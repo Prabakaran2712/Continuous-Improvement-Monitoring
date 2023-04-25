@@ -12,6 +12,7 @@ import {
   faPen,
   faRightFromBracket,
   faSchool,
+  faPerson,
 } from "@fortawesome/free-solid-svg-icons";
 import { faStar } from "@fortawesome/free-solid-svg-icons";
 
@@ -54,6 +55,11 @@ const TeacherLayout = () => {
             name: "Notifications",
             link: "/teacher/notifications",
             icon: <FontAwesomeIcon icon={faEnvelope} size="sm" />,
+          },
+          {
+            name: "Students",
+            link: "/teacher/students",
+            icon: <FontAwesomeIcon icon={faPerson} size="sm" />,
           },
           {
             name: "Courses",

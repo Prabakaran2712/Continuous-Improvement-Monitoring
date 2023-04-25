@@ -17,7 +17,7 @@ const CreateExam = () => {
   const [userData, setUserData] = useState({});
   const [teachesOption, setTeachesOption] = useState([]);
   const [teachesValue, setTeachesValue] = useState([]);
-  const [user, setUser] = useState("641e9b56a732849ef7efd5a8");
+  const [user, setUser] = useState("64212913263de2cbfa095205");
   //function to select properties from an object
   function selectProps(...props) {
     return function (obj) {

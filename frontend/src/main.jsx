@@ -50,6 +50,10 @@ import CreateExam from "./pages/teacher/Exam/CreateExam/CreateExam";
 import ViewExam from "./pages/teacher/Exam/ViewExam/ViewExam";
 import ExamDetails from "./pages/teacher/Exam/ExamDetails/ExamDetails";
 import ClassDetails from "./pages/teacher/Class/ClassDetails/ClassDetails";
+import ViewStudents from "./pages/teacher/ViewStudents/ViewStudents";
+import StudentDetails from "./pages/teacher/StudentDetails/StudentDetails";
+import SubjectMarkAnalytics from "./pages/teacher/SubjectMarkAnalytics/SubjectMarkAnalytics";
+
 const router = createBrowserRouter([
   {
     path: "/",
@@ -174,7 +178,18 @@ const router = createBrowserRouter([
             path: "exam/:id",
             element: <ExamDetails />,
           },
-
+          {
+            path: "subject/:id/student/:sid",
+            element: <SubjectMarkAnalytics />,
+          },
+          {
+            path: "student/:id",
+            element: <StudentDetails />,
+          },
+          {
+            path: "students",
+            element: <ViewStudents />,
+          },
           {
             path: "createExam",
             element: <CreateExam />,

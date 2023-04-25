@@ -7,7 +7,7 @@ import axios from "axios";
 const ViewExam = () => {
   const [loading, setLoading] = useState(true);
   const [Data, setData] = useState();
-  const user = "641e9b56a732849ef7efd5a8";
+  const user = "64212913263de2cbfa095205";
 
   const navigate = useNavigate();
 

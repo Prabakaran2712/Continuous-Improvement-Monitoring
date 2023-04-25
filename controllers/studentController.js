@@ -42,11 +42,8 @@ const getAllStudents = async (req, res) => {
   try {
     const students = await Student.find({})
       .populate("batch")
-      .populate("department")
-      .populate("address")
-      .populate("course")
-      .populate("attendance")
-      .populate("marks");
+      .populate("department");
+
     res.status(200).json(students);
   } catch (error) {
     res.status(500).json({ message: error.message });
@@ -58,9 +55,7 @@ const getStudentByBatch = async (req, res) => {
   try {
     const student = await Student.find({ batch: req.params.batch_id })
       .populate("batch")
-      .populate("department")
-      .populate("attendance")
-      .populate("marks");
+      .populate("department");
     res.status(200).json(student);
   } catch (error) {
     res.status(500).json({ message: error.message });
@@ -91,11 +86,8 @@ const getStudentById = async (req, res) => {
   try {
     const student = await Student.findById(req.params.id)
       .populate("batch")
-      .populate("department")
-      .populate("address")
-      .populate("course")
-      .populate("attendance")
-      .populate("marks");
+      .populate("department");
+
     res.status(200).json(student);
   } catch (error) {
     res.status(500).json({ message: error.message });

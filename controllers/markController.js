@@ -4,18 +4,24 @@ const Mark = require("../models/Mark");
 const getAllMarks = async (req, res) => {
   try {
     const marks = await Mark.find({})
-      .populate("student")
-      .populate([{ path: "teacher", populate: { path: "department" } }])
-      .populate([
-        {
-          path: "exam",
-          populate: { path: "course" },
+      .populate({
+        path: "exam",
+        populate: {
+          path: "teaches",
+          populate: { path: "course", populate: { path: "department" } },
         },
-        {
-          path: "exam",
-          populate: { path: "department" },
+      })
+      .populate({
+        path: "exam",
+        populate: {
+          path: "teaches",
+          populate: { path: "teacher", populate: "address department" },
         },
-      ]);
+      })
+      .populate({
+        path: "exam",
+        populate: { path: "teaches", populate: { path: "batch" } },
+      });
     res.status(200).json(marks);
   } catch (error) {
     res.status(500).json({ message: error.message });
@@ -29,6 +35,34 @@ const getMarkById = async (req, res) => {
       .populate("student")
       .populate("teacher")
       .populate("exam");
+    res.status(200).json(mark);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+//get mark by student id
+const getMarkByStudentId = async (req, res) => {
+  try {
+    const mark = await Mark.find({ student: req.params.id })
+      .populate({
+        path: "exam",
+        populate: {
+          path: "teaches",
+          populate: { path: "course", populate: { path: "department" } },
+        },
+      })
+      .populate({
+        path: "exam",
+        populate: {
+          path: "teaches",
+          populate: { path: "teacher", populate: "address department" },
+        },
+      })
+      .populate({
+        path: "exam",
+        populate: { path: "teaches", populate: { path: "batch" } },
+      });
     res.status(200).json(mark);
   } catch (error) {
     res.status(500).json({ message: error.message });
@@ -83,16 +117,40 @@ const getMarkByCourse = async (req, res) => {
   }
 };
 
+// add or update more marks
+const addMoreMarks = async (req, res) => {
+  try {
+    const marks = req.body;
+    marks.forEach(async (mark) => {
+      const md = await Mark.find({ exam: mark.exam, student: mark.student });
+
+      if (md.length > 0) {
+        await Mark.updateOne(
+          { exam: mark.exam, student: mark.student },
+          { $set: { mark: mark.mark, published: mark.published } }
+        );
+      } else {
+        const m = new Mark(mark);
+        await m.save();
+      }
+    });
+
+    res.status(200).json(marks);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
 //get mark by exam
 const getMarkByExam = async (req, res) => {
   try {
-    const mark = await Mark.find({})
-      .populate({
-        path: "exam",
-        match: { name: req.params.name },
-      })
-      .populate("student")
-      .populate("teacher");
+    const mark = await Mark.find({
+      exam: req.params.id,
+    }).populate({
+      path: "student",
+      populate: { path: "department batch" },
+    });
+
     res.status(200).json(mark);
   } catch (error) {
     res.status(500).json({ message: error.message });
@@ -160,10 +218,12 @@ module.exports = {
   getMarkById,
   getMarkByStudentRollNumber,
   getMarkByTeacherStaffId,
+  getMarkByStudentId,
   getMarkByCourse,
   getMarkByExam,
   addNewMark,
   addNewMarks,
+  addMoreMarks,
   updateMark,
   deleteMark,
 };

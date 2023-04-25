@@ -9,6 +9,7 @@ const {
   getAttendancePercentageByStudentForCourse,
   getAttendancePercentageByStudentForAllClasses,
   getAttendancePercentageByClassForAllStudents,
+  getAttendancePercentageByStudentForAllCourses,
 } = require("../controllers/attendanceController");
 
 const router = require("express").Router();
@@ -50,6 +51,12 @@ router.get(
 router.get(
   "/class/:class_id/all",
   getAttendancePercentageByClassForAllStudents
+);
+
+//attendance percentage by student for all courses
+router.get(
+  "/student/:student_id/all/courses",
+  getAttendancePercentageByStudentForAllCourses
 );
 
 module.exports = router;

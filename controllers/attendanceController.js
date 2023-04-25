@@ -29,20 +29,19 @@ const addMoreAttendances = async (req, res) => {
     const attendances = req.body;
 
     attendances.forEach(async (item) => {
-      console.log(
+      const ad = await Attendance.findOne({
+        student: item.student,
+        class: item.class,
+      });
+      if (ad) {
         await Attendance.updateOne(
-          { _id: item._id },
-          {
-            $set: {
-              student: item.student,
-              present: item.present,
-              class: item.class,
-            },
-            $setOnInsert: { item },
-          },
-          { upsert: true }
-        )
-      );
+          { student: item.student, class: item.class },
+          { $set: { present: item.present } }
+        );
+      } else {
+        const attendance = new Attendance(item);
+        await attendance.save();
+      }
     });
 
     res.status(201).json(attendances);
@@ -98,17 +97,21 @@ const getAttendanceByStudent = async (req, res) => {
           populate: { path: "teacher", populate: "address department" },
           match: { _id: req.params.id },
         },
+      })
+      .populate({
+        path: "class",
+        populate: {
+          path: "teaches",
+          populate: {
+            path: "students",
+            populate: { path: "department batch" },
+          },
+        },
+      })
+      .populate({
+        path: "class",
+        populate: { path: "teaches", populate: { path: "batch" } },
       });
-    populate({
-      path: "class",
-      populate: {
-        path: "teaches",
-        populate: { path: "students", populate: { path: "department batch" } },
-      },
-    }).populate({
-      path: "class",
-      populate: { path: "teaches", populate: { path: "batch" } },
-    });
     res.status(200).json(attendance);
   } catch (error) {
     res.status(500).json({ message: error.message });
@@ -209,6 +212,67 @@ const getAttendancePercentageByClassForAllStudents = async (req, res) => {
   }
 };
 
+//get attendace precentage by student for all courses
+const getAttendancePercentageByStudentForAllCourses = async (req, res) => {
+  try {
+    console.log(req.params.student_id);
+    const attendance = await Attendance.find({ student: req.params.student_id })
+      .populate({ path: "student", populate: "department batch" })
+      .populate({
+        path: "class",
+        populate: {
+          path: "teaches",
+          populate: { path: "course", populate: { path: "department" } },
+        },
+      })
+      .populate({
+        path: "class",
+        populate: {
+          path: "teaches",
+          populate: { path: "teacher", populate: "address department" },
+          match: { _id: req.params.id },
+        },
+      })
+      .populate({
+        path: "class",
+        populate: {
+          path: "teaches",
+          populate: {
+            path: "students",
+            populate: { path: "department batch" },
+          },
+        },
+      })
+      .populate({
+        path: "class",
+        populate: { path: "teaches", populate: { path: "batch" } },
+      });
+    //get number of unique courses
+    const courses = attendance.map((item) => item.class.teaches.course);
+    //remove duplicates
+    const unique_courses = [...new Set(courses)];
+    //get attendance % for each course
+    var attendance_percentage = [];
+    unique_courses.map((course) => {
+      const course_attendance = attendance.filter(
+        (item) => item.class.teaches.course === course
+      );
+      const total_classes = course_attendance.length;
+      const present_classes = course_attendance.filter(
+        (item) => item.present === true
+      ).length;
+      const percentage = (present_classes / total_classes) * 100;
+      attendance_percentage.push({
+        course: course,
+        percentage: percentage,
+      });
+    });
+    res.status(200).json(attendance_percentage);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
 module.exports = {
   getAllAttendances,
   addNewAttendance,
@@ -220,4 +284,5 @@ module.exports = {
   getAttendancePercentageByStudentForCourse,
   getAttendancePercentageByStudentForAllClasses,
   getAttendancePercentageByClassForAllStudents,
+  getAttendancePercentageByStudentForAllCourses,
 };
