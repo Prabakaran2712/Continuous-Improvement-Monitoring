@@ -16,7 +16,7 @@ const ViewCourse = () => {
   };
   const addStudent = (student) => {
     axios
-      .put(`http://localhost:3000/api/teaches/addStudent/${id}`, {
+      .put(`/api/teaches/addStudent/${id}`, {
         student: student,
       })
       .then((res) => {
@@ -33,7 +33,7 @@ const ViewCourse = () => {
 
   const removeStudent = (student) => {
     axios
-      .put(`http://localhost:3000/api/teaches/removeStudent/${id}`, {
+      .put(`/api/teaches/removeStudent/${id}`, {
         student: student,
       })
       .then((res) => {
@@ -50,7 +50,7 @@ const ViewCourse = () => {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:3000/api/teaches/${id}`)
+      .get(`/api/teaches/${id}`)
       .then((res) => {
         if (res.data === null) {
           setLoading(false);
@@ -63,7 +63,7 @@ const ViewCourse = () => {
         console.log(res.data.students);
 
         axios
-          .get(`http://localhost:3000/api/students/batch/${res.data.batch._id}`)
+          .get(`/api/students/batch/${res.data.batch._id}`)
           .then((batchstudents) => {
             //filter out the students who are already in the yourstudents array
             setBatchStudents(batchstudents.data);

@@ -48,27 +48,23 @@ const ClassDetails = () => {
   };
   useEffect(() => {
     axios
-      .get(`http://localhost:3000/api/classes/${id}`)
+      .get(`/api/classes/${id}`)
       .then((res) => {
         console.log(res.data);
         //get student from batch
-        axios
-          .get(`http://localhost:3000/api/teaches/${res.data.teaches._id}`)
-          .then((res) => {
-            //get attendance for class
-            axios
-              .get(`http://localhost:3000/api/attendances/class/${id}`)
-              .then((res) => {
-                var students = [];
-                res.data.forEach((x) => {
-                  students.push({
-                    ...x.student,
-                    present: x.present,
-                  });
-                });
-                setStudents(students);
+        axios.get(`/api/teaches/${res.data.teaches._id}`).then((res) => {
+          //get attendance for class
+          axios.get(`/api/attendances/class/${id}`).then((res) => {
+            var students = [];
+            res.data.forEach((x) => {
+              students.push({
+                ...x.student,
+                present: x.present,
               });
+            });
+            setStudents(students);
           });
+        });
       })
       .catch((err) => {
         console.log(err);
@@ -85,7 +81,7 @@ const ClassDetails = () => {
       };
     });
     axios
-      .post("http://localhost:3000/api/attendances/add", data)
+      .post("/api/attendances/add", data)
       .then((res) => {
         notify("success");
       })

@@ -56,7 +56,7 @@ const TeacherSignup = () => {
   useEffect(() => {
     const loadData = async () => {
       await axios
-        .get("http://localhost:3000/api/departments")
+        .get("/api/departments")
         .then((res) => {
           setDepartment(res.data);
           setDepartmentNames(res.data.map(selectProps("dept_name")));
@@ -66,7 +66,7 @@ const TeacherSignup = () => {
           console.log(err);
         });
       await axios
-        .get("http://localhost:3000/api/courses")
+        .get("/api/courses")
         .then((res) => {
           setCourses(res.data);
           setCourseNames(res.data.map(selectProps("subject_code")));
@@ -91,7 +91,7 @@ const TeacherSignup = () => {
 
   const onSubmit = (data) => {
     axios
-      .post("http://localhost:3000/api/teachers", data)
+      .post("/api/teachers", data)
       .then((res) => {
         console.log(res);
         navigate("/teacher/dashboard");

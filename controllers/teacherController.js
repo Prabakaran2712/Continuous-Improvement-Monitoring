@@ -1,13 +1,63 @@
-require("dotenv").config();
 const Teacher = require("../models/Teacher");
 const Address = require("../models/Address");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 
-const createToken = (_id) => {
-  return jwt.sign({ _id }, process.env.SECRET, {
-    expiresIn: "3d",
-  });
+const createToken = (payload) => {
+  return jwt.sign(payload, process.env.SECRET, { expiresIn: "14 days" });
+};
+
+//verfiy token
+const verifyLogin = async (req, res) => {
+  const token = req.cookies["token"];
+  if (!token) {
+    return res.status(401).json({
+      success: false,
+      message: "no token Not authorized to access this route",
+    });
+  }
+  try {
+    const decoded = jwt.verify(token, process.env.SECRET);
+
+    if (decoded.userType === "teacher") {
+      const userInfo = await Teacher.findById(decoded.userId);
+      if (!userInfo) {
+        return res.status(401).json({
+          success: false,
+          message: "Not authorized to access this route",
+        });
+      }
+      return res.status(200).json({
+        success: true,
+        message: "User is authorized",
+        user: userInfo,
+        userType: decoded.userType,
+      });
+    } else if (decoded.userType === "admin") {
+      const admin = await Teacher.findById(decoded.userId);
+      if (!admin) {
+        return res.status(401).json({
+          success: false,
+          message: "Not authorized to access this route",
+        });
+      }
+      return res.status(200).json({
+        success: true,
+        message: "User is authorized",
+        user: admin,
+        userType: decoded.userType,
+      });
+    } else {
+      return res.status(401).json({
+        success: false,
+        message: "Not authorized to access this route",
+      });
+    }
+  } catch (err) {
+    return res
+      .status(401)
+      .json({ success: false, message: "Not authorized to access this route" });
+  }
 };
 
 //get all teachers
@@ -78,8 +128,16 @@ const addNewTeacher = async (req, res) => {
     await teacher.save();
 
     //create token
-    const token = createToken(teacher._id);
-    res.status(200).json({ teacher, token });
+    res.cookie(
+      "token",
+      createToken({ userId: teacher._id, userType: "admin" }),
+      {
+        maxAge: 1000 * 60 * 60 * 24 * 14,
+        httpOnly: true,
+        sameSite: "strict",
+      }
+    );
+    res.status(200).json({ teacher, message: "Teacher added successfully" });
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
@@ -150,24 +208,80 @@ const getTeachersByCourse = async (req, res) => {
 const loginTeacher = async (req, res) => {
   try {
     const exists = await Teacher.findOne({ email: req.body.email });
+    var userType = "teacher";
+
     if (!exists) {
       throw new Error("User does not exist");
     } else {
       bcrypt.compare(req.body.password, exists.password).then((result) => {
         if (result) {
-          const token = createToken(result._id);
-          res.status(200).json({ user: exists, token: token });
+          //check if user is admin
+          if (exists.isadmin) {
+            userType = "admin";
+            res.cookie(
+              "token",
+              createToken({ userId: exists._id, userType: "admin" }),
+              {
+                maxAge: 1000 * 60 * 60 * 24 * 14,
+                httpOnly: true,
+                sameSite: "strict",
+              }
+            );
+
+            exists.password = undefined;
+
+            res
+              .status(200)
+              .json({ success: true, user: exists, userType: userType });
+          } else {
+            userType = "teacher";
+            res.cookie(
+              "token",
+              createToken({ userId: exists._id, userType: "teacher" }),
+              {
+                maxAge: 1000 * 60 * 60 * 24 * 14,
+                httpOnly: true,
+                sameSite: "strict",
+              }
+            );
+            exists.password = undefined;
+
+            res
+              .status(200)
+              .json({ success: true, user: exists, userType: userType });
+          }
         } else {
           throw new Error("Invalid Login Credentials");
         }
       });
     }
   } catch (error) {
-    res.status(500).json({ message: error.message });
+    res.status(500).json({
+      success: false,
+      message: error.message,
+    });
+  }
+};
+
+const logout = async (req, res) => {
+  try {
+    console.log("logout");
+    await res.clearCookie("token");
+    res.status(200).json({
+      success: true,
+      message: "Logged out successfully",
+    });
+  } catch (error) {
+    console.error(err);
+    res.status(500).json({
+      success: false,
+      message: "Server Error",
+    });
   }
 };
 
 module.exports = {
+  verifyLogin,
   getAllTeachers,
   getTeacherByStaffId,
   getTeacherById,
@@ -177,4 +291,5 @@ module.exports = {
   getTeachersByDepartment,
   getTeachersByCourse,
   loginTeacher,
+  logout,
 };

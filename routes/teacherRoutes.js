@@ -1,4 +1,5 @@
 const {
+  verifyLogin,
   getAllTeachers,
   getTeacherByStaffId,
   getTeacherById,
@@ -8,9 +9,13 @@ const {
   getTeachersByDepartment,
   getTeachersByCourse,
   loginTeacher,
+  logout,
 } = require("../controllers/teacherController");
 
 const router = require("express").Router();
+
+//verify login
+router.get("/verify", verifyLogin);
 
 //get all teachers
 router.get("/", getAllTeachers);
@@ -38,5 +43,8 @@ router.get("/course/:id", getTeachersByCourse);
 
 //login teacher
 router.post("/login", loginTeacher);
+
+//logout teacher
+router.get("/logout", logout);
 
 module.exports = router;

@@ -18,12 +18,30 @@ function App() {
   const auth = useAuthContext();
 
   useEffect(() => {
+    console.log("app");
     const verify = async () => {
+      console.log("verify");
+      await axios
+        .get("/api/teachers/verify")
+        .then((res) => {
+          console.log("login aa dispatch");
+          dispatch({
+            type: "LOGIN",
+            payload: res.data.user,
+            userType: res.data.userType,
+          });
+          return;
+        })
+        .catch((err) => {
+          console.log(err);
+          dispatch({ type: "LOGOUT" });
+        });
+
       console.log("root");
       if (localStorage.getItem("token")) {
         const token = localStorage.getItem("token");
         await axios
-          .post("http://localhost:3000/api/auth/verify", { token })
+          .post("/api/auth/verify", { token })
           .then((data) => {
             dispatch({
               type: "LOGIN",
@@ -33,15 +51,16 @@ function App() {
             setLoading(false);
           })
           .catch((err) => {
+            console.log(err);
             dispatch({
               type: "LOGOUT",
             });
             setLoading(false);
           });
       } else {
-        dispatch({
-          type: "LOGOUT",
-        });
+        // dispatch({
+        //   type: "LOGOUT",
+        // });
         setLoading(false);
       }
     };

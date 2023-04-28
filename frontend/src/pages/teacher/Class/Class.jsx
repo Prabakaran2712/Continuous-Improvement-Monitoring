@@ -15,7 +15,7 @@ const Class = () => {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:3000/api/classes/teacher/${user}`)
+      .get(`/api/classes/teacher/${user}`)
       .then((res) => {
         setData(res.data);
         console.log(res.data);

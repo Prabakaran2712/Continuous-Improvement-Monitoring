@@ -70,7 +70,7 @@ const AddCourses = () => {
   useEffect(() => {
     const loadData = async () => {
       await axios
-        .get("http://localhost:3000/api/departments")
+        .get("/api/departments")
         .then((res) => {
           console.log(res.data);
           setDepartment(res.data);
@@ -88,7 +88,7 @@ const AddCourses = () => {
   const onSubmit = (data) => {
     console.log(data);
     axios
-      .post("http://localhost:3000/api/courses", data)
+      .post("/api/courses", data)
       .then((res) => {
         notify("success");
         navigate("/teacher/course");

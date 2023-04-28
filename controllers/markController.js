@@ -85,6 +85,37 @@ const getMarkByStudentRollNumber = async (req, res) => {
   }
 };
 
+//get mark by teaches
+const getMarkByTeaches = async (req, res) => {
+  try {
+    const mark = await Mark.find({})
+      .populate({
+        path: "exam",
+        match: { teaches: req.params.id },
+      })
+      .populate({
+        path: "exam",
+        populate: {
+          path: "teaches",
+          populate: { path: "course", populate: { path: "department" } },
+        },
+      })
+      .populate({
+        path: "exam",
+        populate: {
+          path: "teaches",
+          populate: { path: "teacher", populate: "address department" },
+        },
+      })
+      .populate({
+        path: "exam",
+        populate: { path: "teaches", populate: { path: "batch" } },
+      });
+    res.status(200).json(mark);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
 //get mark by teacher staff_id
 const getMarkByTeacherStaffId = async (req, res) => {
   try {

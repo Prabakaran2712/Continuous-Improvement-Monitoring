@@ -13,7 +13,7 @@ const ViewStudents = () => {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:3000/api/students`)
+      .get(`/api/students`)
       .then((res) => {
         console.log(res.data);
         setStudents(res.data);
@@ -23,7 +23,7 @@ const ViewStudents = () => {
       });
 
     axios
-      .get(`http://localhost:3000/api/batches`)
+      .get(`/api/batches`)
       .then((res) => {
         console.log(res.data);
         setBatchList(res.data);

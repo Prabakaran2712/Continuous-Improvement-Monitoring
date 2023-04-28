@@ -11,7 +11,7 @@ const Courses = () => {
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
   useEffect(() => {
-    axios.get(`http://localhost:3000/api/teaches/staff/${user}`).then((res) => {
+    axios.get(`/api/teaches/staff/${user}`).then((res) => {
       console.log(res.data);
       setUserData(res.data);
       setLoading(false);

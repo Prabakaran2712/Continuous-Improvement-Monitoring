@@ -64,7 +64,7 @@ const CreateClass = () => {
   };
 
   useEffect(() => {
-    axios.get(`http://localhost:3000/api/teaches/staff/${user}`).then((res) => {
+    axios.get(`/api/teaches/staff/${user}`).then((res) => {
       setUserData(res.data);
       //get course Details
       const courseDetails = res.data.map(selectProps("course"));
@@ -111,7 +111,7 @@ const CreateClass = () => {
 
     //send data to backend
     axios
-      .post("http://localhost:3000/api/classes", data)
+      .post("/api/classes", data)
       .then((res) => {
         //create attendance for each student
         var students = res.data.teaches.students;
@@ -123,11 +123,9 @@ const CreateClass = () => {
           };
         });
         console.log(students);
-        axios
-          .post("http://localhost:3000/api/attendances/add", students)
-          .then((res) => {
-            notify("success");
-          });
+        axios.post("/api/attendances/add", students).then((res) => {
+          notify("success");
+        });
       })
       .catch((err) => {
         console.log(err);

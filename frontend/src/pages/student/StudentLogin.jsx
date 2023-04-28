@@ -55,7 +55,7 @@ const StudentLogin = () => {
 
   const onSubmit = (data) => {
     axios
-      .post("http://localhost:3000/api/students/login", data)
+      .post("/api/students/login", data)
       .then((data) => {
         localStorage.setItem("token", data.data.token);
         dispatch({

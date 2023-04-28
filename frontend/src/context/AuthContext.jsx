@@ -14,7 +14,7 @@ export const authReducer = (state, action) => {
       };
 
     case "LOGOUT":
-      //console.log("logout dispatched");
+      console.log("logout dispatched");
       return {
         ...state,
         user: null,

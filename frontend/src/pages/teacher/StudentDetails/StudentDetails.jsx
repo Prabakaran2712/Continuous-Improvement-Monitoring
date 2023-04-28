@@ -57,7 +57,7 @@ const StudentDetails = () => {
   };
   useEffect(() => {
     axios
-      .get(`http://localhost:3000/api/students/${id}`)
+      .get(`/api/students/${id}`)
       .then((res) => {
         setStudent(res.data);
       })
@@ -66,7 +66,7 @@ const StudentDetails = () => {
         console.log(err);
       });
     //get student marks from student id
-    axios.get(`http://localhost:3000/api/marks/student/${id}`).then((res) => {
+    axios.get(`/api/marks/student/${id}`).then((res) => {
       console.log(res.data);
 
       //get unique subjects
@@ -75,7 +75,7 @@ const StudentDetails = () => {
         if (!uniqueSubjects.includes(x.exam.teaches.course.name)) {
           uniqueSubjects.push({
             name: x.exam.teaches.course.name,
-            _id: x.exam.teaches.course._id,
+            _id: x.exam.teaches._id,
           });
         }
       });
@@ -155,7 +155,7 @@ const StudentDetails = () => {
       console.log(res.data);
       //get attendance data
       axios
-        .get(`http://localhost:3000/api/attendances/student/${id}/all/courses`)
+        .get(`/api/attendances/student/${id}/all/courses`)
         .then((res) => {
           console.log("attendance");
           console.log(res.data);

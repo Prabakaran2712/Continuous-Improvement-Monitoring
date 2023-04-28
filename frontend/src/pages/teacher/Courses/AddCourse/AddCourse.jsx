@@ -81,7 +81,7 @@ const AddCourse = () => {
   useEffect(() => {
     const loadData = () => {
       axios
-        .get("http://localhost:3000/api/batches")
+        .get("/api/batches")
         .then((res) => {
           const batch = res.data;
           const start_year = batch.map(selectProps("start_year"));
@@ -93,7 +93,7 @@ const AddCourse = () => {
           setBatch(batch);
           setBatchName(batchName);
           setBatchValue(batchValue);
-          axios.get("http://localhost:3000/api/courses").then((res) => {
+          axios.get("/api/courses").then((res) => {
             const course = res.data;
             const courseName = course.map(selectProps("name"));
             const courseValue = course.map(selectProps("_id"));
@@ -113,7 +113,7 @@ const AddCourse = () => {
   const onSubmit = (data) => {
     data.teacher = user;
     axios
-      .post("http://localhost:3000/api/teaches", data)
+      .post("/api/teaches", data)
       .then((res) => {
         notify("success");
         navigate("/teacher/courses");

@@ -53,7 +53,7 @@ const ExamDetails = () => {
   useEffect(() => {
     //set default values to form fields
     axios
-      .get(`http://localhost:3000/api/exams/${id}`)
+      .get(`/api/exams/${id}`)
       .then((res) => {
         setExamData(res.data);
         console.log(res.data);
@@ -77,7 +77,7 @@ const ExamDetails = () => {
         setValue("exam_date", moment(res.data.exam_date).format("YYYY-MM-DD"));
         setValue("exam_time", res.data.exam_time);
         //get marks for exam
-        axios.get(`http://localhost:3000/api/marks/exam/${id}`).then((res) => {
+        axios.get(`/api/marks/exam/${id}`).then((res) => {
           console.log(res.data);
           setStudents(res.data);
         });
@@ -98,7 +98,7 @@ const ExamDetails = () => {
     });
     console.log(data);
     axios
-      .post("http://localhost:3000/api/marks/marks", data)
+      .post("/api/marks/marks", data)
       .then((res) => {
         notify("success");
       })

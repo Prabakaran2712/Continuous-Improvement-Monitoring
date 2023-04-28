@@ -1,14 +1,25 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { NavLink, useNavigate } from "react-router-dom";
 import { Store } from "react-notifications-component";
 import axios from "axios";
+import { useAuthContext } from "../../../hooks/useAuthContext";
 
 const TeacherLogin = () => {
   const { register, handleSubmit } = useForm();
-
+  const { dispatch } = useAuthContext();
   const navigate = useNavigate();
+  const auth = useAuthContext();
 
+  useEffect(() => {
+    console.log(auth);
+    if (
+      auth.isAuthenticated == true &&
+      (auth.userType == "teacher" || auth.userType == "admin")
+    ) {
+      navigate("/teacher/dashboard");
+    }
+  }, [auth]);
   //notifications
   const notify = (option) => {
     if (option == "success") {
@@ -44,13 +55,19 @@ const TeacherLogin = () => {
 
   const onSubmit = (data) => {
     axios
-      .post("http://localhost:3000/api/teachers/login", data)
+      .post("/api/teachers/login", data)
       .then((res) => {
-        console.log(res);
+        dispatch({
+          type: "LOGIN",
+          payload: res.data.user,
+          userType: res.data.userType,
+        });
         notify("success");
+        console.log("redirect");
         navigate("/teacher/dashboard");
       })
       .catch((err) => {
+        dispatch({ type: "LOGOUT" });
         notify("error");
         console.log(err);
       });

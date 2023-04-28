@@ -9,7 +9,7 @@ const AdminLogin = () => {
   const onSubmit = (data) => {
     console.log(data);
     axios
-      .post("http://localhost:3000/api/admin/login", data)
+      .post("/api/admin/login", data)
       .then((data) => {
         if (data.status === 200) {
           setSuccessMessage("Successfully Logged in");

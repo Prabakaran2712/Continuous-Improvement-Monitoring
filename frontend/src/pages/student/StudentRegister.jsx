@@ -71,7 +71,7 @@ const StudentRegister = () => {
   const onSubmit = (data) => {
     console.log(data);
     axios
-      .post("http://localhost:3000/api/students", data)
+      .post("/api/students", data)
       .then((data) => {
         console.log(data);
         notify("success");
@@ -86,12 +86,12 @@ const StudentRegister = () => {
   useEffect(() => {
     return () => {
       axios
-        .get("http://localhost:3000/api/departments")
+        .get("/api/departments")
         .then((data) => {
           setDepartmentNames(data.data.map(selectProps("dept_name")));
           setDepartmentValues(data.data.map(selectProps("_id")));
           axios
-            .get("http://localhost:3000/api/batches")
+            .get("/api/batches")
             .then((data) => {
               setBatchNames(
                 data.data.map((data) => {

@@ -3,6 +3,7 @@ require("dotenv").config();
 const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
+const cookieParser = require("cookie-parser");
 
 //require routes
 const departmentRoutes = require("./routes/departmentRoutes");
@@ -27,6 +28,7 @@ app.use((req, res, next) => {
   console.log(req.method, req.path, new Date().toLocaleString());
   next();
 });
+app.use(cookieParser());
 
 //define routes
 app.use("/api/departments", departmentRoutes);

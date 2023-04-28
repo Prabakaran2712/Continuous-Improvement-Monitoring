@@ -12,7 +12,7 @@ const ViewStudentCourses = () => {
   const auth = useAuthContext();
   useEffect(() => {
     axios
-      .get(`http://localhost:3000/api/teaches/student/${auth.user._id}`)
+      .get(`/api/teaches/student/${auth.user._id}`)
       .then((res) => {
         setCourses(res.data);
         setLoading(false);

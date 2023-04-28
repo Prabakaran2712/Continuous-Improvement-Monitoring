@@ -8,7 +8,7 @@ const Marks = () => {
   const [courses, setCourses] = useState(["All"]);
   useEffect(() => {
     axios
-      .get("http://localhost:3000/api/marks")
+      .get("/api/marks")
       .then((res) => {
         setMarks(res.data);
         setMarkFilter(res.data);

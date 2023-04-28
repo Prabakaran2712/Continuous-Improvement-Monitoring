@@ -64,7 +64,7 @@ const CreateExam = () => {
   };
 
   useEffect(() => {
-    axios.get(`http://localhost:3000/api/teaches/staff/${user}`).then((res) => {
+    axios.get(`/api/teaches/staff/${user}`).then((res) => {
       setUserData(res.data);
       //get course Details
       const courseDetails = res.data.map(selectProps("course"));
@@ -111,7 +111,7 @@ const CreateExam = () => {
 
     //send data to backend
     axios
-      .post("http://localhost:3000/api/exams", data)
+      .post("/api/exams", data)
       .then((res) => {
         //create mark for each student
         console.log(res.data.teaches.students);
@@ -125,7 +125,7 @@ const CreateExam = () => {
         }
         console.log(marksData);
         axios
-          .post("http://localhost:3000/api/marks/marks", marksData)
+          .post("/api/marks/marks", marksData)
           .then((res) => {
             console.log(res);
             notify("success");
