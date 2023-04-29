@@ -1,18 +1,27 @@
 import React from "react";
 import Container from "../../../components/Container/Container";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import axios from "axios";
+import { useAuthContext } from "../../../hooks/useAuthContext";
 
 export default function TeacherProfile() {
-  const [userData, setUserData] = useState({
-    name: "Kee Pauk",
-    email: "keelpauk@gmail.com",
-    password: "password",
-    staffID: "123456",
-    department: "CSE",
-    courses: ["CSE 101", "CSE 102", "CSE 103", "CSE 104", "CSE 105"],
-    phone: "1234567890",
-    address: "Kathmandu, Nepal",
-  });
+  const auth = useAuthContext();
+  const [userData, setUserData] = useState({});
+
+  useEffect(() => {
+    console.log(auth);
+    if (
+      auth.isAuthenticated == false ||
+      (auth.userType != "teacher" && auth.userType != "admin")
+    ) {
+      navigate("/teacher/login");
+    }
+    axios.get(`/api/teachers/${auth.user.staff_id}`).then((res) => {
+      console.log("--", res.data);
+      setUserData(res.data);
+    });
+  }, [auth]);
+
   return (
     <Container>
       <div class="card">
@@ -29,7 +38,7 @@ export default function TeacherProfile() {
                 class="form-control"
                 id="name"
                 value={userData.name}
-                readonly
+                disabled
               />
             </div>
             <div class="mb-3">
@@ -41,7 +50,7 @@ export default function TeacherProfile() {
                 class="form-control"
                 id="email"
                 value={userData.email}
-                readonly
+                disabled
               />
             </div>
             <div class="mb-3">
@@ -53,7 +62,7 @@ export default function TeacherProfile() {
                 class="form-control"
                 id="password"
                 value={userData.password}
-                readonly
+                disabled
               />
             </div>
             <div class="mb-3">
@@ -64,15 +73,15 @@ export default function TeacherProfile() {
                 type="text"
                 class="form-control"
                 id="staffid"
-                value={userData.staffID}
-                readonly
+                value={userData.staff_id}
+                disabled
               />
             </div>
             <div class="mb-3">
               <label for="address" class="form-label">
                 Address
               </label>
-              <textarea class="form-control" id="address" readonly>
+              <textarea class="form-control" id="address" disabled>
                 {userData.address}
               </textarea>
             </div>
@@ -84,8 +93,8 @@ export default function TeacherProfile() {
                 type="tel"
                 class="form-control"
                 id="phone"
-                value={userData.phone}
-                readonly
+                value={userData.phone_number}
+                disabled
               />
             </div>
             <div class="mb-3">
@@ -93,7 +102,10 @@ export default function TeacherProfile() {
                 Courses
               </label>
               <ul class="list-group" id="courses">
-                {userData.courses.map((course) => {
+                {userData?.courses?.length == 0 && (
+                  <li class="list-group-item">No courses assigned</li>
+                )}
+                {userData?.courses?.map((course) => {
                   return <li class="list-group-item">{course}</li>;
                 })}
               </ul>
@@ -106,8 +118,20 @@ export default function TeacherProfile() {
                 type="text"
                 class="form-control"
                 id="department"
-                value={userData.department}
-                readonly
+                value={userData?.department?.dept_name}
+                disabled
+              />
+            </div>
+            <div class="mb-3">
+              <label for="departmentCode" class="form-label">
+                Department Code
+              </label>
+              <input
+                type="text"
+                class="form-control"
+                id="departmentCode"
+                value={userData?.department?.dept_code}
+                disabled
               />
             </div>
           </form>

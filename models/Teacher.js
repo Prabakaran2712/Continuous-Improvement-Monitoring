@@ -32,6 +32,12 @@ const TeacherSchema = new mongoose.Schema({
     type: mongoose.Types.ObjectId,
     ref: "Department",
   },
+  courses: [
+    {
+      type: mongoose.Types.ObjectId,
+      ref: "Course",
+    },
+  ],
   isadmin: {
     type: Boolean,
     default: false,
