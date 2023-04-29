@@ -146,13 +146,14 @@ const addNewTeacher = async (req, res) => {
 //update teacher
 const updateTeacher = async (req, res) => {
   try {
-    const teacher = await Teacher.findById(req.params.id);
+    const teacher = await Teacher.findOne({ staff_id: req.params.id });
     if (teacher) {
       teacher.staff_id = req.body.staff_id;
       teacher.name = req.body.name;
+      teacher.phone_number = req.body.phone_number;
       teacher.department = req.body.department;
-      teacher.address = req.body.address;
-      teacher.course = req.body.course;
+      // teacher.address = req.body.address;
+      teacher.courses = req.body.courses;
       const updatedTeacher = await teacher.save();
       res.status(200).json(updatedTeacher);
     } else {
