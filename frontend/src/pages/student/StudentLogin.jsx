@@ -13,6 +13,7 @@ const StudentLogin = () => {
 
   //navigate
   const navigate = useNavigate();
+  const auth = useAuthContext();
 
   //notifications
   const notify = (option) => {
@@ -48,7 +49,7 @@ const StudentLogin = () => {
   };
 
   useEffect(() => {
-    if (user) {
+    if (auth.isAuthenticated == true && auth.userType == "student") {
       navigate("/student/dashboard");
     }
   }, [user]);

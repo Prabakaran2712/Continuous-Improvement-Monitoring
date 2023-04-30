@@ -76,6 +76,15 @@ const Courses = () => {
                         <td>
                           <View id={data._id} view={view} />
                         </td>
+                        <td>
+                          <button
+                            onClick={() => {
+                              navigate(`/teacher/grades/${data._id}`);
+                            }}
+                          >
+                            Grades
+                          </button>
+                        </td>
                       </tr>
                     );
                   })}

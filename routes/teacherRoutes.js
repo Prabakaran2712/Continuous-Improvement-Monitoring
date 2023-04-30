@@ -14,6 +14,9 @@ const {
 
 const router = require("express").Router();
 
+//logout teacher
+router.get("/logout", logout);
+
 //verify login
 router.get("/verify", verifyLogin);
 
@@ -43,8 +46,5 @@ router.get("/course/:id", getTeachersByCourse);
 
 //login teacher
 router.post("/login", loginTeacher);
-
-//logout teacher
-router.get("/logout", logout);
 
 module.exports = router;

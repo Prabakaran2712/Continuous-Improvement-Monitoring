@@ -53,6 +53,7 @@ import ClassDetails from "./pages/teacher/Class/ClassDetails/ClassDetails";
 import ViewStudents from "./pages/teacher/ViewStudents/ViewStudents";
 import StudentDetails from "./pages/teacher/StudentDetails/StudentDetails";
 import SubjectMarkAnalytics from "./pages/teacher/SubjectMarkAnalytics/SubjectMarkAnalytics";
+import Grade from "./pages/teacher/Grade/Grade";
 
 const router = createBrowserRouter([
   {
@@ -179,6 +180,10 @@ const router = createBrowserRouter([
             element: <ExamDetails />,
           },
           {
+            path: "grades/:id",
+            element: <Grade />,
+          },
+          {
             path: "subject/:id/student/:sid",
             element: <SubjectMarkAnalytics />,
           },
@@ -265,12 +270,10 @@ const router = createBrowserRouter([
 ]);
 
 ReactDOM.createRoot(document.getElementById("root")).render(
-  <React.StrictMode>
-    <AuthContextProvider>
-      <LocalizationProvider dateAdapter={AdapterDayjs}>
-        <ReactNotifications />
-        <RouterProvider router={router} />
-      </LocalizationProvider>
-    </AuthContextProvider>
-  </React.StrictMode>
+  <AuthContextProvider>
+    <LocalizationProvider dateAdapter={AdapterDayjs}>
+      <ReactNotifications />
+      <RouterProvider router={router} />
+    </LocalizationProvider>
+  </AuthContextProvider>
 );

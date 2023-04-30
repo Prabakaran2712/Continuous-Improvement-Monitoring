@@ -22,6 +22,7 @@ import { useAuthContext } from "../../hooks/useAuthContext";
 //styles
 import styles from "./TeacherLayout.module.css";
 import axios from "axios";
+import Loading from "../../components/Loading/Loading";
 
 const TeacherLayout = () => {
   const [loading, setLoading] = useState(true);
@@ -43,7 +44,7 @@ const TeacherLayout = () => {
 
   useEffect(() => {
     setLoading(true);
-
+    console.log(auth);
     if (
       auth.isAuthenticated === false ||
       (auth.userType !== "teacher" && auth.userType !== "admin")
@@ -59,7 +60,7 @@ const TeacherLayout = () => {
   }, []);
 
   if (loading) {
-    return <div>Loading...</div>;
+    return <Loading />;
   }
   if (auth.userType === "teacher") {
     return (

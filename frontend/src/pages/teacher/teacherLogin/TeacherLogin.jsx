@@ -57,6 +57,7 @@ const TeacherLogin = () => {
     axios
       .post("/api/teachers/login", data)
       .then((res) => {
+        console.log("ut" + res.data.userType);
         dispatch({
           type: "LOGIN",
           payload: res.data.user,

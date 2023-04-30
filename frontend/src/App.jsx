@@ -11,6 +11,7 @@ import reactLogo from "./assets/react.svg";
 import axios from "axios";
 import { useAuthContext } from "./hooks/useAuthContext";
 import { Outlet } from "react-router";
+import Loading from "./components/Loading/Loading";
 
 function App() {
   const { user, dispatch } = useAuthContext();
@@ -22,9 +23,10 @@ function App() {
     const verify = async () => {
       console.log("verify");
       await axios
-        .get("/api/teachers/verify")
+        .get("/api/auth/verify")
         .then((res) => {
           console.log("login aa dispatch");
+          console.log(res.data.userType);
           dispatch({
             type: "LOGIN",
             payload: res.data.user,
@@ -38,35 +40,11 @@ function App() {
         });
 
       console.log("root");
-      if (localStorage.getItem("token")) {
-        const token = localStorage.getItem("token");
-        await axios
-          .post("/api/auth/verify", { token })
-          .then((data) => {
-            dispatch({
-              type: "LOGIN",
-              payload: data.data.user,
-              userType: data.data.userType,
-            });
-            setLoading(false);
-          })
-          .catch((err) => {
-            console.log(err);
-            dispatch({
-              type: "LOGOUT",
-            });
-            setLoading(false);
-          });
-      } else {
-        // dispatch({
-        //   type: "LOGOUT",
-        // });
-        setLoading(false);
-      }
+      setLoading(false);
     };
     verify();
   }, []);
-  if (loading) return <div>Loading</div>;
+  if (loading) return <Loading />;
   else {
     return <Outlet />;
   }

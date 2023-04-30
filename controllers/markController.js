@@ -91,10 +91,6 @@ const getMarkByTeaches = async (req, res) => {
     const mark = await Mark.find({})
       .populate({
         path: "exam",
-        match: { teaches: req.params.id },
-      })
-      .populate({
-        path: "exam",
         populate: {
           path: "teaches",
           populate: { path: "course", populate: { path: "department" } },
@@ -110,8 +106,16 @@ const getMarkByTeaches = async (req, res) => {
       .populate({
         path: "exam",
         populate: { path: "teaches", populate: { path: "batch" } },
+      })
+      .populate({
+        path: "student",
+        populate: { path: "department batch" },
       });
-    res.status(200).json(mark);
+    //filter exams with teaches _id equals to req.params.id
+    const filteredMarks = mark.filter((m) => {
+      return m.exam.teaches._id == req.params.id;
+    });
+    res.status(200).json(filteredMarks);
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
@@ -252,6 +256,7 @@ module.exports = {
   getMarkByStudentId,
   getMarkByCourse,
   getMarkByExam,
+  getMarkByTeaches,
   addNewMark,
   addNewMarks,
   addMoreMarks,

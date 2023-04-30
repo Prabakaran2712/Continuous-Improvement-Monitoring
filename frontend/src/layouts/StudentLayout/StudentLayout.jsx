@@ -5,17 +5,30 @@ import { useNavigate } from "react-router-dom";
 
 import { useEffect, useState } from "react";
 import { useAuthContext } from "../../hooks/useAuthContext";
-
+import axios from "axios";
 //styles
 import styles from "./StudentLayout.module.css";
 
 const StudentLayout = () => {
-  const { logout } = useLogout();
   const [loading, setLoading] = useState(false);
+  const { dispatch } = useAuthContext();
   const auth = useAuthContext();
 
   //navigate
   const navigate = useNavigate();
+
+  const logout = () => {
+    console.log("logout");
+    axios
+      .get("/api/students/logout")
+      .then((res) => {
+        dispatch({ type: "LOGOUT" });
+        navigate("/");
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
   useEffect(() => {
     setLoading(true);

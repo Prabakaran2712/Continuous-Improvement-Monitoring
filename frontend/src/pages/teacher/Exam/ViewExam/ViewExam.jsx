@@ -4,6 +4,7 @@ import Button from "../../../../components/forms/Button/Button";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import Loading from "../../../../components/Loading/Loading";
 const ViewExam = () => {
   const [loading, setLoading] = useState(true);
   const [Data, setData] = useState();
@@ -24,7 +25,11 @@ const ViewExam = () => {
       });
   }, []);
   if (loading) {
-    return <h1>Loading...</h1>;
+    return (
+      <Container>
+        <Loading />
+      </Container>
+    );
   } else {
     return (
       <Container>

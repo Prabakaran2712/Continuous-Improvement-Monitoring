@@ -12,9 +12,13 @@ const GradeSchema = new mongoose.Schema({
     required: true,
   },
   grade: {
-    type: Number,
+    type: String,
     required: true,
+  },
+  published: {
+    type: Boolean,
+    default: false,
   },
 });
 
-mongoose.model("Grade", GradeSchema);
+module.exports = mongoose.model("Grade", GradeSchema);
