@@ -5,6 +5,8 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import Loading from "../../../../components/Loading/Loading";
+import CreateExamButton from "../../../../components/Exam/createExamButton/CreateExamButton";
+import ViewExamButton from "../../../../components/Exam/viewExamButton/ViewExamButton";
 const ViewExam = () => {
   const [loading, setLoading] = useState(true);
   const [Data, setData] = useState();
@@ -34,15 +36,12 @@ const ViewExam = () => {
     return (
       <Container>
         <div className="header">
-          <Title title="Exams" />
           <div className="options d-flex flex-row justify-content-end m-2">
-            <Button
-              type="success"
+            <CreateExamButton
               onClick={() => {
                 console.log("clicked");
                 navigate("/teacher/createExam");
               }}
-              name="Create Exam"
             />
           </div>
         </div>
@@ -63,7 +62,12 @@ const ViewExam = () => {
               <tbody>
                 {Data.map((exam) => {
                   return (
-                    <tr key={Math.random()}>
+                    <tr
+                      key={Math.random()}
+                      onClick={() => {
+                        navigate(`/teacher/exam/${exam._id}`);
+                      }}
+                    >
                       <td>{exam.exam_code}</td>
                       <td>{exam.exam_date}</td>
                       <td>{exam.exam_time}</td>
@@ -71,21 +75,6 @@ const ViewExam = () => {
                       <td>{exam.teaches.course.name}</td>
                       <td>{exam.teaches.course.subject_code}</td>
                       <td>{exam.exam_type}</td>
-                      <td>
-                        <Button
-                          name="View"
-                          onClick={() => {
-                            navigate(`/teacher/exam/${exam._id}`);
-                          }}
-                          type="success"
-                        />
-                      </td>
-                      <td>
-                        <Button name="Delete" type="danger" />
-                      </td>
-                      <td>
-                        <Button name="Update" />
-                      </td>
                     </tr>
                   );
                 })}

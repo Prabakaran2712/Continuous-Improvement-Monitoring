@@ -54,6 +54,7 @@ import ViewStudents from "./pages/teacher/ViewStudents/ViewStudents";
 import StudentDetails from "./pages/teacher/StudentDetails/StudentDetails";
 import SubjectMarkAnalytics from "./pages/teacher/SubjectMarkAnalytics/SubjectMarkAnalytics";
 import Grade from "./pages/teacher/Grade/Grade";
+import ViewGrade from "./pages/student/ViewGrade/ViewGrade";
 
 const router = createBrowserRouter([
   {
@@ -149,6 +150,10 @@ const router = createBrowserRouter([
             path: "courses",
             element: <ViewStudentCourses />,
           },
+          {
+            path: "grades",
+            element: <ViewGrade />,
+          },
         ],
       },
       {
@@ -163,6 +168,7 @@ const router = createBrowserRouter([
             path: "profile",
             element: <TeacherProfile />,
           },
+
           {
             path: "dashboard",
             element: <Dashboard />,

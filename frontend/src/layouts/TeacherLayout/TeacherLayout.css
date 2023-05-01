@@ -29,7 +29,7 @@
 }
 .sidebar-brand {
   height: 90px;
-  padding: 1rem 0rem 1rem 2rem;
+  padding: 2rem 0rem 1rem 2rem;
   color: #fff;
 }
 .sidebar-brand span {
@@ -126,7 +126,7 @@ header {
 
 header h2 {
   color: #222;
-  font-size: 1.8rem;
+  font-size: 2rem;
 }
 header label span {
   font-size: 1.5rem;

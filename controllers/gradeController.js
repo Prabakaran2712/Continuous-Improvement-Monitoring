@@ -58,7 +58,40 @@ const getGradeByTeaches = async (req, res) => {
   }
 };
 
+//get grade by student
+
+const getGradeByStudent = async (req, res) => {
+  try {
+    const grade = await Grade.find({})
+      .populate({
+        path: "student",
+        populate: { path: "department batch" },
+      })
+      .populate({
+        path: "teaches",
+        populate: { path: "course", populate: { path: "department" } },
+      })
+      .populate({
+        path: "teaches",
+        populate: { path: "teacher", populate: "address department" },
+      })
+      .populate({
+        path: "teaches",
+        populate: { path: "students", populate: { path: "department batch" } },
+      });
+    //filter grades with student _id equals to req.params.id
+    const filteredGrades = grade.filter((m) => {
+      return m.student._id == req.params.id;
+    });
+
+    res.status(200).json(filteredGrades);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
 module.exports = {
   addMoreGrades,
   getGradeByTeaches,
+  getGradeByStudent,
 };
