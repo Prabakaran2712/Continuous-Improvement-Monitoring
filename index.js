@@ -4,6 +4,7 @@ const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
 const cookieParser = require("cookie-parser");
+const bodyParser = require("body-parser");
 
 //require routes
 const departmentRoutes = require("./routes/departmentRoutes");
@@ -20,9 +21,13 @@ const adminRoutes = require("./routes/adminRoutes");
 const teachesRoutes = require("./routes/teachesRoutes");
 const authRoutes = require("./routes/authRoutes");
 const gradeRoutes = require("./routes/gradeRoutes");
+const chatRoutes = require("./routes/chatRoutes");
+const messageRoutes = require("./routes/messageRoutes");
 
 //set up express app and middleware
 const app = express();
+
+app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cors());
 app.use(express.json());
 app.use((req, res, next) => {
@@ -46,6 +51,8 @@ app.use("/api/marks", markRoutes);
 app.use("/api/teaches", teachesRoutes);
 app.use("/api/auth", authRoutes);
 app.use("/api/grades", gradeRoutes);
+app.use("/api/chats", chatRoutes);
+app.use("/api/messages", messageRoutes);
 
 //production mode
 if (process.env.NODE_ENV === "production") {

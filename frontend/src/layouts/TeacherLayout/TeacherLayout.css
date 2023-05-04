@@ -100,10 +100,13 @@
   width: calc(100% - 70px);
   left: 70px;
 }
-
 .main-content {
   transition: margin-left 300ms;
   margin-left: var(--side-bar-width);
+  height: 100%;
+}
+.main-content main {
+  height: 100%;
 }
 header {
   display: flex;
@@ -137,6 +140,7 @@ header label span {
 .user-wrapper {
   display: flex;
   align-items: center;
+  height: 60px;
 }
 .user-wrapper img {
   border-radius: 50%;

@@ -7,8 +7,10 @@ import { useForm } from "react-hook-form";
 import Container from "../../../../components/Container/Container";
 import Title from "../../../../components/forms/Title/Title";
 import Input from "../../../../components/forms/Input/Input";
+import UpdateButton from "../../../../components/Button/UpdateButton/UpdateButton";
 
 import { Switch } from "@mui/material";
+import DeleteButton from "../../../../components/Button/DeleteButton/DeleteButton";
 
 const ExamDetails = () => {
   const [examData, setExamData] = useState();
@@ -109,8 +111,25 @@ const ExamDetails = () => {
   };
   return (
     <Container>
-      <div className="header">
+      <div className="header d-flex flex-row justify-content-between my-4 mx-auto">
         <Title title="Exam Details" />
+        <div
+          className="options d-flex flex-row justify-content-end px-3"
+          style={{
+            marginRight: "100px",
+          }}
+        >
+          <div className="button mx-2">
+            <UpdateButton
+              onClick={() => {
+                console.log("clicked");
+              }}
+            />
+          </div>
+          <div className="button mx-2">
+            <DeleteButton />
+          </div>
+        </div>
       </div>
       <div className="body m-2">
         <form onSubmit={handleSubmit((data) => console.log(data))}>

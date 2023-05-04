@@ -6,12 +6,14 @@ import moment from "moment";
 import { useEffect } from "react";
 import { useState } from "react";
 import axios from "axios";
+import { useAuthContext } from "../../../hooks/useAuthContext";
 
 const Class = () => {
   const [data, setData] = useState();
   const navigate = useNavigate();
+  const auth = useAuthContext();
 
-  const user = "643cd9f6a0dc99c9f907a437";
+  const user = auth.user._id;
 
   useEffect(() => {
     axios

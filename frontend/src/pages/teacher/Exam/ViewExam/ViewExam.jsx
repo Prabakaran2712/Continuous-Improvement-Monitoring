@@ -7,10 +7,13 @@ import axios from "axios";
 import Loading from "../../../../components/Loading/Loading";
 import CreateExamButton from "../../../../components/Exam/createExamButton/CreateExamButton";
 import ViewExamButton from "../../../../components/Exam/viewExamButton/ViewExamButton";
+import { useAuthContext } from "../../../../hooks/useAuthContext";
 const ViewExam = () => {
   const [loading, setLoading] = useState(true);
   const [Data, setData] = useState();
-  const user = "64212913263de2cbfa095205";
+  const auth = useAuthContext();
+
+  const user = auth.user._id;
 
   const navigate = useNavigate();
 

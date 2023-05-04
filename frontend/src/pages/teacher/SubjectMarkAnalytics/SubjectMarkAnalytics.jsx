@@ -37,6 +37,8 @@ const SubjectMarkAnalytics = () => {
             if (mark.exam.exam_type === "Assessment-1")
               assesment1.push([mark.student.name, mark.mark]);
           });
+          console.log(" assesment1");
+          console.log(assesment1);
           setAssesment1Data(assesment1);
 
           //assesment 2 in data format for all students
@@ -46,6 +48,7 @@ const SubjectMarkAnalytics = () => {
             if (mark.exam.exam_type === "Assessment-2")
               assesment2.push([mark.student.name, mark.mark]);
           });
+          console.log(assesment2);
           setAssesment2Data(assesment2);
 
           //end semester in data format for all students
@@ -54,6 +57,7 @@ const SubjectMarkAnalytics = () => {
             if (mark.exam.exam_type === "End-Semester")
               endsemester.push([mark.student.name, mark.mark]);
           });
+          console.log(endsemester);
           setEndsemesterData(endsemester);
 
           //pie chart data

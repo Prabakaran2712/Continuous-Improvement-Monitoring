@@ -1,0 +1,52 @@
+:root {
+  --their-chat: #16a7fc;
+  --my-chat: #d9dfde;
+}
+.message {
+  max-width: 300px;
+  border-radius: 10px;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  word-wrap: break-word;
+  background: #00bfb6;
+  padding: 15px;
+
+  font-weight: 900;
+  color: #fff;
+  font-family: arial;
+  position: relative;
+}
+
+.sb3:before {
+  content: "";
+  width: 0px;
+  height: 0px;
+  position: absolute;
+  border-left: 10px solid var(--my-chat);
+  border-right: 10px solid transparent;
+  border-top: 10px solid var(--my-chat);
+  border-bottom: 10px solid transparent;
+  left: 19px;
+  bottom: -19px;
+}
+
+.sb4:before {
+  content: "";
+  width: 0px;
+  height: 0px;
+  position: absolute;
+  border-left: 10px solid transparent;
+  border-right: 10px solid var(--their-chat);
+  border-top: 10px solid var(--their-chat);
+  border-bottom: 10px solid transparent;
+  right: 19px;
+  bottom: -19px;
+}
+.fromMe {
+  background-color: #16a7fc;
+  color: #fff;
+}
+.fromThem {
+  background-color: #d9dfde;
+  color: black;
+}

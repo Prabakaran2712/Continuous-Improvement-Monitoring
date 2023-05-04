@@ -18,6 +18,7 @@ import {
   faSignOutAlt,
   faChartLine,
   faBars,
+  faMessage,
 } from "@fortawesome/free-solid-svg-icons";
 import { faStar } from "@fortawesome/free-solid-svg-icons";
 import { useAuthContext } from "../../hooks/useAuthContext";
@@ -27,11 +28,29 @@ import { Link } from "react-router-dom";
 import "./TeacherLayout.css";
 import axios from "axios";
 import Loading from "../../components/Loading/Loading";
+import Dropdown from "../../components/Dropdown/Dropdown";
 
 const TeacherLayout = () => {
   const [loading, setLoading] = useState(true);
   const { dispatch } = useAuthContext();
   const [title, setTitle] = useState("Dashboard");
+  const auth = useAuthContext();
+  const profile = {
+    name: auth.user.name,
+    role: auth.userType,
+    items: [
+      {
+        name: "Profile",
+        link: "/teacher/profile",
+        icon: <FontAwesomeIcon icon={faUser} />,
+      },
+      {
+        name: "Logout",
+        link: "/teacher/logout",
+        icon: <FontAwesomeIcon icon={faSignOutAlt} />,
+      },
+    ],
+  };
   const options = [
     {
       name: "Dashboard",
@@ -70,6 +89,12 @@ const TeacherLayout = () => {
       title: "Notifications",
     },
     {
+      name: "Chats",
+      link: "/teacher/chats",
+      icon: <FontAwesomeIcon icon={faMessage} size="sm" />,
+      title: "Chats",
+    },
+    {
       name: "Students",
       link: "/teacher/students",
       icon: <FontAwesomeIcon icon={faPerson} size="sm" />,
@@ -106,7 +131,6 @@ const TeacherLayout = () => {
         console.log(err);
       });
   };
-  const auth = useAuthContext();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -163,7 +187,6 @@ const TeacherLayout = () => {
                 <label htmlFor="nav-toggle" className="toggleIcon">
                   <FontAwesomeIcon icon={faBars} size="sm" />
                 </label>
-                {title}
               </h2>
 
               <div className="user-wrapper">
@@ -189,7 +212,7 @@ const TeacherLayout = () => {
   }
   if (auth.userType === "admin") {
     return (
-      <div>
+      <div style={{ height: "100%", width: "100%" }}>
         <input type="checkbox" id="nav-toggle" />
         <div className="sidebar">
           <div className="sidebar-brand">
@@ -225,20 +248,10 @@ const TeacherLayout = () => {
               <label htmlFor="nav-toggle" className="toggleIcon">
                 <FontAwesomeIcon icon={faBars} size="sm" />
               </label>
-              {title}
             </h2>
 
             <div className="user-wrapper">
-              <img
-                src="https://i.scdn.co/image/ab6761610000e5eb81a1d05f4ee442f176e929cb"
-                width="40px"
-                height="40px"
-                alt=""
-              />
-              <div>
-                <h4>{auth.user.name}</h4>
-                <small>Teacher (Admin)</small>
-              </div>
+              <Dropdown option={profile} />
             </div>
           </header>
           <main>

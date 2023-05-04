@@ -1,0 +1,23 @@
+.chatContainer {
+  height: 100%;
+  border-radius: 10px;
+
+  overflow: scroll;
+}
+.chat {
+  padding: 40px;
+
+  background-color: white;
+  height: 100%;
+  border-radius: 10px;
+  overflow: scroll;
+  padding-bottom: 100px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.options {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}

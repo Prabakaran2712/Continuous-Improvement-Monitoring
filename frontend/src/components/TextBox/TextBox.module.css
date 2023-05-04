@@ -1,0 +1,10 @@
+.messageWrapper {
+  width: 100%;
+}
+.messageText {
+  resize: none;
+  width: 100%;
+  border-radius: 40px;
+  min-height: 50px;
+  padding: 10px;
+}

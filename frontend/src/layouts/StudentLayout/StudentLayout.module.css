@@ -137,6 +137,7 @@ header label span {
 .user-wrapper {
   display: flex;
   align-items: center;
+  height: 60px;
 }
 .user-wrapper img {
   border-radius: 50%;

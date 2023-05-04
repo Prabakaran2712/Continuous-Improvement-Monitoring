@@ -16,18 +16,7 @@ const StudentSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    courses: {
-      type: [mongoose.Types.ObjectId],
-      ref: "Course",
-    },
-    marks: {
-      type: [mongoose.Types.ObjectId],
-      ref: "Mark",
-    },
-    attendance: {
-      type: [mongoose.Types.ObjectId],
-      ref: "Attendance",
-    },
+
     department: {
       type: mongoose.Types.ObjectId,
       ref: "Department",

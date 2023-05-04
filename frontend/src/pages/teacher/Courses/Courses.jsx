@@ -4,9 +4,11 @@ import { useNavigate } from "react-router";
 import Container from "../../../components/Container/Container";
 import DeleteButton from "../../../components/DeleteButton";
 import View from "../../../components/Courses/Teacher/View";
+import { useAuthContext } from "../../../hooks/useAuthContext";
 
 const Courses = () => {
-  const user = "64212913263de2cbfa095205";
+  const auth = useAuthContext();
+  const user = auth.user._id;
   const [userData, setUserData] = useState({});
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();

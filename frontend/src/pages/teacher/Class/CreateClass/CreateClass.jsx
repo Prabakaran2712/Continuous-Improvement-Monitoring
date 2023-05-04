@@ -9,6 +9,8 @@ import Input from "../../../../components/forms/Input/Input";
 import Submit from "../../../../components/forms/Submit/Submit";
 import TimeComponent from "../../../../components/forms/Time/TimeComponent";
 import Select from "../../../../components/forms/Select";
+import { useAuthContext } from "../../../../hooks/useAuthContext";
+
 const CreateClass = () => {
   const { register, handleSubmit } = useForm();
   const [classDate, setClassDate] = useState();
@@ -17,7 +19,9 @@ const CreateClass = () => {
   const [userData, setUserData] = useState({});
   const [teachesOption, setTeachesOption] = useState([]);
   const [teachesValue, setTeachesValue] = useState([]);
-  const [user, setUser] = useState("64212913263de2cbfa095205");
+  const auth = useAuthContext();
+
+  const user = auth.user._id;
   //function to select properties from an object
   function selectProps(...props) {
     return function (obj) {

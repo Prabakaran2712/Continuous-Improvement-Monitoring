@@ -18,13 +18,30 @@ import {
   faSignOut,
   faSignOutAlt,
   faChartLine,
+  faUser,
+  faMessage,
 } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
+import Dropdown from "../../components/Dropdown/Dropdown";
 
 const StudentLayout = () => {
   const [loading, setLoading] = useState(false);
   const { dispatch } = useAuthContext();
   const auth = useAuthContext();
+  //navigate
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    setLoading(true);
+
+    console.log(auth);
+    if (!auth.isAuthenticated || auth.userType !== "student") {
+      console.log("redirecting");
+      navigate("/auth/student/signin");
+    }
+    setLoading(false);
+  }, []);
+
   const options = [
     {
       name: "Dashboard",
@@ -47,6 +64,11 @@ const StudentLayout = () => {
       icon: <FontAwesomeIcon icon={faBell} />,
     },
     {
+      name: "Chats",
+      link: "/student/chats",
+      icon: <FontAwesomeIcon icon={faMessage} />,
+    },
+    {
       name: "Grades",
       link: "/student/grades",
       icon: <FontAwesomeIcon icon={faPen} />,
@@ -61,9 +83,6 @@ const StudentLayout = () => {
     },
   ];
 
-  //navigate
-  const navigate = useNavigate();
-
   const logout = () => {
     console.log("logout");
     axios
@@ -77,75 +96,71 @@ const StudentLayout = () => {
       });
   };
 
-  useEffect(() => {
-    setLoading(true);
-    console.log(auth);
-    if (!auth.isAuthenticated || auth.userType !== "student") {
-      console.log("redirecting");
-      navigate("/auth/student/signin");
-    }
-    setLoading(false);
-  }, []);
-
-  if (loading) {
+  if (loading || !auth.isAuthenticated) {
     return <div>Loading...</div>;
-  }
-  return (
-    <div style={{ height: "100%", width: "100%" }} className={`row m-0 g-0 `}>
-      <div>
-        <input type="checkbox" id="nav-toggle" />
-        <div className="sidebar">
-          <div className="sidebar-brand">
-            <h2>
-              <FontAwesomeIcon icon={faChartLine} size="sm" />
-              <span> CIM</span>
-            </h2>
-          </div>
-          <div className="sidebar-menu">
-            <ul>
-              {options.map((option) => {
-                return (
-                  <li key={Math.random()}>
-                    <Link to={option.link}>
-                      {option.icon}
-                      <span>{option.name}</span>
-                    </Link>
-                  </li>
-                );
-              })}
-            </ul>
-          </div>
-        </div>
-
-        <div className="main-content">
-          <header>
-            <h2>
-              <label htmlFor="nav-toggle" className="toggleIcon">
-                <FontAwesomeIcon icon={faBars} size="sm" />
-              </label>
-              Dashboard
-            </h2>
-
-            <div className="user-wrapper">
-              <img
-                src="https://i.scdn.co/image/ab6761610000e5eb81a1d05f4ee442f176e929cb"
-                width="40px"
-                height="40px"
-                alt=""
-              />
-              <div>
-                <h4>{auth.user.name}</h4>
-                <small>{auth.userType}</small>
-              </div>
+  } else {
+    const profile = {
+      name: auth.user.name,
+      role: auth.userType,
+      items: [
+        {
+          name: "Profile",
+          link: "/student/profile",
+          icon: <FontAwesomeIcon icon={faUser} />,
+        },
+        {
+          name: "Logout",
+          link: "/student/logout",
+          icon: <FontAwesomeIcon icon={faSignOutAlt} />,
+        },
+      ],
+    };
+    return (
+      <div style={{ height: "100%", width: "100%" }} className={`row m-0 g-0 `}>
+        <div>
+          <input type="checkbox" id="nav-toggle" />
+          <div className="sidebar">
+            <div className="sidebar-brand">
+              <h2>
+                <FontAwesomeIcon icon={faChartLine} size="sm" />
+                <span> CIM</span>
+              </h2>
             </div>
-          </header>
-          <main>
-            <Outlet />
-          </main>
+            <div className="sidebar-menu">
+              <ul>
+                {options.map((option) => {
+                  return (
+                    <li key={Math.random()}>
+                      <Link to={option.link}>
+                        {option.icon}
+                        <span>{option.name}</span>
+                      </Link>
+                    </li>
+                  );
+                })}
+              </ul>
+            </div>
+          </div>
+
+          <div className="main-content">
+            <header>
+              <h2>
+                <label htmlFor="nav-toggle" className="toggleIcon">
+                  <FontAwesomeIcon icon={faBars} size="sm" />
+                </label>
+              </h2>
+
+              <div className="user-wrapper">
+                <Dropdown option={profile} />
+              </div>
+            </header>
+            <main>
+              <Outlet />
+            </main>
+          </div>
         </div>
       </div>
-    </div>
-  );
+    );
+  }
 };
-
 export default StudentLayout;

@@ -35,7 +35,6 @@ function App() {
           return;
         })
         .catch((err) => {
-          console.log(err);
           dispatch({ type: "LOGOUT" });
         });
 

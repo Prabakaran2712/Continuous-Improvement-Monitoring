@@ -1,0 +1,52 @@
+:root {
+  --primary: #ec7263;
+  --secondary: #ffff;
+}
+.button {
+  display: inline-block;
+  min-width: 50px;
+  width: 70px;
+  margin: 20px auto;
+  background: var(--primary);
+  color: #fefefe;
+  font-size: 1.2em;
+  padding: 1em;
+  border-radius: 100%;
+  text-align: center;
+  position: relative;
+  cursor: pointer;
+  appearance: none;
+  -webkit-appearance: none;
+  border: 0;
+}
+/* //make paper plane flying away and comming back again */
+.icon {
+  font-size: 1.2em;
+}
+.button .animation {
+  transform: translate3d(0, 0, 0) rotate3d(0, 0, 1, 0deg);
+  animation: fly 1s linear 0s 1 forwards;
+  animation-iteration-count: infinite;
+}
+
+@keyframes fly {
+  0% {
+    transform: translate3d(0, 0, 0);
+  }
+  30% {
+    font-size: 1em;
+    transform: translate3d(200%, -120%, 0);
+    opacity: 0;
+  }
+  60% {
+    opacity: 0;
+    transform: translate3d(-200%, 200%, 0);
+  }
+  80% {
+    opacity: 1;
+    transform: translate3d(100%, -100%, 0);
+  }
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+}

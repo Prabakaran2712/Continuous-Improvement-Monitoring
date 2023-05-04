@@ -21,7 +21,9 @@ const getAllMarks = async (req, res) => {
       .populate({
         path: "exam",
         populate: { path: "teaches", populate: { path: "batch" } },
-      });
+      })
+      .populate({ path: "student", populate: { path: "department batch" } });
+
     res.status(200).json(marks);
   } catch (error) {
     res.status(500).json({ message: error.message });

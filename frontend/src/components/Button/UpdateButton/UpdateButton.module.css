@@ -1,0 +1,26 @@
+.btn {
+  border: none;
+  border-radius: 100%;
+  box-shadow: 0px 0px 10px 3px rgba(168, 168, 168, 0.5);
+}
+.icon {
+  color: var(--primary);
+  border-radius: 100%;
+  font-size: 25px;
+  padding: 13px;
+  border: 2px solid var(--primary);
+}
+.btn:hover {
+  transform: rotate(360deg);
+  transition: 0.75s;
+  border: none;
+  background-color: white;
+  box-shadow: 0px 0px 10px 3px rgba(126, 123, 123, 0.7);
+  color: #000;
+}
+
+.btn:hover .icon {
+  border: 2px solid var(--primary);
+  background-color: var(--primary);
+  color: #fff;
+}

@@ -55,6 +55,12 @@ import StudentDetails from "./pages/teacher/StudentDetails/StudentDetails";
 import SubjectMarkAnalytics from "./pages/teacher/SubjectMarkAnalytics/SubjectMarkAnalytics";
 import Grade from "./pages/teacher/Grade/Grade";
 import ViewGrade from "./pages/student/ViewGrade/ViewGrade";
+import ViewStudentMarks from "./pages/student/ViewStudentMarks/ViewStudentMarks";
+import ViewChats from "./pages/student/ViewChats/ViewChats";
+import Logout from "./pages/Logout/Logout";
+import Chat from "./pages/student/Chat/Chat";
+import ViewChatsTeacher from "./pages/teacher/ViewChats/ViewChats";
+import StudentCourses from "./pages/student/StudentCourses/StudentCourses";
 
 const router = createBrowserRouter([
   {
@@ -154,6 +160,27 @@ const router = createBrowserRouter([
             path: "grades",
             element: <ViewGrade />,
           },
+          {
+            path: "marks",
+            element: <ViewStudentMarks />,
+          },
+          {
+            path: "chats",
+            element: <ViewChats />,
+          },
+          ,
+          {
+            path: "chat/:id",
+            element: <Chat />,
+          },
+          {
+            path: "courses",
+            element: <StudentCourses />,
+          },
+          {
+            path: "logout",
+            element: <Logout />,
+          },
         ],
       },
       {
@@ -221,6 +248,14 @@ const router = createBrowserRouter([
             path: "courses/add",
             element: <AddCourse />,
           },
+          {
+            path: "chats",
+            element: <ViewChatsTeacher />,
+          },
+          {
+            path: "chat/:id",
+            element: <Chat />,
+          },
 
           //view course on id
           {
@@ -268,6 +303,10 @@ const router = createBrowserRouter([
                 element: <UpdateCourses />,
               },
             ],
+          },
+          {
+            path: "logout",
+            element: <Logout />,
           },
         ],
       },
