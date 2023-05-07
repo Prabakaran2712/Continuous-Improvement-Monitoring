@@ -3,6 +3,7 @@ const {
   deleteChat,
   viewChats,
   viewChatsTeacher,
+  getChat,
 } = require("../controllers/chatController");
 
 const router = require("express").Router();
@@ -18,5 +19,8 @@ router.get("/student/:id", viewChats);
 
 //view all chats of teacher  with teacher id in teaches
 router.get("/teacher/:id", viewChatsTeacher);
+
+//view a chat
+router.get("/:id", getChat);
 
 module.exports = router;

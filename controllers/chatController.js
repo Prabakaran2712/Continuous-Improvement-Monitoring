@@ -77,5 +77,35 @@ const viewChatsTeacher = async (req, res) => {
     res.status(500).json(err);
   }
 };
+//get chat details by id
+const getChat = async (req, res) => {
+  try {
+    const chat = await Chat.findById(req.params.id)
 
-module.exports = { createChat, deleteChat, viewChats, viewChatsTeacher };
+      .populate({
+        path: "teaches",
+        populate: { path: "course", populate: { path: "department" } },
+      })
+      .populate({
+        path: "teaches",
+        populate: { path: "teacher", populate: { path: "department address" } },
+      })
+      .populate({
+        path: "teaches",
+        populate: { path: "students", populate: { path: "department batch" } },
+      })
+      .populate({ path: "teaches", populate: { path: "batch" } })
+      .populate({ path: "student", populate: { path: "department batch" } });
+    res.status(200).json(chat);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+};
+
+module.exports = {
+  createChat,
+  deleteChat,
+  viewChats,
+  viewChatsTeacher,
+  getChat,
+};

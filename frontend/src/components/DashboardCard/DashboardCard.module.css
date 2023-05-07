@@ -1,0 +1,39 @@
+.cardSingleLink {
+  margin-top: 50px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.cardSingle {
+  width: 400px;
+  border-radius: 10px;
+  border: 2px solid #b4b4b4c7;
+}
+.cardSingle .cardText {
+  color: black;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 3rem;
+}
+.cardSingle:hover {
+  border: 2px solid #0e0101;
+}
+.cardSingle .cardText h1 {
+  font-size: 2rem;
+  font-weight: 600;
+}
+.cardSingle .cardText span {
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+
+.cardSingleIcon {
+  font-size: 2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.cardSingle .cardText .cardSingleIcon span {
+  font-size: 1.5rem;
+  color: black;
+}

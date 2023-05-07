@@ -248,9 +248,15 @@ const getAttendancePercentageByStudentForAllCourses = async (req, res) => {
         populate: { path: "teaches", populate: { path: "batch" } },
       });
     //get number of unique courses
-    const courses = attendance.map((item) => item.class.teaches.course);
+    const courses = attendance.map((item) => {
+      //add semester to each course
+
+      item.class.teaches.course.semester = item.class.teaches.semester;
+      return item.class.teaches.course;
+    });
     //remove duplicates
     const unique_courses = [...new Set(courses)];
+
     //get attendance % for each course
     var attendance_percentage = [];
     unique_courses.map((course) => {
@@ -265,6 +271,7 @@ const getAttendancePercentageByStudentForAllCourses = async (req, res) => {
       attendance_percentage.push({
         course: course,
         percentage: percentage,
+        semester: course.semester,
       });
     });
     res.status(200).json(attendance_percentage);

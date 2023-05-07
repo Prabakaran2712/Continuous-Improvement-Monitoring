@@ -1,14 +1,46 @@
 import { useEffect } from "react";
 import Container from "../../../components/Container/Container";
+import DashboardCard from "../../../components/DashboardCard/DashboardCard";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faUser, faPen } from "@fortawesome/free-solid-svg-icons";
 
 const StudentDasboard = () => {
+  const options = [
+    {
+      name: "Students",
+      value: "54",
+      icon: <FontAwesomeIcon icon={faUser} size="lg" />,
+    },
+    {
+      name: "GPA",
+      value: "9.8",
+      icon: <FontAwesomeIcon icon={faPen} size="lg" />,
+    },
+    {
+      name: "GPA",
+      value: "9.8",
+      icon: <FontAwesomeIcon icon={faPen} size="lg" />,
+    },
+    {
+      name: "GPA",
+      value: "9.8",
+      icon: <FontAwesomeIcon icon={faPen} size="lg" />,
+    },
+  ];
+
   useEffect(() => {
-    console.log("dashboard");
-  });
+    //need gpa data
+    //need marks data
+    //need courses data
+    //need attendance data
+  }, []);
+
   return (
-    <Container>
-      <div className="display-6">Dashboard</div>
-    </Container>
+    <div className="cards ">
+      {options.map((option, index) => (
+        <DashboardCard key={index} options={option} />
+      ))}
+    </div>
   );
 };
 

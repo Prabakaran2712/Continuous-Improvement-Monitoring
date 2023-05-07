@@ -158,7 +158,7 @@ main {
 
 .cards {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(2, 1fr);
   grid-gap: 2rem;
   margin-top: 1rem;
 }
@@ -170,23 +170,6 @@ main {
   border-radius: 2px;
 }
 
-.cardSingle div:last-child span {
-  font-size: 3rem;
-  color: var(--main-color);
-}
-.cardSingle div:first-child span {
-  color: var(--text-grey);
-}
-.cardSingle:last-child {
-  background: var(--main-color);
-  color: white;
-}
-.cardSingle:last-child div:last-child span {
-  color: #fff;
-}
-.cardSingle:last-child div:first-child span {
-  color: var(--text-grey);
-}
 @media only screen and (max-width: 1200px) {
   .sidebar .sidebar-brand,
   .sidebar li {

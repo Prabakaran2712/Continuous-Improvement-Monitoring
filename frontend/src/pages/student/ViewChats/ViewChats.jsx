@@ -3,12 +3,21 @@ import { useEffect, useState } from "react";
 import { useAuthContext } from "../../../hooks/useAuthContext";
 import Loading from "../../../components/Loading/Loading";
 import { useNavigate } from "react-router-dom";
+import CreateExamButton from "../../../components/Exam/createExamButton/CreateExamButton";
 
 const ViewChats = () => {
   const [chats, setChats] = useState([]);
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
   const auth = useAuthContext();
+  const createChat = (auth) => {
+    console.log(auth.userType);
+    if (auth.userType == "student") {
+      navigate("/student/createChat");
+    } else {
+      navigate("/teacher/createChat");
+    }
+  };
   useEffect(() => {
     axios.get(`/api/chats/student/${auth.user._id}`).then((res) => {
       console.log(res.data);
@@ -25,7 +34,15 @@ const ViewChats = () => {
     );
   return (
     <div>
-      <h1>View Chats</h1>
+      <div className="header d-flex flex-row justify-content-between my-3">
+        <h1>View Chats</h1>
+
+        <CreateExamButton
+          onClick={() => {
+            createChat(auth);
+          }}
+        />
+      </div>
       <div className="chatsContainer">
         <table className="table ">
           <thead>

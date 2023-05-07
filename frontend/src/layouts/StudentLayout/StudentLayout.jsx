@@ -20,6 +20,7 @@ import {
   faChartLine,
   faUser,
   faMessage,
+  faGraduationCap,
 } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
 import Dropdown from "../../components/Dropdown/Dropdown";
@@ -72,6 +73,11 @@ const StudentLayout = () => {
       name: "Grades",
       link: "/student/grades",
       icon: <FontAwesomeIcon icon={faPen} />,
+    },
+    {
+      name: "Your Courses",
+      link: "/student/courses",
+      icon: <FontAwesomeIcon icon={faGraduationCap} />,
     },
     {
       name: "Logout",

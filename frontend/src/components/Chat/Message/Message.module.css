@@ -4,17 +4,21 @@
 }
 .message {
   max-width: 300px;
+
   border-radius: 10px;
-  margin-top: 20px;
-  margin-bottom: 20px;
-  word-wrap: break-word;
+  margin-top: 10px;
+  margin-bottom: 10px;
+
   background: #00bfb6;
   padding: 15px;
-
+  word-wrap: break-word;
   font-weight: 900;
   color: #fff;
   font-family: arial;
   position: relative;
+}
+.message pre {
+  word-wrap: break-word;
 }
 
 .sb3:before {
@@ -49,4 +53,14 @@
 .fromThem {
   background-color: #d9dfde;
   color: black;
+}
+
+@media screen and (max-width: 768px) {
+  .message {
+    max-width: 100px;
+    margin-top: 7px;
+    margin-bottom: 7px;
+    border-radius: 7px;
+    padding: 10px;
+  }
 }

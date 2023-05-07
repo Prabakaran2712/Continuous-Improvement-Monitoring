@@ -1,12 +1,25 @@
+import Styles from "./DashboardCard.module.css";
+import { Link } from "react-router-dom";
 const DashboardCard = (props) => {
   return (
-    <div className="cardSingle">
-      <div>
-        <h1>{props.options.value}</h1>
-        <span>{props.options.name}</span>
+    <Link to={props.options.link} className={`${Styles.cardSingleLink}`}>
+      <div className={`${Styles.cardSingle}`}>
+        <div className={`${Styles.cardText}`}>
+          <div>
+            <h1>{props.options.value}</h1>
+            <span>{props.options.name}</span>
+          </div>
+          <div className={`${Styles.cardSingleIcon}`}>
+            <span> {props.options.icon}</span>
+          </div>
+        </div>
+        {props.options.graph ? (
+          <div className={`${Styles.cardGraph}`}></div>
+        ) : (
+          <></>
+        )}
       </div>
-      <span> {props.options.icon}</span>
-    </div>
+    </Link>
   );
 };
 

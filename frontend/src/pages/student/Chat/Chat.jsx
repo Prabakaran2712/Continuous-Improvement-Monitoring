@@ -7,10 +7,12 @@ import Styles from "./Chat.module.css";
 import SendButton from "../../../components/Chat/SendButton/SendButton";
 import TextBox from "../../../components/TextBox/TextBox";
 import Message from "../../../components/Chat/Message/Message";
+import ChatHeader from "../../../components/Chat/ChatHeader/ChatHeader";
 const Chat = () => {
   const { id } = useParams();
   const [loading, setLoading] = useState(true);
   const [messages, setMessages] = useState([]);
+  const [chatDetails, setChatDetails] = useState({});
   const [sendLoading, setSendLoading] = useState(false);
   const [message, setMessage] = useState("");
   const auth = useAuthContext();
@@ -42,7 +44,17 @@ const Chat = () => {
         });
         setMessages(res.data);
         console.log(res.data);
-        setLoading(false);
+        //get  chat details
+        axios
+          .get(`/api/chats/${id}`)
+          .then((res) => {
+            console.log(res.data);
+            setChatDetails(res.data);
+            setLoading(false);
+          })
+          .catch((err) => {
+            console.log(err);
+          });
       })
       .catch((err) => {
         console.log(err);
@@ -57,16 +69,19 @@ const Chat = () => {
     );
   return (
     <div className={`${Styles.chat} `}>
-      <div className={` ${Styles.chatHeader} row `}></div>
-      <div className={` ${Styles.chatContainer} row `}>
-        {console.log(messages)}
+      <div className={` ${Styles.chatHeader} row `}>
+        <ChatHeader data={chatDetails} role={auth.userType} />
+      </div>
+      <div
+        className={` ${Styles.chatContainer} row d-flex flex-column justify-content-start `}
+      >
         {messages.map((message) => {
           return (
             <div
               className={
                 message.yourMessage
-                  ? `d-flex flex-row justify-content-end`
-                  : `d-flex flex-row justify-content-start`
+                  ? `d-flex flex-row justify-content-end align-items-center`
+                  : `d-flex flex-row justify-content-start align-items-center`
               }
               key={Math.random()}
             >

@@ -4,8 +4,8 @@ const Message = (props) => {
     <div
       className={
         props.yourMessage
-          ? `${Styles.sb4} ${Styles.fromMe}  ${Styles.message} `
-          : `${Styles.sb3} ${Styles.fromThem}  ${Styles.message} `
+          ? ` ${Styles.fromMe}  ${Styles.message} `
+          : ` ${Styles.fromThem}  ${Styles.message} `
       }
     >
       <pre>{props.message}</pre>

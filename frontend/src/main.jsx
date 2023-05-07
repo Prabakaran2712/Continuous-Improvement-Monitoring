@@ -60,7 +60,9 @@ import ViewChats from "./pages/student/ViewChats/ViewChats";
 import Logout from "./pages/Logout/Logout";
 import Chat from "./pages/student/Chat/Chat";
 import ViewChatsTeacher from "./pages/teacher/ViewChats/ViewChats";
-import StudentCourses from "./pages/student/StudentCourses/StudentCourses";
+import CourseDetails from "./pages/student/CourseDetails/CourseDetails";
+import CreateChat from "./pages/Chat/CreateChat/CreateChat";
+import ViewStudentAttendance from "./pages/student/ViewStudentAttendance/ViewStudentAttendance";
 
 const router = createBrowserRouter([
   {
@@ -157,6 +159,11 @@ const router = createBrowserRouter([
             element: <ViewStudentCourses />,
           },
           {
+            path: "course/:id",
+            element: <CourseDetails />,
+          },
+
+          {
             path: "grades",
             element: <ViewGrade />,
           },
@@ -165,18 +172,22 @@ const router = createBrowserRouter([
             element: <ViewStudentMarks />,
           },
           {
+            path: "createChat",
+            element: <CreateChat />,
+          },
+          {
             path: "chats",
             element: <ViewChats />,
           },
-          ,
+          {
+            path: "attendance",
+            element: <ViewStudentAttendance />,
+          },
           {
             path: "chat/:id",
             element: <Chat />,
           },
-          {
-            path: "courses",
-            element: <StudentCourses />,
-          },
+
           {
             path: "logout",
             element: <Logout />,
@@ -307,6 +318,10 @@ const router = createBrowserRouter([
           {
             path: "logout",
             element: <Logout />,
+          },
+          {
+            path: "createChat",
+            element: <CreateChat />,
           },
         ],
       },
