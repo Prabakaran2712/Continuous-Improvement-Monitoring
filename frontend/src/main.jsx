@@ -11,7 +11,7 @@ import { LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 
 //pages
-import Home from "./pages/Home";
+import Home from "./pages/Home/Home";
 import RootLayout from "./layouts/RootLayout";
 import StudentRegister from "./pages/student/StudentRegister";
 

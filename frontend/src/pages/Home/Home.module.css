@@ -1,0 +1,14 @@
+.image {
+  position: fixed;
+  right: 0px;
+  z-index: -1;
+}
+
+@media (max-width: 1300px) {
+  .image {
+    display: None;
+  }
+}
+.button {
+  padding-left: 100px;
+}

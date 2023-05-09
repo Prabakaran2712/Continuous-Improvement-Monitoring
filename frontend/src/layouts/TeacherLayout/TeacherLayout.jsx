@@ -96,17 +96,6 @@ const TeacherLayout = () => {
       icon: <FontAwesomeIcon icon={faEnvelope} size="sm" />,
       title: "Courses",
     },
-    {
-      name: "Profile",
-      link: "/teacher/profile",
-      icon: <FontAwesomeIcon icon={faUser} size="sm" />,
-      title: "Profile",
-    },
-    {
-      name: "logout",
-      link: "/teacher/logout",
-      icon: <FontAwesomeIcon icon={faSignOutAlt} size="sm" />,
-    },
   ];
   const admin = [...options];
   const logout = () => {
