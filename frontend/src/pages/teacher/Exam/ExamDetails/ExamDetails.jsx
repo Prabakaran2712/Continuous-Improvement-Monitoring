@@ -2,21 +2,42 @@ import { useParams } from "react-router";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import moment from "moment";
+import { useNavigate } from "react-router-dom";
 import { Store } from "react-notifications-component";
 import { useForm } from "react-hook-form";
 import Container from "../../../../components/Container/Container";
 import Title from "../../../../components/forms/Title/Title";
 import Input from "../../../../components/forms/Input/Input";
+import UpdateButton from "../../../../components/Button/UpdateButton/UpdateButton";
 
 import { Switch } from "@mui/material";
+import DeleteButton from "../../../../components/Button/DeleteButton/DeleteButton";
+import Confirm from "../../../../components/Confirm/Confirm";
+import Loading from "../../../../components/Loading/Loading";
 
 const ExamDetails = () => {
   const [examData, setExamData] = useState();
   const [examDate, setExamDate] = useState();
   const [examTime, setExamTime] = useState();
   const [students, setStudents] = useState([]);
+  const [loading, setLoading] = useState(true);
   const { id } = useParams();
   const { register, handleSubmit, setValue } = useForm();
+
+  const [open, setOpen] = useState(false);
+  const navigate = useNavigate();
+
+  const deleteExam = () => {
+    axios
+      .delete(`/api/exams/${id}`)
+      .then((res) => {
+        navigate("/teacher/exams");
+        console.log(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
   const notify = (option) => {
     if (option == "success") {
@@ -80,10 +101,12 @@ const ExamDetails = () => {
         axios.get(`/api/marks/exam/${id}`).then((res) => {
           console.log(res.data);
           setStudents(res.data);
+          setLoading(false);
         });
       })
       .catch((err) => {
         console.log(err);
+        setLoading(false);
       });
   }, []);
 
@@ -107,10 +130,41 @@ const ExamDetails = () => {
         notify("error");
       });
   };
+  if (loading) return <Loading />;
   return (
     <Container>
-      <div className="header">
+      <Confirm
+        title="Delete Exam"
+        content="Are you sure you want to delete this exam?"
+        success="Yes"
+        fail="No"
+        open={open}
+        setOpen={setOpen}
+        onSuccess={deleteExam}
+      />
+      <div className="header d-flex flex-row justify-content-between my-4 mx-auto">
         <Title title="Exam Details" />
+        <div
+          className="options d-flex flex-row justify-content-end px-3"
+          style={{
+            marginRight: "100px",
+          }}
+        >
+          <div className="button mx-2">
+            <UpdateButton
+              onClick={() => {
+                //   console.log("clicked");
+              }}
+            />
+          </div>
+          <div className="button mx-2">
+            <DeleteButton
+              onClick={() => {
+                setOpen(true);
+              }}
+            />
+          </div>
+        </div>
       </div>
       <div className="body m-2">
         <form onSubmit={handleSubmit((data) => console.log(data))}>

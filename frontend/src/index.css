@@ -19,10 +19,24 @@ body {
   width: 100%;
   margin: 0px;
   padding: 0px;
+  background-color: #f0f0f0;
 }
 #root {
   height: 100%;
   width: 100%;
   margin: 0px;
   padding: 0px;
+}
+a {
+  text-decoration: none;
+}
+
+/* temp */
+.yourMessage {
+  display: flex;
+  justify-content: flex-end;
+}
+.otherMessage {
+  display: flex;
+  justify-content: flex-start;
 }

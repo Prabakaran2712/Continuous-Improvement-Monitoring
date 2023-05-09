@@ -1,0 +1,8 @@
+.category p {
+  font-size: 20px;
+  font-weight: 500;
+}
+.category p span {
+  font-size: 20px;
+  font-weight: normal;
+}

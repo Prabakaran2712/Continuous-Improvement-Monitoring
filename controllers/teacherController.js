@@ -130,7 +130,7 @@ const addNewTeacher = async (req, res) => {
     //create token
     res.cookie(
       "token",
-      createToken({ userId: teacher._id, userType: "admin" }),
+      createToken({ userId: teacher._id, userType: "teacher" }),
       {
         maxAge: 1000 * 60 * 60 * 24 * 14,
         httpOnly: true,
@@ -264,10 +264,11 @@ const loginTeacher = async (req, res) => {
   }
 };
 
-const logout = async (req, res) => {
+const logout = (req, res) => {
+  console.log("logout");
   try {
     console.log("logout");
-    await res.clearCookie("token");
+    res.clearCookie("token");
     res.status(200).json({
       success: true,
       message: "Logged out successfully",

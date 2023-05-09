@@ -1,4 +1,5 @@
 const Teaches = require("../models/Teaches");
+const Grades = require("../models/Grades");
 
 //get all Teaches
 const getAllTeaches = async (req, res) => {
@@ -157,6 +158,16 @@ const addStudentsToTeaches = async (req, res) => {
           populate: { path: "department batch" },
         })
         .populate("batch");
+      //add grades for the student
+
+      const grades = new Grades({
+        student: req.body.student,
+        teaches: updatedTeachesPopulated._id,
+        grade: "NA",
+        published: false,
+      });
+      const newGrades = await grades.save();
+
       res.status(200).json(updatedTeachesPopulated);
     } else {
       res.status(404).json({ message: "Teaches not found" });
@@ -189,6 +200,18 @@ const removeStudentsFromTeaches = async (req, res) => {
           populate: { path: "department batch" },
         })
         .populate("batch");
+
+      //remove grades for the student
+      const grades = await Grades.findOne({
+        teaches: updatedTeachesPopulated._id,
+        student: req.body.student,
+      });
+
+      console.log(grades);
+      if (grades) {
+        await grades.remove();
+      }
+
       res.status(200).json(updatedTeachesPopulated);
     } else {
       res.status(404).json({ message: "Teaches not found" });

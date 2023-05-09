@@ -6,18 +6,25 @@ import moment from "moment";
 import { useEffect } from "react";
 import { useState } from "react";
 import axios from "axios";
+import { useAuthContext } from "../../../hooks/useAuthContext";
+import CreateExamButton from "../../../components/Exam/createExamButton/CreateExamButton";
+import Loading from "../../../components/Loading/Loading";
 
 const Class = () => {
   const [data, setData] = useState();
   const navigate = useNavigate();
+  const auth = useAuthContext();
+  const [loading, setLoading] = useState(true);
+  const [filteredData, setFilteredData] = useState();
 
-  const user = "643cd9f6a0dc99c9f907a437";
+  const user = auth.user._id;
 
   useEffect(() => {
     axios
       .get(`/api/classes/teacher/${user}`)
       .then((res) => {
         setData(res.data);
+        setLoading(false);
         console.log(res.data);
       })
       .catch((err) => {
@@ -25,12 +32,16 @@ const Class = () => {
       });
   }, []);
 
+  if (loading) {
+    return <Loading />;
+  }
+
   return (
     <Container>
-      <div className="header">
+      <div className="header my-5">
         <Title title="Class" />
         <div className="option-pane d-flex flex-row justify-content-end">
-          <Button
+          <CreateExamButton
             name="Create"
             type="success"
             onClick={() => {
@@ -40,22 +51,31 @@ const Class = () => {
         </div>
       </div>
       <div className="body m-2">
-        <div className="row   table-responsive">
-          <table className="table table-striped">
-            <thead>
+        <div className="row   table-responsive px-5">
+          <table
+            className="table table-striped table-hover  mx-auto"
+            style={{ cursor: "pointer" }}
+          >
+            <thead className="table-dark">
               <tr>
+                <th> #</th>
                 <th>Course Name</th>
                 <th>Topic</th>
                 <th>Date</th>
                 <th>Time</th>
-                <th>View</th>
               </tr>
             </thead>
             <tbody>
               {data &&
-                data.map((classData) => {
+                data.map((classData, index) => {
                   return (
-                    <tr key={Math.random()}>
+                    <tr
+                      key={Math.random()}
+                      onClick={() => {
+                        navigate(`/teacher/class/${classData._id}`);
+                      }}
+                    >
+                      <td>{index + 1}</td>
                       <td>{classData.teaches.course.name}</td>
                       <td>{classData.topic}</td>
                       <td>
@@ -65,15 +85,6 @@ const Class = () => {
                         }
                       </td>
                       <td>{classData.time}</td>
-                      <td>
-                        <Button
-                          type="success"
-                          onClick={() => {
-                            navigate(`/teacher/class/${classData._id}`);
-                          }}
-                          name="View"
-                        />
-                      </td>
                     </tr>
                   );
                 })}

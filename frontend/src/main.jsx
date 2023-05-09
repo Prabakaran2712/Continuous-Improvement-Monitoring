@@ -53,6 +53,17 @@ import ClassDetails from "./pages/teacher/Class/ClassDetails/ClassDetails";
 import ViewStudents from "./pages/teacher/ViewStudents/ViewStudents";
 import StudentDetails from "./pages/teacher/StudentDetails/StudentDetails";
 import SubjectMarkAnalytics from "./pages/teacher/SubjectMarkAnalytics/SubjectMarkAnalytics";
+import Grade from "./pages/teacher/Grade/Grade";
+import ViewGrade from "./pages/student/ViewGrade/ViewGrade";
+import ViewStudentMarks from "./pages/student/ViewStudentMarks/ViewStudentMarks";
+import ViewChats from "./pages/student/ViewChats/ViewChats";
+import Logout from "./pages/Logout/Logout";
+import Chat from "./pages/student/Chat/Chat";
+import ViewChatsTeacher from "./pages/teacher/ViewChats/ViewChats";
+import CourseDetails from "./pages/student/CourseDetails/CourseDetails";
+import CreateChat from "./pages/Chat/CreateChat/CreateChat";
+import ViewStudentAttendance from "./pages/student/ViewStudentAttendance/ViewStudentAttendance";
+import AttendanceDetails from "./pages/student/AttendanceDetails/AttendanceDetails";
 
 const router = createBrowserRouter([
   {
@@ -148,6 +159,44 @@ const router = createBrowserRouter([
             path: "courses",
             element: <ViewStudentCourses />,
           },
+          {
+            path: "course/:id",
+            element: <CourseDetails />,
+          },
+
+          {
+            path: "grades",
+            element: <ViewGrade />,
+          },
+          {
+            path: "marks",
+            element: <ViewStudentMarks />,
+          },
+          {
+            path: "createChat",
+            element: <CreateChat />,
+          },
+          {
+            path: "chats",
+            element: <ViewChats />,
+          },
+          {
+            path: "attendance",
+            element: <ViewStudentAttendance />,
+          },
+          {
+            path: "attendance/:id",
+            element: <AttendanceDetails />,
+          },
+          {
+            path: "chat/:id",
+            element: <Chat />,
+          },
+
+          {
+            path: "logout",
+            element: <Logout />,
+          },
         ],
       },
       {
@@ -162,6 +211,7 @@ const router = createBrowserRouter([
             path: "profile",
             element: <TeacherProfile />,
           },
+
           {
             path: "dashboard",
             element: <Dashboard />,
@@ -177,6 +227,10 @@ const router = createBrowserRouter([
           {
             path: "exam/:id",
             element: <ExamDetails />,
+          },
+          {
+            path: "grades/:id",
+            element: <Grade />,
           },
           {
             path: "subject/:id/student/:sid",
@@ -209,6 +263,14 @@ const router = createBrowserRouter([
           {
             path: "courses/add",
             element: <AddCourse />,
+          },
+          {
+            path: "chats",
+            element: <ViewChatsTeacher />,
+          },
+          {
+            path: "chat/:id",
+            element: <Chat />,
           },
 
           //view course on id
@@ -258,6 +320,14 @@ const router = createBrowserRouter([
               },
             ],
           },
+          {
+            path: "logout",
+            element: <Logout />,
+          },
+          {
+            path: "createChat",
+            element: <CreateChat />,
+          },
         ],
       },
     ],
@@ -265,12 +335,10 @@ const router = createBrowserRouter([
 ]);
 
 ReactDOM.createRoot(document.getElementById("root")).render(
-  <React.StrictMode>
-    <AuthContextProvider>
-      <LocalizationProvider dateAdapter={AdapterDayjs}>
-        <ReactNotifications />
-        <RouterProvider router={router} />
-      </LocalizationProvider>
-    </AuthContextProvider>
-  </React.StrictMode>
+  <AuthContextProvider>
+    <LocalizationProvider dateAdapter={AdapterDayjs}>
+      <ReactNotifications />
+      <RouterProvider router={router} />
+    </LocalizationProvider>
+  </AuthContextProvider>
 );

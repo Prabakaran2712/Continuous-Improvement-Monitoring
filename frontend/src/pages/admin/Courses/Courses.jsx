@@ -16,7 +16,7 @@ const Courses = () => {
       });
   }, []);
   return (
-    <div className="col-lg-10 col-sm-12 my-5 p-5 ">
+    <div className="">
       <div className=" d-flex  flex-row justify-content-between align-items-center">
         <h1 className="display-6">Courses</h1>
         <button

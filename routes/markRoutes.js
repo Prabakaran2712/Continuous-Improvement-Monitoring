@@ -5,6 +5,7 @@ const {
   getMarkByTeacherStaffId,
   getMarkByCourse,
   getMarkByExam,
+  getMarkByTeaches,
   addNewMark,
   getMarkByStudentId,
   addMoreMarks,
@@ -34,6 +35,9 @@ router.get("/course/:id", getMarkByCourse);
 
 //get mark by exam
 router.get("/exam/:id", getMarkByExam);
+
+//get mark by teaches
+router.get("/teaches/:id", getMarkByTeaches);
 
 //add new mark
 router.post("/", addNewMark);

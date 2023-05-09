@@ -1,0 +1,8 @@
+.btn {
+  border: none;
+  font-size: 10px;
+}
+.icon {
+  color: var(--primary);
+  border-radius: 100%;
+}

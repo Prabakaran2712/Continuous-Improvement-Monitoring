@@ -2,13 +2,8 @@ const Student = require("../models/Student");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 
-const createToken = (_id) => {
-  const payload = {
-    _id: _id,
-  };
-  return jwt.sign(payload, process.env.SECRET, {
-    expiresIn: "3d",
-  });
+const createToken = (payload) => {
+  return jwt.sign(payload, process.env.SECRET, { expiresIn: "14 days" });
 };
 
 //student registration
@@ -29,8 +24,17 @@ const addNewStudent = async (req, res) => {
       const hpass = await bcrypt.hashSync(req.body.password, gensalt);
       req.body.password = hpass;
       const newUser = await Student.create(req.body);
-      const token = createToken(newUser._id);
-      res.status(200).json({ newUser, token });
+
+      res.cookie(
+        "token",
+        createToken({ userId: newUser._id, userType: "student" }),
+        {
+          maxAge: 1000 * 60 * 60 * 24 * 14,
+          httpOnly: true,
+          sameSite: "strict",
+        }
+      );
+      res.status(200).json({ newUser, message: "Student added successfully" });
     }
   } catch (error) {
     res.status(500).json({ message: error.message });
@@ -234,8 +238,20 @@ const studentLogin = async (req, res) => {
         .compare(req.body.password, exists.password)
         .then((result) => {
           if (result) {
-            const token = createToken(exists._id);
-            res.status(200).json({ user: exists, token: token });
+            res.cookie(
+              "token",
+              createToken({ userId: exists._id, userType: "student" }),
+              {
+                maxAge: 1000 * 60 * 60 * 24 * 14,
+                httpOnly: true,
+                sameSite: "strict",
+              }
+            );
+            exists.password = undefined;
+
+            res
+              .status(200)
+              .json({ success: true, user: exists, userType: "student" });
           } else {
             throw new Error("Invalid Login Credentials");
           }
@@ -267,6 +283,24 @@ const verifyToken = async (req, res) => {
   }
 };
 
+const logout = (req, res) => {
+  console.log("logout");
+  try {
+    console.log("logout");
+    res.clearCookie("token");
+    res.status(200).json({
+      success: true,
+      message: "Logged out successfully",
+    });
+  } catch (error) {
+    console.error(err);
+    res.status(500).json({
+      success: false,
+      message: "Server Error",
+    });
+  }
+};
+
 module.exports = {
   getAllStudents,
   getStudentByRollNumber,
@@ -283,4 +317,5 @@ module.exports = {
   deleteMarksFromStudent,
   studentLogin,
   verifyToken,
+  logout,
 };

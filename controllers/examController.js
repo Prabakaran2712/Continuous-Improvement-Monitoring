@@ -1,4 +1,5 @@
 const Exam = require("../models/Exam");
+const Mark = require("../models/Mark");
 
 //get all exams
 const getAllExams = async (req, res) => {
@@ -139,6 +140,8 @@ const deleteExam = async (req, res) => {
     const exam = await Exam.findById(req.params.id);
     if (exam) {
       await exam.remove();
+      //delete marks of this exam
+      await Mark.deleteMany({ exam: req.params.id });
       res.status(200).json({ message: "Exam deleted successfully" });
     }
   } catch (error) {

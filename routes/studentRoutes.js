@@ -14,9 +14,13 @@ const {
   deleteMarksFromStudent,
   studentLogin,
   verifyToken,
+  logout,
 } = require("../controllers/studentController");
 
 const router = require("express").Router();
+
+//logout
+router.get("/logout", logout);
 
 //get all students
 router.get("/", getAllStudents);

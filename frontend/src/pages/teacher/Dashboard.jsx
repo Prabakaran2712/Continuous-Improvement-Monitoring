@@ -1,7 +1,35 @@
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faUser, faPen } from "@fortawesome/free-solid-svg-icons";
+import DashboardCard from "../../components/DashboardCard/DashboardCard";
 const Dashboard = () => {
+  const options = [
+    {
+      name: "Students",
+      value: "54",
+      icon: <FontAwesomeIcon icon={faUser} size="lg" />,
+    },
+    {
+      name: "GPA",
+      value: "9.8",
+      icon: <FontAwesomeIcon icon={faPen} size="lg" />,
+    },
+    {
+      name: "GPA",
+      value: "9.8",
+      icon: <FontAwesomeIcon icon={faPen} size="lg" />,
+    },
+    {
+      name: "GPA",
+      value: "9.8",
+      icon: <FontAwesomeIcon icon={faPen} size="lg" />,
+    },
+  ];
+
   return (
-    <div className="col-lg-10 col-sm-12 my-5 p-5">
-      <div className="display-6">Dashboard</div>
+    <div className="cards">
+      {options.map((option, index) => (
+        <DashboardCard key={index} options={option} />
+      ))}
     </div>
   );
 };

@@ -4,9 +4,11 @@ import { useNavigate } from "react-router";
 import Container from "../../../components/Container/Container";
 import DeleteButton from "../../../components/DeleteButton";
 import View from "../../../components/Courses/Teacher/View";
+import { useAuthContext } from "../../../hooks/useAuthContext";
 
 const Courses = () => {
-  const user = "64212913263de2cbfa095205";
+  const auth = useAuthContext();
+  const user = auth.user._id;
   const [userData, setUserData] = useState({});
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
@@ -75,6 +77,15 @@ const Courses = () => {
                         </td>
                         <td>
                           <View id={data._id} view={view} />
+                        </td>
+                        <td>
+                          <button
+                            onClick={() => {
+                              navigate(`/teacher/grades/${data._id}`);
+                            }}
+                          >
+                            Grades
+                          </button>
                         </td>
                       </tr>
                     );

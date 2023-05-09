@@ -10,6 +10,7 @@ import Title from "../../../../components/forms/Title/Title";
 import Input from "../../../../components/forms/Input/Input";
 import Select from "../../../../components/forms/Select";
 import Submit from "../../../../components/forms/Submit/Submit";
+import { useAuthContext } from "../../../../hooks/useAuthContext";
 
 const AddCourse = () => {
   const { register, handleSubmit } = useForm();
@@ -21,7 +22,8 @@ const AddCourse = () => {
   const navigate = useNavigate();
 
   //user details neeeds to be changed after authentication
-  const [user, setUser] = useState("64212913263de2cbfa095205");
+  const auth = useAuthContext();
+  const user = auth.user._id;
 
   //toast notification
   const notify = (option) => {

@@ -248,9 +248,15 @@ const getAttendancePercentageByStudentForAllCourses = async (req, res) => {
         populate: { path: "teaches", populate: { path: "batch" } },
       });
     //get number of unique courses
-    const courses = attendance.map((item) => item.class.teaches.course);
+    const courses = attendance.map((item) => {
+      //add semester to each course
+
+      item.class.teaches.course.semester = item.class.teaches.semester;
+      return item.class.teaches.course;
+    });
     //remove duplicates
     const unique_courses = [...new Set(courses)];
+
     //get attendance % for each course
     var attendance_percentage = [];
     unique_courses.map((course) => {
@@ -265,9 +271,65 @@ const getAttendancePercentageByStudentForAllCourses = async (req, res) => {
       attendance_percentage.push({
         course: course,
         percentage: percentage,
+        semester: course.semester,
+        teaches: course_attendance[0].class.teaches,
       });
     });
     res.status(200).json(attendance_percentage);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+//get attendaces of student for a teaches
+const getAttendanceByStudentAndTeaches = async (req, res) => {
+  try {
+    const attendance = await Attendance.find({
+      student: req.params.student_id,
+    })
+      .populate({ path: "student", populate: "department batch" })
+      .populate({
+        path: "class",
+        populate: {
+          path: "teaches",
+          populate: { path: "course", populate: { path: "department" } },
+          match: { _id: req.params.teaches_id },
+        },
+      })
+      .populate({
+        path: "class",
+        populate: {
+          path: "teaches",
+          populate: { path: "teacher", populate: "address department" },
+          match: { _id: req.params.teaches_id },
+        },
+      })
+      .populate({
+        path: "class",
+        populate: {
+          path: "teaches",
+          populate: {
+            path: "students",
+            populate: { path: "department batch" },
+          },
+          match: { _id: req.params.teaches_id },
+        },
+      })
+      .populate({
+        path: "class",
+        populate: {
+          path: "teaches",
+          populate: { path: "batch" },
+          match: { _id: req.params.teaches_id },
+        },
+      });
+
+    // remove null values
+    const filtered_attendance = attendance.filter(
+      (item) => item.class.teaches !== null
+    );
+
+    res.status(200).json(filtered_attendance);
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
@@ -285,4 +347,5 @@ module.exports = {
   getAttendancePercentageByStudentForAllClasses,
   getAttendancePercentageByClassForAllStudents,
   getAttendancePercentageByStudentForAllCourses,
+  getAttendanceByStudentAndTeaches,
 };
