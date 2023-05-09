@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { useAuthContext } from "../../../hooks/useAuthContext";
 import Loading from "../../../components/Loading/Loading";
 import { useNavigate } from "react-router-dom";
-import CreateExamButton from "../../../components/Exam/createExamButton/CreateExamButton";
+import CreateExamButton from "../../../components/Exam/CreateExamButton/CreateExamButton";
 
 const ViewChats = () => {
   const [chats, setChats] = useState([]);

@@ -5,8 +5,8 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import Loading from "../../../../components/Loading/Loading";
-import CreateExamButton from "../../../../components/Exam/createExamButton/CreateExamButton";
-import ViewExamButton from "../../../../components/Exam/viewExamButton/ViewExamButton";
+import CreateExamButton from "../../../../components/Exam/CreateExamButton/CreateExamButton";
+import ViewExamButton from "../../../../components/Exam/ViewExamButton/ViewExamButton";
 import { useAuthContext } from "../../../../hooks/useAuthContext";
 const ViewExam = () => {
   const [loading, setLoading] = useState(true);

@@ -7,7 +7,7 @@ import { useEffect } from "react";
 import { useState } from "react";
 import axios from "axios";
 import { useAuthContext } from "../../../hooks/useAuthContext";
-import CreateExamButton from "../../../components/Exam/createExamButton/CreateExamButton";
+import CreateExamButton from "../../../components/Exam/CreateExamButton/CreateExamButton";
 import Loading from "../../../components/Loading/Loading";
 
 const Class = () => {
