@@ -1,5 +1,5 @@
 :root {
-  --primary: #ec7263;
+  --primary: rgba(2, 2, 2, 0.863);
   --secondary: #ffff;
 }
 * {
