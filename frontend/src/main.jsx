@@ -63,6 +63,7 @@ import ViewChatsTeacher from "./pages/teacher/ViewChats/ViewChats";
 import CourseDetails from "./pages/student/CourseDetails/CourseDetails";
 import CreateChat from "./pages/Chat/CreateChat/CreateChat";
 import ViewStudentAttendance from "./pages/student/ViewStudentAttendance/ViewStudentAttendance";
+import AttendanceDetails from "./pages/student/AttendanceDetails/AttendanceDetails";
 
 const router = createBrowserRouter([
   {
@@ -182,6 +183,10 @@ const router = createBrowserRouter([
           {
             path: "attendance",
             element: <ViewStudentAttendance />,
+          },
+          {
+            path: "attendance/:id",
+            element: <AttendanceDetails />,
           },
           {
             path: "chat/:id",

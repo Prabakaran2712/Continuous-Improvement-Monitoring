@@ -63,6 +63,7 @@ const ViewStudentAttendance = () => {
         subject_code: x.course.subject_code,
         percentage: x.percentage,
         semester: x.course.semester,
+        teaches: x.teaches,
       };
       attendance.push(obj);
     });
@@ -171,7 +172,12 @@ const ViewStudentAttendance = () => {
                 <tbody>
                   {filteredAttendanceData.map((x, i) => {
                     return (
-                      <tr key={Math.random()}>
+                      <tr
+                        key={Math.random()}
+                        onClick={() => {
+                          navigate(`/student/attendance/${x.teaches._id}`);
+                        }}
+                      >
                         <th scope="row">{i + 1}</th>
                         <td>{x.course.name}</td>
                         <td>{x.course.subject_code}</td>

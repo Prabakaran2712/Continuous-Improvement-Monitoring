@@ -58,12 +58,7 @@ const TeacherLayout = () => {
       icon: <FontAwesomeIcon icon={faHouse} size="sm" />,
       title: "Dashboard",
     },
-    {
-      name: "Marks",
-      link: "/teacher/marks",
-      icon: <FontAwesomeIcon icon={faStar} size="sm" />,
-      title: "Marks",
-    },
+
     {
       name: "Exams",
       link: "/teacher/exams",
@@ -76,12 +71,7 @@ const TeacherLayout = () => {
       icon: <FontAwesomeIcon icon={faSchool} size="sm" />,
       title: "Classes",
     },
-    {
-      name: "Attendance",
-      link: "/teacher/attendance",
-      icon: <FontAwesomeIcon icon={faBook} size="sm" />,
-      title: "Attendance",
-    },
+
     {
       name: "Notifications",
       link: "/teacher/notifications",

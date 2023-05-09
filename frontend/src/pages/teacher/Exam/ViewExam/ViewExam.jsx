@@ -38,7 +38,10 @@ const ViewExam = () => {
   } else {
     return (
       <Container>
-        <div className="header">
+        <div className="header d-flex flex-row justify-content-between my-5">
+          <div className="title">
+            <Title title="Exams" />
+          </div>
           <div className="options d-flex flex-row justify-content-end m-2">
             <CreateExamButton
               onClick={() => {
@@ -48,22 +51,26 @@ const ViewExam = () => {
             />
           </div>
         </div>
-        <div className="body m-2">
-          <div className="row   table-responsive">
-            <table className="table table-striped">
-              <thead>
+        <div className="body m-2 my-5">
+          <div className="row   table-responsive px-5">
+            <table
+              className="table table-striped mx-auto table-hover"
+              style={{
+                cursor: "pointer",
+              }}
+            >
+              <thead className="table-dark">
                 <tr>
+                  <th>#</th>
                   <th>Exam Code</th>
-                  <th>Date</th>
-                  <th>Time</th>
-                  <th>Duration</th>
+
                   <th>Subject Name</th>
                   <th>Subject Code</th>
                   <th>Type</th>
                 </tr>
               </thead>
               <tbody>
-                {Data.map((exam) => {
+                {Data.map((exam, indx) => {
                   return (
                     <tr
                       key={Math.random()}
@@ -71,10 +78,8 @@ const ViewExam = () => {
                         navigate(`/teacher/exam/${exam._id}`);
                       }}
                     >
+                      <td>{indx + 1}</td>
                       <td>{exam.exam_code}</td>
-                      <td>{exam.exam_date}</td>
-                      <td>{exam.exam_time}</td>
-                      <td>{exam.exam_duration}</td>
                       <td>{exam.teaches.course.name}</td>
                       <td>{exam.teaches.course.subject_code}</td>
                       <td>{exam.exam_type}</td>

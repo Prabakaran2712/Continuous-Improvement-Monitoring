@@ -140,7 +140,7 @@ const CreateClass = () => {
     <Container>
       <div className="  w-100 mx-auto my-5 ">
         <Title title="Create Class" />
-        <div className="form-body w-75 mx-2 my-3">
+        <div className="form-body w-75 mx-2  my-4">
           <form onSubmit={handleSubmit(onSubmit)}>
             <div className="row">
               <div className="col-6">

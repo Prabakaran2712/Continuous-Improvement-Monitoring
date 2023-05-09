@@ -1,0 +1,14 @@
+.attendanceReport {
+  font-size: 1.2rem;
+
+  padding: 1.5rem;
+  border: 2px solid #000;
+  border-radius: 10px;
+}
+.attendanceReport span {
+  font-weight: 500;
+  font-size: 20px;
+}
+.reportContent div {
+  margin: 1rem;
+}
