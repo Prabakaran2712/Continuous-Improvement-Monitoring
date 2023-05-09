@@ -7,7 +7,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "client": "cd frontend && npm run dev",
     "dev": "concurrently \"nodemon index.js\" \"npm run client\"",
-    "build": "cd frontend && npm install && npx vite build"
+    "deploy": "cd frontend && npm install && npx vite build"
   },
   "repository": {
     "type": "git",
