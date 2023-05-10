@@ -1,4 +1,4 @@
-import logo from "../assets/annaUniv.svg";
+import logo from "../../assets/annaUniv.svg";
 import { NavLink } from "react-router-dom";
 const Header = () => {
   return (
@@ -23,7 +23,7 @@ const Header = () => {
         >
           <span className="navbar-toggler-icon"></span>
         </button>
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <div className="collapse navbar-collapse" id="navbarSupportedContent">
           <ul className="navbar-nav">
             <li className="nav-item">
               <NavLink className="nav-link active py-7 px-4" to="/">
@@ -43,7 +43,7 @@ const Header = () => {
           </ul>
         </div>
         <div
-          class="collapse navbar-collapse justify-content-end"
+          className="collapse navbar-collapse justify-content-end"
           id="navbarSupportedContent"
         >
           <ul className="navbar-nav">
@@ -81,8 +81,7 @@ const Header = () => {
             </li>
             <li className="nav-item dropdown mx-2">
               <button
-                class="btn btn-dark btn-lg dropdown-toggle py-7px-5"
-                className="nav-link dropdown-toggle py-7 px-5"
+                className="btn btn-dark btn-lg dropdown-toggle py-7 px-5 nav-link dropdown-toggle py-7 px-5"
                 to="#"
                 id="navDropdown"
                 data-bs-toggle="dropdown"

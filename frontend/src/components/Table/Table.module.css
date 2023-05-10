@@ -1,0 +1,94 @@
+.styledTable {
+  border-collapse: collapse;
+  margin: 25px 0;
+  font-size: 0.9em;
+  font-family: sans-serif;
+  min-width: 400px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+  width: 100%;
+  overflow: scroll;
+}
+.styledTable thead tr {
+  background-color: var(--main-color);
+  color: #ffffff;
+  text-align: left;
+}
+
+.styledTable th,
+.styledTable td {
+  padding: 15px 17px;
+}
+.styledTable tbody tr {
+  border-bottom: 1px solid #dddddd;
+}
+
+.styledTable tbody tr:nth-of-type(even) {
+  background-color: #f3f3f3;
+}
+
+.styledTable tbody tr:last-of-type {
+  border-bottom: 2px solid var(--main-color);
+}
+
+.styledTable tbody tr:hover {
+  font-weight: bold;
+  color: var(--main-color);
+  background-color: #ffffff;
+  transition: 0.3s;
+}
+.header {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+.header div {
+  margin: 5px;
+}
+
+@media screen and (max-width: 992px) {
+  .styledTable {
+    min-width: 200px;
+    font-size: 0.75rem;
+    margin: 15px 0;
+  }
+
+  .styledTable th,
+  .styledTable td {
+    padding: 10px 12px;
+  }
+}
+@media screen and (max-width: 768px) {
+  .styledTable {
+    min-width: 100px;
+    font-size: 0.75rem;
+    margin: 10px 0;
+  }
+
+  .styledTable th,
+  .styledTable td {
+    padding: 5px 7px;
+  }
+}
+@media screen and (max-width: 576px) {
+  .styledTable {
+    min-width: 50px;
+    font-size: 0.75rem;
+    margin: 5px 0;
+  }
+
+  .styledTable th,
+  .styledTable td {
+    padding: 2px 4px;
+  }
+}
+@media screen and (max-width: 400px) {
+  .styledTable {
+    font-size: 0.6rem;
+    margin: 3px 0;
+  }
+
+  .styledTable th,
+  .styledTable td {
+    padding: 2px 3px;
+  }
+}

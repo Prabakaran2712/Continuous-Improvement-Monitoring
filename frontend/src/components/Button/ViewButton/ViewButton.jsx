@@ -1,5 +1,5 @@
 //Button for viewing a course
-const View = (props) => {
+const ViewButton = (props) => {
   return (
     <button
       className="btn btn-outline-success h-50"
@@ -12,4 +12,4 @@ const View = (props) => {
   );
 };
 
-export default View;
+export default ViewButton;

@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import Container from "../../../components/Container/Container";
-import DashboardCard from "../../../components/DashboardCard/DashboardCard";
+import DashboardCard from "../../../components/Dashboard/DashboardCard/DashboardCard";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser, faPen } from "@fortawesome/free-solid-svg-icons";
 

@@ -3,7 +3,7 @@ import axios from "axios";
 import { useNavigate } from "react-router";
 import Container from "../../../components/Container/Container";
 import DeleteButton from "../../../components/DeleteButton";
-import View from "../../../components/Courses/Teacher/View";
+import ViewButton from "../../../components/Button/ViewButton/ViewButton";
 import { useAuthContext } from "../../../hooks/useAuthContext";
 
 const Courses = () => {
@@ -76,7 +76,7 @@ const Courses = () => {
                           <DeleteButton />
                         </td>
                         <td>
-                          <View id={data._id} view={view} />
+                          <ViewButton id={data._id} view={view} />
                         </td>
                         <td>
                           <button

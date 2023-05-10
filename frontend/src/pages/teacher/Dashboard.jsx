@@ -1,6 +1,6 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser, faPen } from "@fortawesome/free-solid-svg-icons";
-import DashboardCard from "../../components/DashboardCard/DashboardCard";
+import DashboardCard from "../../components/Dashboard/DashboardCard/DashboardCard";
 const Dashboard = () => {
   const options = [
     {
