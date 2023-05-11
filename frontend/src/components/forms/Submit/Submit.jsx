@@ -1,8 +1,9 @@
+import Styles from "./Submit.module.css";
 const Submit = (props) => {
   return (
     <input
       type="submit"
-      className="form-control btn btn-outline-success w-50 shadow"
+      className={`form-control btn btn-outline-dark  shadow ${Styles.submit}`}
       value={props.name}
     />
   );

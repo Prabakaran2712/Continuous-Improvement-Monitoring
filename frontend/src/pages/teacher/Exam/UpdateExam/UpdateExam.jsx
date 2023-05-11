@@ -10,10 +10,13 @@ import Submit from "../../../../components/forms/Submit/Submit";
 import TimeComponent from "../../../../components/forms/Time/TimeComponent";
 import Select from "../../../../components/forms/Select";
 import { useAuthContext } from "../../../../hooks/useAuthContext";
-import Styles from "./CreateExam.module.css";
+import { useParams, useNavigate } from "react-router-dom";
+import Styles from "./UpdateExam.module.css";
+import moment from "moment";
+import Loading from "../../../../components/Loading/Loading";
 
-const CreateExam = () => {
-  const { register, handleSubmit } = useForm();
+const UpdateExam = () => {
+  const { register, handleSubmit, setValue } = useForm();
   const [examDate, setExamDate] = useState();
   const [examTime, setExamTime] = useState();
   const [loading, setLoading] = useState(true);
@@ -21,8 +24,9 @@ const CreateExam = () => {
   const [teachesOption, setTeachesOption] = useState([]);
   const [teachesValue, setTeachesValue] = useState([]);
   const auth = useAuthContext();
-
+  const navigate = useNavigate();
   const user = auth.user._id;
+  const { id } = useParams();
   //function to select properties from an object
   function selectProps(...props) {
     return function (obj) {
@@ -40,7 +44,7 @@ const CreateExam = () => {
     if (option == "success") {
       Store.addNotification({
         title: "Success!",
-        message: `New Exam has been created`,
+        message: `updated exam successfully`,
         type: "success",
         insert: "top",
         container: "top-right",
@@ -54,7 +58,7 @@ const CreateExam = () => {
     } else {
       Store.addNotification({
         title: "Error!",
-        message: `Error while creating  Exam`,
+        message: `Error while updating  Exam`,
         type: "danger",
         insert: "top",
         container: "top-right",
@@ -100,56 +104,54 @@ const CreateExam = () => {
 
       //set teaches id as value
       setTeachesValue(res.data.map(selectProps("_id")));
+      axios
+        .get(`/api/exams/${id}`)
+        .then((res) => {
+          console.log(res.data);
 
-      setLoading(false);
+          //set form fields using setValue
+          setValue("exam_duration", res.data.exam_duration);
+          setValue("exam_code", res.data.exam_code);
+          setValue("exam_type", res.data.exam_type);
+          setValue("subject_name", res.data.teaches.course.name);
+          setValue("total_marks", res.data.total_marks);
+          setValue("teaches", res.data.teaches._id);
+          setExamTime(moment(res.data.exam_time, "hh:mm A"));
+          setLoading(false);
+        })
+
+        .catch((err) => {
+          console.log(err);
+          setLoading(false);
+        });
     });
   }, []);
   const onSubmit = (data) => {
     data.exam_date = examDate.$d;
     //get only time from examTime
-    const time12 = examTime.$d.toLocaleTimeString("en-US", {
-      hour: "numeric",
-      minute: "2-digit",
-      hour12: true,
-    });
-    data.exam_time = time12;
+    data.exam_time = examTime.format("hh:mm A");
 
-    //send data to backend
     axios
-      .post("/api/exams", data)
+      .put(`/api/exams/${id}`, data)
       .then((res) => {
-        //create mark for each student
-        console.log(res.data.teaches.students);
-        var marksData = [];
-        for (let i = 0; i < res.data.teaches.students.length; i++) {
-          const markData = {
-            student: res.data.teaches.students[i]._id,
-            exam: res.data._id,
-          };
-          marksData.push(markData);
-        }
-        console.log(marksData);
-        axios
-          .post("/api/marks/marks", marksData)
-          .then((res) => {
-            console.log(res);
-            notify("success");
-          })
-          .catch((err) => {
-            console.log(err);
-            notify("error");
-          });
+        console.log(res.data);
+        notify("success");
+        navigate(`/teacher/exams/${id}`);
       })
       .catch((err) => {
         console.log(err);
         notify("error");
       });
   };
+  if (loading) {
+    return <Loading />;
+  }
+
   return (
     <Container>
       <div className="  w-100 mx-auto my-2 ">
         <div className="mx-5">
-          <Title title="Create Exam" />
+          <Title title="Update Exam" />
         </div>
         <div className={`${Styles.formBody}`}>
           <form onSubmit={handleSubmit(onSubmit)}>
@@ -164,6 +166,7 @@ const CreateExam = () => {
                 />
 
                 <DateComponent
+                  defaultValue={examDate}
                   value={examDate}
                   onChange={setExamDate}
                   label={"Exam Date"}
@@ -208,7 +211,7 @@ const CreateExam = () => {
             </div>
             <div className="row my-5 justify-content-end   ">
               <div className=" mx-auto text-center">
-                <Submit name="Create" />
+                <Submit name="Update" />
               </div>
             </div>
           </form>
@@ -218,4 +221,4 @@ const CreateExam = () => {
   );
 };
 
-export default CreateExam;
+export default UpdateExam;

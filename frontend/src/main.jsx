@@ -21,12 +21,10 @@ import "bootstrap/dist/js/bootstrap.bundle.min";
 
 //layouts
 import StudentLayout from "./layouts/StudentLayout/StudentLayout";
-import AdminLayout from "./layouts/AdminLayout";
 import TeacherLayout from "./layouts/TeacherLayout/TeacherLayout";
-import TestLayout from "./layouts/TestLayout/TestLayout";
 
 //pages
-import Dashboard from "./pages/teacher/Dashboard";
+import Dashboard from "./pages/teacher/Dashboard/Dashboard";
 import Marks from "./pages/teacher/Marks";
 import Attendance from "./pages/teacher/Attendance";
 import Notifications from "./pages/teacher/Notifications";
@@ -41,7 +39,6 @@ import Class from "./pages/teacher/Class/Class";
 import StudentDasboard from "./pages/student/StudentDasboard/StudentDasboard";
 import StudentLogin from "./pages/student/StudentLogin";
 import About from "./pages/about/About";
-import AdminLogin from "./pages/admin/AdminLogin";
 import TeacherCourses from "./pages/teacher/Courses/Courses";
 import ViewCourse from "./pages/teacher/Courses/ViewCourse/ViewCourse";
 import AddCourse from "./pages/teacher/Courses/AddCourse/AddCourse";
@@ -64,6 +61,7 @@ import CourseDetails from "./pages/student/CourseDetails/CourseDetails";
 import CreateChat from "./pages/Chat/CreateChat/CreateChat";
 import ViewStudentAttendance from "./pages/student/ViewStudentAttendance/ViewStudentAttendance";
 import AttendanceDetails from "./pages/student/AttendanceDetails/AttendanceDetails";
+import UpdateExam from "./pages/teacher/Exam/UpdateExam/UpdateExam";
 
 const router = createBrowserRouter([
   {
@@ -115,19 +113,6 @@ const router = createBrowserRouter([
                   },
                 ],
               },
-              {
-                path: "admin",
-                children: [
-                  {
-                    path: "signin",
-                    element: <AdminLogin />,
-                  },
-                  {
-                    path: "signup",
-                    element: <StudentRegister />,
-                  },
-                ],
-              },
             ],
           },
           {
@@ -137,16 +122,7 @@ const router = createBrowserRouter([
         ],
         errorElement: <Home />,
       },
-      {
-        path: "/test",
-        element: <TestLayout />,
-        children: [
-          {
-            path: "dashboard",
-            element: <StudentDasboard />,
-          },
-        ],
-      },
+
       {
         path: "student",
         element: <StudentLayout />,
@@ -199,10 +175,7 @@ const router = createBrowserRouter([
           },
         ],
       },
-      {
-        path: "/admin",
-        element: <AdminLayout />,
-      },
+
       {
         path: "teacher",
         element: <TeacherLayout />,
@@ -222,11 +195,24 @@ const router = createBrowserRouter([
           },
           {
             path: "exams",
-            element: <ViewExam />,
-          },
-          {
-            path: "exam/:id",
-            element: <ExamDetails />,
+            children: [
+              {
+                path: "",
+                element: <ViewExam />,
+              },
+              {
+                path: ":id",
+                element: <ExamDetails />,
+              },
+              {
+                path: "create",
+                element: <CreateExam />,
+              },
+              {
+                path: "update/:id",
+                element: <UpdateExam />,
+              },
+            ],
           },
           {
             path: "grades/:id",

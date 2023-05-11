@@ -14,6 +14,10 @@ import { Switch } from "@mui/material";
 import DeleteButton from "../../../../components/Button/DeleteButton/DeleteButton";
 import Confirm from "../../../../components/Confirm/Confirm";
 import Loading from "../../../../components/Loading/Loading";
+import Table from "../../../../components/Table/Table";
+
+//styles
+import Styles from "./ExamDetails.module.css";
 
 const ExamDetails = () => {
   const [examData, setExamData] = useState();
@@ -23,16 +27,15 @@ const ExamDetails = () => {
   const [loading, setLoading] = useState(true);
   const { id } = useParams();
   const { register, handleSubmit, setValue } = useForm();
-
   const [open, setOpen] = useState(false);
   const navigate = useNavigate();
+  const [totalMarks, setTotalMarks] = useState(100);
 
   const deleteExam = () => {
     axios
       .delete(`/api/exams/${id}`)
       .then((res) => {
         navigate("/teacher/exams");
-        console.log(res.data);
       })
       .catch((err) => {
         console.log(err);
@@ -77,7 +80,7 @@ const ExamDetails = () => {
       .get(`/api/exams/${id}`)
       .then((res) => {
         setExamData(res.data);
-        console.log(res.data);
+        setTotalMarks(res.data.total_marks);
 
         //set form fields using setValue
         setValue("exam_code", res.data.exam_code);
@@ -94,13 +97,16 @@ const ExamDetails = () => {
             "-" +
             res.data.teaches.batch.end_year
         );
-        //only date no time
         setValue("exam_date", moment(res.data.exam_date).format("YYYY-MM-DD"));
         setValue("exam_time", res.data.exam_time);
+
         //get marks for exam
         axios.get(`/api/marks/exam/${id}`).then((res) => {
-          console.log(res.data);
-          setStudents(res.data);
+          //sort students by roll number
+          var sorted = res.data.sort((a, b) => {
+            return a.student.roll_number - b.student.roll_number;
+          });
+          setStudents(sorted);
           setLoading(false);
         });
       })
@@ -119,7 +125,6 @@ const ExamDetails = () => {
         published: x.published,
       };
     });
-    console.log(data);
     axios
       .post("/api/marks/marks", data)
       .then((res) => {
@@ -142,18 +147,17 @@ const ExamDetails = () => {
         setOpen={setOpen}
         onSuccess={deleteExam}
       />
-      <div className="header d-flex flex-row justify-content-between my-4 mx-auto">
+      <div
+        className={`header d-flex flex-row justify-content-between my-4 mx-md-5`}
+      >
         <Title title="Exam Details" />
         <div
-          className="options d-flex flex-row justify-content-end px-3"
-          style={{
-            marginRight: "100px",
-          }}
+          className={`d-flex flex-row justify-content-end px-3 align-items-center ${Styles.options}}`}
         >
           <div className="button mx-2">
             <UpdateButton
               onClick={() => {
-                //   console.log("clicked");
+                navigate(`/teacher/exams/update/${id}`);
               }}
             />
           </div>
@@ -166,10 +170,10 @@ const ExamDetails = () => {
           </div>
         </div>
       </div>
-      <div className="body m-2">
+      <div className="body m-1 m-sm-2">
         <form onSubmit={handleSubmit((data) => console.log(data))}>
           <div className="row">
-            <div className="col-6">
+            <div className="col-md-6 col-12">
               <Input
                 name="exam_code"
                 label="Exam Code"
@@ -220,7 +224,7 @@ const ExamDetails = () => {
                 disabled={true}
               />
             </div>
-            <div className="col-6">
+            <div className="col-md-6 col-12">
               <Input
                 name="teacher_name"
                 label="Teacher Name"
@@ -265,70 +269,55 @@ const ExamDetails = () => {
             </div>
           </div>
           <div className="student-list m-2">
-            <div className="row   table-responsive p-5">
-              <div className="header">
-                <p className="display-6 my-3">Students</p>
+            <div className="table-responsive p-md-5">
+              <div className="header mb-4">
+                <Title title="Students" />
               </div>
-              <table className="table table-striped w-75 mx-auto">
-                <thead>
-                  <tr>
-                    <th>#</th>
-                    <th>Name</th>
-                    <th>Roll Number</th>
-                    <td>Marks</td>
-                    <th>Status</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {students &&
-                    students.map((student, indx) => {
-                      return (
-                        <tr key={Math.random()}>
-                          <td>{indx + 1}</td>
-                          <td>{student.student.name}</td>
-                          <td>{student.student.roll_number}</td>
-                          <td>
-                            <input
-                              type="number"
-                              className="form-control w-25  "
-                              name="marks"
-                              value={student.mark}
-                              max={examData.total_marks}
-                              onChange={(event) => {
-                                //update a value in the array and then set the array
-                                var temp = [...students];
-                                temp[indx].mark = event.target.value;
-                                setStudents(temp);
-                              }}
-                            />
-                          </td>
+              <div className={`${Styles.table}`}>
+                <Table
+                  thead={["#", "Roll Number", "Name", "Marks", "Published"]}
+                  tbody={students.map((x, indx) => {
+                    return [
+                      x.student.roll_number,
+                      x.student.name,
+                      <input
+                        type="number"
+                        className="form-control w-50  mx-auto"
+                        name="marks"
+                        value={x.mark}
+                        max={totalMarks}
+                        onChange={(event) => {
+                          //update a value in the array and then set the array
+                          var temp = [...students];
+                          temp[indx].mark = event.target.value;
+                          setStudents(temp);
+                        }}
+                      />,
 
-                          <td>
-                            <Switch
-                              color="warning"
-                              checked={student.published}
-                              onChange={(event) => {
-                                //update a value in the array and then set the array
-                                var temp = [...students];
-                                temp[indx].published = event.target.checked;
+                      <Switch
+                        color="default"
+                        checked={x.published}
+                        onChange={(event) => {
+                          //update a value in the array and then set the array
+                          var temp = [...students];
+                          temp[indx].published = event.target.checked;
+                          setStudents(temp);
+                        }}
+                      />,
+                      () => {
+                        console.log;
+                      },
+                    ];
+                  })}
+                  tooltip={false}
+                  hover={false}
+                />
+              </div>
 
-                                setStudents(temp);
-                              }}
-                            />
-                            <br />
-                            {student.published
-                              ? "    Published"
-                              : "Not Published"}
-                          </td>
-                        </tr>
-                      );
-                    })}
-                </tbody>
-              </table>
               <div className="mx-auto my-5 p-2 text-center">
                 <button
                   type="button"
-                  className="btn btn-success"
+                  className="btn btn-outline-dark"
                   onClick={save}
                 >
                   Save

@@ -24,3 +24,16 @@
   color: var(--primary);
   background-color: #fff;
 }
+
+@media screen and (max-width: 1376px) {
+  .icon {
+    font-size: 20px;
+    padding: 10px;
+  }
+}
+@media screen and (max-width: 768px) {
+  .icon {
+    font-size: 18px;
+    padding: 7px;
+  }
+}

@@ -1,6 +1,7 @@
 .input {
   background-color: #f7f7f9;
   border-radius: 1px;
+  min-width: 100px;
 }
 .label {
   font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,

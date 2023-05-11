@@ -1,25 +1,54 @@
 import Styles from "./DashboardCard.module.css";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faArrowAltCircleRight,
+  faCartShopping,
+  faPen,
+} from "@fortawesome/free-solid-svg-icons";
+
 const DashboardCard = (props) => {
+  const [color, setColor] = useState(Styles.bgBlue);
+  useEffect(() => {
+    if (props.color) {
+      console.log(props.color);
+      if (props.color == "blue") {
+        setColor(Styles.bgBlue);
+      } else if (props.color == "green") {
+        setColor(Styles.bgGreen);
+      } else if (props.color == "red") {
+        setColor(Styles.bgRed);
+      } else if (props.color == "yellow") {
+        setColor(Styles.bgYellow);
+      } else {
+        setColor(Styles.bgBlue);
+      }
+    } else {
+      setColor(Styles.bgBlue);
+    }
+  }, []);
+
   return (
-    <Link to={props.options.link} className={`${Styles.cardSingleLink}`}>
-      <div className={`${Styles.cardSingle}`}>
-        <div className={`${Styles.cardText}`}>
-          <div>
-            <h1>{props.options.value}</h1>
-            <span>{props.options.name}</span>
+    <div className="row">
+      <div className="col-md-4 col-xl-3">
+        <div className={`${Styles.card}  ${Styles.orderCard}  ${color}`}>
+          <div className={`${Styles.cardBlock}`}>
+            <h6 className="">Orders Received</h6>
+            <h4 className={`${Styles.cardBody}`}>
+              <span>486</span>
+              <FontAwesomeIcon icon={faCartShopping} />
+            </h4>
           </div>
-          <div className={`${Styles.cardSingleIcon}`}>
-            <span> {props.options.icon}</span>
+          <div className={`${Styles.moreInfo}`}>
+            More info{" "}
+            <span>
+              <FontAwesomeIcon icon={faArrowAltCircleRight} />
+            </span>
           </div>
         </div>
-        {props.options.graph ? (
-          <div className={`${Styles.cardGraph}`}></div>
-        ) : (
-          <></>
-        )}
       </div>
-    </Link>
+    </div>
   );
 };
 

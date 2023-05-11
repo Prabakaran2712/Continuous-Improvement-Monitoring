@@ -1,26 +1,10 @@
-import "./Loading.css";
-
+import Styles from "./Loading.module.css";
+import { CircularProgress } from "@mui/material";
 const Loading = () => {
   return (
-    <div className="loading mx-auto ">
-      <div className="loader mx-auto my-5">
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-      </div>
-      <div
-        className="
-    loader-text text-center 
-    "
-      >
-        Loading
-      </div>
+    <div className={`${Styles.loading}`}>
+      <h1>Loading . . . </h1>
+      <CircularProgress color="inherit" />
     </div>
   );
 };

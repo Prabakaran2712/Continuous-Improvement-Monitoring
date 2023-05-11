@@ -136,7 +136,7 @@ const ViewExam = () => {
         exam.teaches.batch.start_year + "-" + exam.teaches.batch.end_year,
         <FontAwesomeIcon icon={faArrowRight} />,
         () => {
-          navigate(`/teacher/exam/${exam._id}`);
+          navigate(`/teacher/exams/${exam._id}`);
         },
       ]);
     });
@@ -184,7 +184,7 @@ const ViewExam = () => {
             <CreateExamButton
               onClick={() => {
                 console.log("clicked");
-                navigate("/teacher/createExam");
+                navigate("/teacher/exams/create");
               }}
             />
           </div>
@@ -203,6 +203,8 @@ const ViewExam = () => {
               ]}
               tbody={Data}
               sort={sort}
+              type="sort"
+              tooltip={true}
             />
           </div>
           <div className={`${Styles.optionPane}`}>

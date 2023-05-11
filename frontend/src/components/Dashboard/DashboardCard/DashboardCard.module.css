@@ -1,39 +1,78 @@
-.cardSingleLink {
-  margin-top: 50px;
-  margin-left: auto;
-  margin-right: auto;
+.orderCard {
+  color: #fff;
 }
-.cardSingle {
-  width: 400px;
-  border-radius: 10px;
-  border: 2px solid #b4b4b4c7;
+
+.bgBlue {
+  background: linear-gradient(45deg, #4099ff, #73b4ff);
 }
-.cardSingle .cardText {
-  color: black;
+
+.bgGreen {
+  background: linear-gradient(45deg, #2ed8b6, #59e0c5);
+}
+
+.bgYellow {
+  background: linear-gradient(45deg, #ffb64d, #ffcb80);
+}
+
+.bgPink {
+  background: linear-gradient(45deg, #ff5370, #ff869a);
+}
+
+.card {
+  border-radius: 5px;
+  -webkit-box-shadow: 0 1px 2.94px 0.06px rgba(4, 26, 55, 0.16);
+  box-shadow: 0 1px 2.94px 0.06px rgba(4, 26, 55, 0.16);
+  border: none;
+  margin-bottom: 30px;
+  -webkit-transition: all 0.3s ease-in-out;
+  transition: all 0.3s ease-in-out;
+  width: 350px;
+}
+
+.card .cardBlock {
+  padding: 30px 30px;
+}
+.card .cardBlock svg {
+  font-size: 40px;
+}
+.card .cardBlock h6 {
+  font-size: 1.1rem;
+  font-weight: 500;
+}
+.orderCard i {
+  font-size: 26px;
+}
+
+.fLeft {
+  float: left;
+}
+
+.fRight {
+  float: right;
+}
+.card .cardBody {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  padding: 3rem;
+  align-items: center;
 }
-.cardSingle:hover {
-  border: 2px solid #0e0101;
+.moreInfo {
+  text-align: center;
+  padding-top: 6px;
+  padding-bottom: 6px;
 }
-.cardSingle .cardText h1 {
-  font-size: 2rem;
-  font-weight: 600;
-}
-.cardSingle .cardText span {
-  font-size: 1.1rem;
-  font-weight: 600;
+.bgBlue .moreInfo {
+  background: linear-gradient(45deg, #1c5da8, #1d73d4);
 }
 
-.cardSingleIcon {
-  font-size: 2rem;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
+.bgGreen .moreInfo {
+  background: linear-gradient(45deg, #1ca086, #1cd4b2);
 }
-.cardSingle .cardText .cardSingleIcon span {
-  font-size: 1.5rem;
-  color: black;
+
+.bgYellow .moreInfo {
+  background: linear-gradient(45deg, #b67700, #d49a00);
+}
+
+.bgPink .moreInfo {
+  background: linear-gradient(45deg, #a8004d, #d4006b);
 }

@@ -1,0 +1,37 @@
+.loading span {
+  width: 4.5rem !important;
+  height: 4.5rem !important;
+  text-align: center;
+}
+.loading h1 {
+  font-size: 2.5rem;
+  font-weight: 300;
+  margin: 2rem 0;
+}
+.loading {
+  text-align: center;
+  margin-top: 13rem;
+}
+
+@media screen and (max-width: 1376px) {
+  .loading {
+    margin-top: 15rem;
+  }
+  .loading h1 {
+    font-size: 2rem;
+  }
+  .loading span {
+    width: 4rem !important;
+    height: 4rem !important;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .loading h1 {
+    font-size: 1.5rem;
+  }
+  .loading span {
+    width: 3rem !important;
+    height: 3rem !important;
+  }
+}

@@ -1,6 +1,7 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser, faPen } from "@fortawesome/free-solid-svg-icons";
-import DashboardCard from "../../components/Dashboard/DashboardCard/DashboardCard";
+import Styles from "./Dashboard.module.css";
+import DashboardCard from "../../../components/Dashboard/DashboardCard/DashboardCard";
 const Dashboard = () => {
   const options = [
     {
@@ -26,9 +27,9 @@ const Dashboard = () => {
   ];
 
   return (
-    <div className="cards">
+    <div className={`${Styles.cards}`}>
       {options.map((option, index) => (
-        <DashboardCard key={index} options={option} />
+        <DashboardCard key={index} options={option} color={"green"} />
       ))}
     </div>
   );

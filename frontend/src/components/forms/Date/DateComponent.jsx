@@ -11,6 +11,7 @@ const DateComponent = (props) => {
         label=""
         value={props.value ? props.value : ""}
         onChange={props.onChange}
+        defaultValue={props.defaultValue ? props.defaultValue : ""}
       />
     </div>
   );

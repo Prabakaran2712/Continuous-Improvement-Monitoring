@@ -82,7 +82,7 @@ const StudentLogin = () => {
   return (
     <div className="card  w-50 mx-auto m-5 p-5">
       <div className="option-pane card-title d-flex flex-row justify-content-center ">
-        <div className="display-6">Sign in (Student) </div>
+        <div className="display-6">Student Login </div>
       </div>
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className="form-group mx-5 my-3">
