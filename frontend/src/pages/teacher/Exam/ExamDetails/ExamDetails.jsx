@@ -30,6 +30,7 @@ const ExamDetails = () => {
   const [open, setOpen] = useState(false);
   const navigate = useNavigate();
   const [totalMarks, setTotalMarks] = useState(100);
+  const [published, setPublished] = useState(false);
 
   const deleteExam = () => {
     axios
@@ -99,7 +100,12 @@ const ExamDetails = () => {
         );
         setValue("exam_date", moment(res.data.exam_date).format("YYYY-MM-DD"));
         setValue("exam_time", res.data.exam_time);
-
+        setPublished(res.data.published);
+        if (res.data.published) {
+          setValue("published", "Published");
+        } else {
+          setValue("published", "Not Published");
+        }
         //get marks for exam
         axios.get(`/api/marks/exam/${id}`).then((res) => {
           //sort students by roll number
@@ -107,6 +113,7 @@ const ExamDetails = () => {
             return a.student.roll_number - b.student.roll_number;
           });
           setStudents(sorted);
+
           setLoading(false);
         });
       })
@@ -128,7 +135,16 @@ const ExamDetails = () => {
     axios
       .post("/api/marks/marks", data)
       .then((res) => {
-        notify("success");
+        var data = { published: published };
+        axios
+          .put(`/api/exams/publish/${id}`, data)
+          .then((res) => {
+            notify("success");
+          })
+          .catch((err) => {
+            console.log(err);
+            notify("error");
+          });
       })
       .catch((err) => {
         console.log(err);
@@ -148,7 +164,7 @@ const ExamDetails = () => {
         onSuccess={deleteExam}
       />
       <div
-        className={`header d-flex flex-row justify-content-between my-4 mx-md-5`}
+        className={`header d-flex flex-row justify-content-between my-lg-4 my-sm-2 mx-md-5 mx-sm-4`}
       >
         <Title title="Exam Details" />
         <div
@@ -266,62 +282,74 @@ const ExamDetails = () => {
                 conditions={{ required: true, maxLength: 100 }}
                 disabled={true}
               />
+              <Input
+                name="published"
+                label="Status"
+                register={register}
+                type="text"
+                conditions={{ required: true, maxLength: 100 }}
+                disabled={true}
+              />
             </div>
           </div>
           <div className="student-list m-2">
             <div className="table-responsive p-md-5">
-              <div className="header mb-4">
+              <div className="header mb-lg-3 m-2">
                 <Title title="Students" />
               </div>
-              <div className={`${Styles.table}`}>
-                <Table
-                  thead={["#", "Roll Number", "Name", "Marks", "Published"]}
-                  tbody={students.map((x, indx) => {
-                    return [
-                      x.student.roll_number,
-                      x.student.name,
-                      <input
-                        type="number"
-                        className="form-control w-50  mx-auto"
-                        name="marks"
-                        value={x.mark}
-                        max={totalMarks}
-                        onChange={(event) => {
-                          //update a value in the array and then set the array
-                          var temp = [...students];
-                          temp[indx].mark = event.target.value;
-                          setStudents(temp);
-                        }}
-                      />,
+              <div className={`${Styles.body}`}>
+                <div className={`${Styles.table}`}>
+                  <Table
+                    thead={["#", "Roll Number", "Name", "Marks"]}
+                    tbody={students.map((x, indx) => {
+                      return [
+                        x.student.roll_number,
+                        x.student.name,
+                        <input
+                          type="number"
+                          className="form-control w-50  mx-auto"
+                          name="marks"
+                          value={x.mark}
+                          max={totalMarks}
+                          onChange={(event) => {
+                            //update a value in the array and then set the array
+                            var temp = [...students];
+                            temp[indx].mark = event.target.value;
+                            setStudents(temp);
+                          }}
+                        />,
 
-                      <Switch
-                        color="default"
-                        checked={x.published}
-                        onChange={(event) => {
-                          //update a value in the array and then set the array
-                          var temp = [...students];
-                          temp[indx].published = event.target.checked;
-                          setStudents(temp);
-                        }}
-                      />,
-                      () => {
-                        console.log;
-                      },
-                    ];
-                  })}
-                  tooltip={false}
-                  hover={false}
-                />
-              </div>
+                        () => {
+                          console.log;
+                        },
+                      ];
+                    })}
+                    tooltip={false}
+                    hover={false}
+                  />
+                </div>
 
-              <div className="mx-auto my-5 p-2 text-center">
-                <button
-                  type="button"
-                  className="btn btn-outline-dark"
-                  onClick={save}
-                >
-                  Save
-                </button>
+                <div className={`mx-auto text-center ${Styles.submitOptions}`}>
+                  <button
+                    type="button"
+                    className="btn btn-outline-dark"
+                    onClick={save}
+                  >
+                    Save
+                  </button>
+                  <div className={`${Styles.publish}`}>
+                    <label className="me-2">Publish</label>
+                    <Switch
+                      color="default"
+                      checked={published}
+                      onChange={(event) => {
+                        setPublished(event.target.checked);
+                      }}
+                      width={100}
+                      height={50}
+                    />
+                  </div>
+                </div>
               </div>
             </div>
           </div>

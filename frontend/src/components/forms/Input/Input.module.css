@@ -8,3 +8,18 @@
     Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
   font-weight: 300;
 }
+
+@media screen and (max-width: 768px) {
+  .input {
+    font-size: 0.9rem;
+  }
+}
+@media screen and (max-width: 576px) {
+  .input {
+    font-size: 0.8rem;
+  }
+  .container {
+    margin: 0;
+    padding: 0;
+  }
+}

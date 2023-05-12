@@ -164,7 +164,7 @@ const addMoreMarks = async (req, res) => {
       if (md.length > 0) {
         await Mark.updateOne(
           { exam: mark.exam, student: mark.student },
-          { $set: { mark: mark.mark, published: mark.published } }
+          { $set: { mark: mark.mark } }
         );
       } else {
         const m = new Mark(mark);

@@ -25,6 +25,10 @@ const ClassSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  publised: {
+    type: Boolean,
+    default: false,
+  },
 });
 
 module.exports = mongoose.model("Class", ClassSchema);

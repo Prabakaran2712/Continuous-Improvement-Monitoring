@@ -176,11 +176,11 @@ const ViewExam = () => {
   } else {
     return (
       <Container>
-        <div className="header d-flex flex-row justify-content-between my-5">
+        <div className="header d-flex flex-row justify-content-between my-lg-3 mt-sm-1">
           <div className="title">
             <Title title="Exams" />
           </div>
-          <div className="options d-flex flex-row justify-content-end m-2">
+          <div className="options d-flex flex-row justify-content-end m-lg-2">
             <CreateExamButton
               onClick={() => {
                 console.log("clicked");

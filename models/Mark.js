@@ -15,10 +15,6 @@ const MarkSchema = new mongoose.Schema({
     ref: "Exam",
     required: true,
   },
-  published: {
-    type: Boolean,
-    default: false,
-  },
 });
 
 module.exports = mongoose.model("Mark", MarkSchema);

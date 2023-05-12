@@ -62,10 +62,16 @@
 }
 
 @media screen and (max-width: 768px) {
+  .body {
+    margin: 5px 0px;
+  }
   .examOption {
     width: 100%;
   }
   .batchOption {
     width: 100%;
+  }
+  .optionPane {
+    padding-top: 0px;
   }
 }

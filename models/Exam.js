@@ -32,6 +32,10 @@ const ExamSchema = new mongoose.Schema({
     type: Number,
     required: true,
   },
+  published: {
+    type: Boolean,
+    default: false,
+  },
 });
 
 module.exports = mongoose.model("Exam", ExamSchema);

@@ -126,6 +126,21 @@ const updateExam = async (req, res) => {
       exam.department = req.body.department;
       exam.semester = req.body.semester;
       exam.total_marks = req.body.total_marks;
+      exam.published = req.body.published;
+      const updatedExam = await exam.save();
+      res.status(200).json(updatedExam);
+    }
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+//publish exam
+const publishExam = async (req, res) => {
+  try {
+    const exam = await Exam.findById(req.params.id);
+    if (exam) {
+      exam.published = req.body.published;
       const updatedExam = await exam.save();
       res.status(200).json(updatedExam);
     }
@@ -170,6 +185,7 @@ module.exports = {
   getExamsByTeacherId,
   addNewExam,
   updateExam,
+  publishExam,
   deleteExam,
   getExamsBetweenDates,
 };

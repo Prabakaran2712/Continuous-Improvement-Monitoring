@@ -1,8 +1,13 @@
+.body {
+  display: flex;
+  flex-direction: column-reverse;
+  align-items: center;
+  justify-content: center;
+}
 .table {
   width: 70%;
   margin-left: auto;
   margin-right: auto;
-  margin-top: 4%;
   overflow: scroll;
 }
 
@@ -10,7 +15,22 @@
   min-width: 100px;
 }
 
+.submitOptions {
+  padding: 1.1rem;
+  display: flex;
+  flex-direction: row-reverse;
+  align-items: center;
+  justify-content: space-between;
+  width: 70%;
+}
+.publish {
+  font-size: 1.4rem;
+}
+
 @media screen and (max-width: 1200px) {
+  .submitOptions {
+    width: 100%;
+  }
   .table {
     width: 100%;
   }
@@ -19,6 +39,15 @@
 @media screen and (max-width: 768px) {
   .table td input {
     font-size: 0.75rem;
+  }
+  .submitOptions {
+    padding: 0.5rem;
+  }
+  .submitOptions button {
+    font-size: 0.9rem;
+  }
+  .publish {
+    font-size: 0.9rem;
   }
 }
 .options {

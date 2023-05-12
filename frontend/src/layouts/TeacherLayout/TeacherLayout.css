@@ -187,10 +187,10 @@ main {
 
 @media only screen and (max-width: 768px) {
   main {
-    margin-left: 70px;
+    margin-left: 0px;
   }
   .sidebar {
-    width: 70px;
+    width: 0px;
   }
   .sidebar .sidebar-brand h2 span:last-child,
   .sidebar li a span:last-child {

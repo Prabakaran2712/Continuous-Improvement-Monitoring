@@ -11,6 +11,7 @@ import TimeComponent from "../../../../components/forms/Time/TimeComponent";
 import Select from "../../../../components/forms/Select";
 import { useAuthContext } from "../../../../hooks/useAuthContext";
 import Styles from "./CreateExam.module.css";
+import Loading from "../../../../components/Loading/Loading";
 
 const CreateExam = () => {
   const { register, handleSubmit } = useForm();
@@ -145,6 +146,10 @@ const CreateExam = () => {
         notify("error");
       });
   };
+  if (loading) {
+    return <Loading />;
+  }
+
   return (
     <Container>
       <div className="  w-100 mx-auto my-2 ">

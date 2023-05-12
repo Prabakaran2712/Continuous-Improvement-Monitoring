@@ -4,6 +4,7 @@ const {
   getExamsByTeacherId,
   addNewExam,
   updateExam,
+  publishExam,
   deleteExam,
   getExamsBetweenDates,
 } = require("../controllers/examController");
@@ -24,6 +25,9 @@ router.post("/", addNewExam);
 
 //update exam
 router.put("/:id", updateExam);
+
+//publish exam
+router.put("/publish/:id", publishExam);
 
 //delete exam
 router.delete("/:id", deleteExam);
