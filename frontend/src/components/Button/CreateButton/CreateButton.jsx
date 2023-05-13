@@ -1,7 +1,7 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlusCircle } from "@fortawesome/free-solid-svg-icons";
-import Styles from "./CreateExamButton.module.css";
-const CreateExamButton = (props) => {
+import Styles from "./CreateButton.module.css";
+const CreateButton = (props) => {
   return (
     <button className={`${Styles.btn}`} onClick={props.onClick}>
       <FontAwesomeIcon
@@ -14,4 +14,4 @@ const CreateExamButton = (props) => {
   );
 };
 
-export default CreateExamButton;
+export default CreateButton;

@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { useAuthContext } from "../../../hooks/useAuthContext";
 import Loading from "../../../components/Loading/Loading";
 import { useNavigate } from "react-router-dom";
-import CreateExamButton from "../../../components/Exam/CreateExamButton/CreateExamButton";
+import CreateButton from "../../../components/Button/CreateButton/CreateButton";
 
 const ViewChats = () => {
   const [chats, setChats] = useState([]);
@@ -37,7 +37,7 @@ const ViewChats = () => {
       <div className="header d-flex flex-row justify-content-between my-3">
         <h1>View Chats</h1>
 
-        <CreateExamButton
+        <CreateButton
           onClick={() => {
             createChat(auth);
           }}

@@ -33,22 +33,6 @@ const TeacherLayout = () => {
   const { dispatch } = useAuthContext();
   const [title, setTitle] = useState("Dashboard");
   const auth = useAuthContext();
-  const profile = {
-    name: auth.user.name,
-    role: auth.userType,
-    items: [
-      {
-        name: "Profile",
-        link: "/teacher/profile",
-        icon: <FontAwesomeIcon icon={faUser} />,
-      },
-      {
-        name: "Logout",
-        link: "/teacher/logout",
-        icon: <FontAwesomeIcon icon={faSignOutAlt} />,
-      },
-    ],
-  };
   const options = [
     {
       name: "Dashboard",
@@ -112,7 +96,7 @@ const TeacherLayout = () => {
 
   useEffect(() => {
     setLoading(true);
-    console.log(auth);
+
     if (
       auth.isAuthenticated === false ||
       (auth.userType !== "teacher" && auth.userType !== "admin")
@@ -131,6 +115,22 @@ const TeacherLayout = () => {
     return <Loading />;
   }
   if (auth.userType === "teacher") {
+    const profile = {
+      name: auth.user.name,
+      role: auth.userType,
+      items: [
+        {
+          name: "Profile",
+          link: "/teacher/profile",
+          icon: <FontAwesomeIcon icon={faUser} />,
+        },
+        {
+          name: "Logout",
+          link: "/teacher/logout",
+          icon: <FontAwesomeIcon icon={faSignOutAlt} />,
+        },
+      ],
+    };
     return (
       <div style={{ height: "100%", width: "100%" }} className={`row m-0 g-0 `}>
         <div>
@@ -147,7 +147,7 @@ const TeacherLayout = () => {
                 {options.map((option) => {
                   return (
                     <li key={Math.random()}>
-                      <Link to={option.link} onClick={setTitle(option.title)}>
+                      <Link to={option.link}>
                         {option.icon}
                         <span>{option.name}</span>
                       </Link>
@@ -167,16 +167,7 @@ const TeacherLayout = () => {
               </h2>
 
               <div className="user-wrapper">
-                <img
-                  src="https://i.scdn.co/image/ab6761610000e5eb81a1d05f4ee442f176e929cb"
-                  width="40px"
-                  height="40px"
-                  alt=""
-                />
-                <div>
-                  <h4>{auth.user.name}</h4>
-                  <small>{auth.userType}</small>
-                </div>
+                <Dropdown option={profile} />
               </div>
             </header>
             <main>
@@ -188,6 +179,22 @@ const TeacherLayout = () => {
     );
   }
   if (auth.userType === "admin") {
+    const profile = {
+      name: auth.user.name,
+      role: auth.userType,
+      items: [
+        {
+          name: "Profile",
+          link: "/teacher/profile",
+          icon: <FontAwesomeIcon icon={faUser} />,
+        },
+        {
+          name: "Logout",
+          link: "/teacher/logout",
+          icon: <FontAwesomeIcon icon={faSignOutAlt} />,
+        },
+      ],
+    };
     return (
       <div style={{ height: "100%", width: "100%" }}>
         <input type="checkbox" id="nav-toggle" />

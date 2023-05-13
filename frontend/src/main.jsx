@@ -39,7 +39,7 @@ import Class from "./pages/teacher/Class/Class";
 import StudentDasboard from "./pages/student/StudentDasboard/StudentDasboard";
 import StudentLogin from "./pages/student/StudentLogin";
 import About from "./pages/about/About";
-import TeacherCourses from "./pages/teacher/Courses/Courses";
+import TeacherCourses from "./pages/teacher/Courses/CourseList/CourseList";
 import ViewCourse from "./pages/teacher/Courses/ViewCourse/ViewCourse";
 import AddCourse from "./pages/teacher/Courses/AddCourse/AddCourse";
 import ViewStudentCourses from "./pages/student/Courses/ViewStudentCourses";
@@ -244,11 +244,13 @@ const router = createBrowserRouter([
           },
           {
             path: "courses",
-            element: <TeacherCourses />,
-          },
-          {
-            path: "courses/add",
-            element: <AddCourse />,
+            children: [
+              { path: "", element: <TeacherCourses /> },
+              {
+                path: "add",
+                element: <AddCourse />,
+              },
+            ],
           },
           {
             path: "chats",

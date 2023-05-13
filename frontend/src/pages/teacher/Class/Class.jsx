@@ -7,7 +7,8 @@ import { useEffect } from "react";
 import { useState } from "react";
 import axios from "axios";
 import { useAuthContext } from "../../../hooks/useAuthContext";
-import CreateExamButton from "../../../components/Exam/CreateExamButton/CreateExamButton";
+import CreateButton from "../../../components/Button/CreateButton/CreateButton";
+import Table from "../../../components/Table/Table";
 import Loading from "../../../components/Loading/Loading";
 
 const Class = () => {
@@ -38,58 +39,35 @@ const Class = () => {
 
   return (
     <Container>
-      <div className="header my-5">
-        <Title title="Class" />
-        <div className="option-pane d-flex flex-row justify-content-end">
-          <CreateExamButton
-            name="Create"
-            type="success"
+      <div className="header d-flex flex-row justify-content-between my-lg-3 mt-sm-1 mx-lg-5">
+        <div className="title">
+          <Title title="Your Classes" />
+        </div>
+        <div className="options d-flex flex-row justify-content-end m-lg-2">
+          <CreateButton
             onClick={() => {
+              console.log("clicked");
               navigate("/teacher/class/create");
             }}
           />
         </div>
       </div>
       <div className="body m-2">
-        <div className="row   table-responsive px-5">
-          <table
-            className="table table-striped table-hover  mx-auto"
-            style={{ cursor: "pointer" }}
-          >
-            <thead className="table-dark">
-              <tr>
-                <th> #</th>
-                <th>Course Name</th>
-                <th>Topic</th>
-                <th>Date</th>
-                <th>Time</th>
-              </tr>
-            </thead>
-            <tbody>
-              {data &&
-                data.map((classData, index) => {
-                  return (
-                    <tr
-                      key={Math.random()}
-                      onClick={() => {
-                        navigate(`/teacher/class/${classData._id}`);
-                      }}
-                    >
-                      <td>{index + 1}</td>
-                      <td>{classData.teaches.course.name}</td>
-                      <td>{classData.topic}</td>
-                      <td>
-                        {
-                          //convert to date string
-                          moment(classData.date).format("DD-MM-YYYY")
-                        }
-                      </td>
-                      <td>{classData.time}</td>
-                    </tr>
-                  );
-                })}
-            </tbody>
-          </table>
+        <div className="row   table-responsive px-5 text-center">
+          <Table
+            thead={["#", "Course Name", "Topic", "Date", "Time"]}
+            tbody={data.map((classData, index) => {
+              return [
+                classData.teaches.course.name,
+                classData.topic,
+                moment(classData.date).format("DD-MM-YYYY"),
+                classData.time,
+                () => {
+                  navigate(`/teacher/class/${classData._id}`);
+                },
+              ];
+            })}
+          />
         </div>
       </div>
     </Container>

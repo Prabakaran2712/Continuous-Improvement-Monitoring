@@ -3,7 +3,7 @@ import Title from "../../../../components/forms/Title/Title";
 import Table from "../../../../components/Table/Table";
 import Styles from "./ViewExam.module.css";
 import Loading from "../../../../components/Loading/Loading";
-import CreateExamButton from "../../../../components/Exam/CreateExamButton/CreateExamButton";
+import CreateButton from "../../../../components/Button/CreateButton/CreateButton";
 
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -181,7 +181,7 @@ const ViewExam = () => {
             <Title title="Exams" />
           </div>
           <div className="options d-flex flex-row justify-content-end m-lg-2">
-            <CreateExamButton
+            <CreateButton
               onClick={() => {
                 console.log("clicked");
                 navigate("/teacher/exams/create");
