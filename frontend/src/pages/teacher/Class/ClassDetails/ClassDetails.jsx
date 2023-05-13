@@ -5,7 +5,7 @@ import { Store } from "react-notifications-component";
 import Container from "../../../../components/Container/Container";
 import Title from "../../../../components/forms/Title/Title";
 import Input from "../../../../components/forms/Input/Input";
-import Select from "../../../../components/forms/Select";
+import Select from "../../../../components/forms/Select/Select";
 import Switch from "@mui/material/Switch";
 import { useEffect } from "react";
 import axios from "axios";

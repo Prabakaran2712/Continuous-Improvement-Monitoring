@@ -8,7 +8,7 @@ import Container from "../../../components/Container/Container";
 import Title from "../../../components/forms/Title/Title";
 
 import { Switch } from "@mui/material";
-import Select from "../../../components/forms/Select";
+import Select from "../../../components/forms/Select/Select";
 import SubjectData from "../../../components/SubjectData/SubjectData";
 
 const ExamDetails = () => {

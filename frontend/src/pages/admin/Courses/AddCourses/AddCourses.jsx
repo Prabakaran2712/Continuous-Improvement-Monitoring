@@ -6,7 +6,7 @@ import { Store } from "react-notifications-component";
 
 //form elements
 import Input from "../../../../components/forms/Input/Input";
-import Select from "../../../../components/forms/Select";
+import Select from "../../../../components/forms/Select/Select";
 import Title from "../../../../components/forms/Title/Title";
 import Submit from "../../../../components/forms/Submit/Submit";
 

@@ -1,7 +1,11 @@
+.select {
+  font-weight: 300;
+}
 .input {
   background-color: #f7f7f9;
   border-radius: 1px;
   min-width: 100px;
+  padding: 0.9rem;
 }
 .label {
   font-weight: 300;

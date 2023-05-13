@@ -9,7 +9,7 @@ import Input from "../../../../components/forms/Input/Input";
 import DateComponent from "../../../../components/forms/Date/DateComponent";
 import Submit from "../../../../components/forms/Submit/Submit";
 import TimeComponent from "../../../../components/forms/Time/TimeComponent";
-import Select from "../../../../components/forms/Select";
+import Select from "../../../../components/forms/Select/Select";
 import { useNavigate } from "react-router-dom";
 
 const StudentChatCreate = () => {

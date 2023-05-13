@@ -35,7 +35,7 @@ import UpdateCourses from "./pages/admin/Courses/UpdateCourses";
 import AddCourses from "./pages/admin/Courses/AddCourses/AddCourses";
 import TeacherLogin from "./pages/teacher/teacherLogin/TeacherLogin";
 import CreateClass from "./pages/teacher/Class/CreateClass/CreateClass";
-import Class from "./pages/teacher/Class/Class";
+import ViewClass from "./pages/teacher/Class/ViewClass/ViewClass";
 import StudentDasboard from "./pages/student/StudentDasboard/StudentDasboard";
 import StudentLogin from "./pages/student/StudentLogin";
 import About from "./pages/about/About";
@@ -250,6 +250,10 @@ const router = createBrowserRouter([
                 path: "add",
                 element: <AddCourse />,
               },
+              {
+                path: "view/:id",
+                element: <ViewCourse />,
+              },
             ],
           },
           {
@@ -262,16 +266,13 @@ const router = createBrowserRouter([
           },
 
           //view course on id
-          {
-            path: "courses/view/:id",
-            element: <ViewCourse />,
-          },
+
           {
             path: "class",
             children: [
               {
                 path: "",
-                element: <Class />,
+                element: <ViewClass />,
               },
               {
                 path: ":id",

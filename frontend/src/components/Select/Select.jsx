@@ -1,9 +1,10 @@
+import Styles from "./Select.module.css";
 const Select = (props) => {
   return (
-    <div className="form-group   ">
-      <label className="my-3">{props.label}</label>
+    <div className={` form-group mx-md-5 my-sm-3 mx-5  ${Styles.select}`}>
+      <label className={`my-3 ${Styles.label}`}>{props.label}</label>
       <select
-        className="form-select"
+        className={`form-select ${Styles.input}`}
         onChange={props.onChange && props.onChange}
       >
         {props.options &&

@@ -6,7 +6,7 @@ import axios from "axios";
 
 //form elements
 import Input from "../../components/forms/Input/Input";
-import Select from "../../components/forms/Select";
+import Select from "../../components/forms/Select/Select";
 import { set } from "mongoose";
 
 const StudentRegister = () => {

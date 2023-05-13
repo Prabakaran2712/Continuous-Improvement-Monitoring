@@ -1,15 +1,19 @@
+//importing libraries
 import { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
+import { useAuthContext } from "../../../../hooks/useAuthContext";
 import axios from "axios";
 import { Store } from "react-notifications-component";
+
+//importing components
 import Container from "../../../../components/Container/Container";
 import Title from "../../../../components/forms/Title/Title";
 import DateComponent from "../../../../components/forms/Date/DateComponent";
 import Input from "../../../../components/forms/Input/Input";
 import Submit from "../../../../components/forms/Submit/Submit";
 import TimeComponent from "../../../../components/forms/Time/TimeComponent";
-import Select from "../../../../components/forms/Select";
-import { useAuthContext } from "../../../../hooks/useAuthContext";
+import Select from "../../../../components/forms/Select/Select";
+import Loading from "../../../../components/Loading/Loading";
 
 const CreateClass = () => {
   const { register, handleSubmit } = useForm();
@@ -20,8 +24,8 @@ const CreateClass = () => {
   const [teachesOption, setTeachesOption] = useState([]);
   const [teachesValue, setTeachesValue] = useState([]);
   const auth = useAuthContext();
-
   const user = auth.user._id;
+
   //function to select properties from an object
   function selectProps(...props) {
     return function (obj) {
@@ -68,6 +72,7 @@ const CreateClass = () => {
   };
 
   useEffect(() => {
+    window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
     axios.get(`/api/teaches/staff/${user}`).then((res) => {
       setUserData(res.data);
       //get course Details
@@ -99,6 +104,7 @@ const CreateClass = () => {
 
       //set teaches id as value
       setTeachesValue(res.data.map(selectProps("_id")));
+      console.log(teachesOption);
 
       setLoading(false);
     });
@@ -136,14 +142,20 @@ const CreateClass = () => {
         notify("error");
       });
   };
+
+  if (loading) {
+    return <Loading />;
+  }
   return (
     <Container>
-      <div className="  w-100 mx-auto my-5 ">
-        <Title title="Create Class" />
-        <div className="form-body w-75 mx-2  my-4">
+      <div className="  w-100 mx-auto my-lg-4  my-sm-3 ">
+        <div className="header mx-5">
+          <Title title="Create Class" />
+        </div>
+        <div className="form-body w-lg-75  mx-lg-5 my-lg-3 my-sm-2">
           <form onSubmit={handleSubmit(onSubmit)}>
             <div className="row">
-              <div className="col-6">
+              <div className="col-lg-6 col-md-12">
                 <Input
                   name="topic"
                   label="Topic"
@@ -163,7 +175,7 @@ const CreateClass = () => {
                   label={"Class Time"}
                 />
               </div>
-              <div className="col-6">
+              <div className="col-lg-6 col-md-12">
                 <Input
                   name="duration"
                   label="Class Duration"

@@ -8,7 +8,7 @@ import { useNavigate } from "react-router-dom";
 import Container from "../../../../components/Container/Container";
 import Title from "../../../../components/forms/Title/Title";
 import Input from "../../../../components/forms/Input/Input";
-import Select from "../../../../components/forms/Select";
+import Select from "../../../../components/forms/Select/Select";
 import Submit from "../../../../components/forms/Submit/Submit";
 import { useAuthContext } from "../../../../hooks/useAuthContext";
 

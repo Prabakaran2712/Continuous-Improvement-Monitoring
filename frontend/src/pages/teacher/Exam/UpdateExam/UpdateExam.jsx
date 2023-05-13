@@ -8,7 +8,7 @@ import DateComponent from "../../../../components/forms/Date/DateComponent";
 import Input from "../../../../components/forms/Input/Input";
 import Submit from "../../../../components/forms/Submit/Submit";
 import TimeComponent from "../../../../components/forms/Time/TimeComponent";
-import Select from "../../../../components/forms/Select";
+import Select from "../../../../components/forms/Select/Select";
 import { useAuthContext } from "../../../../hooks/useAuthContext";
 import { useParams, useNavigate } from "react-router-dom";
 import Styles from "./UpdateExam.module.css";

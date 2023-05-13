@@ -1,12 +1,12 @@
 import { MobileTimePicker } from "@mui/x-date-pickers";
-import styles from "./TimeComponent.module.css";
+import Styles from "./TimeComponent.module.css";
 const TimeComponent = (props) => {
   return (
     <div className="form-group mx-5 my-3">
-      <label className={`my-3 ${styles.label}`}>{props.label}</label>
+      <label className={`my-3 ${Styles.label}`}>{props.label}</label>
       <br />
       <MobileTimePicker
-        className={` ${styles.input}`}
+        className={` ${Styles.input}`}
         label=""
         value={props.value ? props.value : ""}
         onChange={props.onChange}

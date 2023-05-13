@@ -7,7 +7,7 @@ import { Store } from "react-notifications-component";
 
 //form elements
 import Input from "../../../components/forms/Input/Input";
-import Select from "../../../components/forms/Select";
+import Select from "../../../components/forms/Select/Select";
 const TeacherSignup = () => {
   const { register, handleSubmit } = useForm();
   const navigate = useNavigate();
