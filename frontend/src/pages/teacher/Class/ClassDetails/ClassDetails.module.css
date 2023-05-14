@@ -1,0 +1,62 @@
+.body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.table {
+  text-align: center;
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  overflow: scroll;
+}
+.table table {
+  width: 70%;
+}
+
+.table td input {
+  min-width: 100px;
+}
+
+.submitOptions {
+  padding: 1.1rem;
+  display: flex;
+  flex-direction: row-reverse;
+  align-items: center;
+  justify-content: center;
+  width: 70%;
+}
+.publish {
+  font-size: 1.4rem;
+}
+
+@media screen and (max-width: 1376px) {
+  .submitOptions {
+    width: 100%;
+  }
+  .table {
+    width: 100%;
+  }
+  .table table {
+    width: 100%;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .table td input {
+    font-size: 0.75rem;
+  }
+  .submitOptions {
+    padding: 0.5rem;
+  }
+  .submitOptions button {
+    font-size: 0.9rem;
+  }
+  .publish {
+    font-size: 0.9rem;
+  }
+}
+.options {
+  align-items: center;
+}

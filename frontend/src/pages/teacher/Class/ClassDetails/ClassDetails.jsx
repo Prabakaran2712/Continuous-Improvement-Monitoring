@@ -9,12 +9,37 @@ import Select from "../../../../components/forms/Select/Select";
 import Switch from "@mui/material/Switch";
 import { useEffect } from "react";
 import axios from "axios";
-
+import Table from "../../../../components/Table/Table";
+import Submit from "../../../../components/forms/Submit/Submit";
+import Loading from "../../../../components/Loading/Loading";
+import moment from "moment";
+import Styles from "./ClassDetails.module.css";
+import Header from "../../../../components/Page/Header/Header";
+import UpdateButton from "../../../../components/Button/UpdateButton/UpdateButton";
+import DeleteButton from "../../../../components/Button/DeleteButton/DeleteButton";
+import { useNavigate } from "react-router-dom";
+import Confirm from "../../../../components/Confirm/Confirm";
 const ClassDetails = () => {
   const { id } = useParams();
-  const { register, onSubmit } = useForm();
+  const { register, onSubmit, setValue } = useForm();
   const [students, setStudents] = useState([]);
   const [checked, setChecked] = useState(false);
+  const [loading, setLoading] = useState(true);
+  const [open, setOpen] = useState(false);
+
+  const navigate = useNavigate();
+  const deleteExam = () => {
+    // axios
+    //   .delete(`/api/classes/${id}`)
+    //   .then((res) => {
+    //     navigate("/teacher/class");
+    //   })
+    //   .catch((err) => {
+    //     console.log(err);
+    //   });
+    alert("delete");
+  };
+
   const notify = (option) => {
     if (option == "success") {
       Store.addNotification({
@@ -51,6 +76,19 @@ const ClassDetails = () => {
       .get(`/api/classes/${id}`)
       .then((res) => {
         console.log(res.data);
+        //set default values
+        setValue("course_name", res.data.teaches.course.name);
+        setValue(
+          "batch_name",
+          res.data.teaches.batch.start_year +
+            "-" +
+            res.data.teaches.batch.end_year
+        );
+        setValue("unit", res.data.unit);
+        setValue("topic", res.data.topic);
+        setValue("class_date", moment(res.data.date).format("YYYY-MM-DD"));
+        setValue("class_time", res.data.time);
+
         //get student from batch
         axios.get(`/api/teaches/${res.data.teaches._id}`).then((res) => {
           //get attendance for class
@@ -62,7 +100,13 @@ const ClassDetails = () => {
                 present: x.present,
               });
             });
+            //sort students by roll number
+            students.sort((a, b) => {
+              return a.roll_number - b.roll_number;
+            });
+
             setStudents(students);
+            setLoading(false);
           });
         });
       })
@@ -90,14 +134,37 @@ const ClassDetails = () => {
         notify("error");
       });
   };
+  if (loading) {
+    return <Loading />;
+  }
 
   return (
     <Container>
-      <Title title={"Class Details"} />
-      <div className="body m-2">
+      <Confirm
+        title="Delete Exam"
+        content="Are you sure you want to delete this exam?"
+        success="Yes"
+        fail="No"
+        open={open}
+        setOpen={setOpen}
+        onSuccess={deleteExam}
+      />
+      <Header
+        title="Class Details"
+        buttons={[
+          <UpdateButton
+            onClick={() => {
+              navigate("/teacher/class/update/" + id);
+            }}
+          />,
+          <DeleteButton onClick={() => {}} />,
+        ]}
+      />
+
+      <div className="body m-1 m-sm-2">
         <form>
           <div className="row">
-            <div className="col-6">
+            <div className="col-md-6 col-12">
               <Input
                 name="course_name"
                 label="Course Name"
@@ -124,7 +191,7 @@ const ClassDetails = () => {
                 disabled={true}
               />
             </div>
-            <div className="col-6">
+            <div className="col-md-6 col-12">
               <Input
                 name="batch_name"
                 label="Batch Name"
@@ -145,57 +212,48 @@ const ClassDetails = () => {
                 name="topic"
                 label="Topic"
                 register={register}
-                type="Number"
+                type="text"
                 conditions={{ required: true, maxLength: 100 }}
                 disabled={true}
               />
             </div>
-            <div className="student-list m-2">
-              <div className="row   table-responsive p-5">
-                <div className="header">
-                  <p className="display-6 my-3">Students</p>
+          </div>
+          <div className="student-list m-2">
+            <div className="table-responsive p-md-5">
+              <div className="header mb-lg-3 m-2">
+                <Title title="Students" />
+              </div>
+              <div className={`${Styles.body}`}>
+                <div className={`${Styles.table}`}>
+                  <Table
+                    thead={["#", "Name", "Roll Number", "Attendance"]}
+                    tbody={students.map((x, indx) => {
+                      return [
+                        x.name,
+                        x.roll_number,
+                        <>
+                          <Switch
+                            color="warning"
+                            checked={x.present}
+                            onChange={(event) => {
+                              var temp = [...students];
+                              temp[indx].present = event.target.checked;
+                              setStudents(temp);
+                            }}
+                          />
+                          ,
+                          <br />
+                          {x.present ? "Present" : "Absent"}
+                        </>,
+                        () => {},
+                      ];
+                    })}
+                  />
                 </div>
-                <table className="table table-striped w-75 mx-auto">
-                  <thead>
-                    <tr>
-                      <th>#</th>
-                      <th>Name</th>
-                      <th>Roll Number</th>
-                      <th>Attendance</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {students &&
-                      students.map((student, indx) => {
-                        return (
-                          <tr key={Math.random()}>
-                            <td>{indx + 1}</td>
-                            <td>{student.name}</td>
-                            <td>{student.roll_number}</td>
-
-                            <td>
-                              <Switch
-                                color="warning"
-                                checked={student.present}
-                                onChange={(event) => {
-                                  //update a value in the array and then set the array
-                                  var temp = [...students];
-                                  temp[indx].present = event.target.checked;
-                                  setStudents(temp);
-                                }}
-                              />
-                              <br />
-                              {student.present ? "Present" : "Absent"}
-                            </td>
-                          </tr>
-                        );
-                      })}
-                  </tbody>
-                </table>
-                <div className="mx-auto my-5 p-2 text-center">
+                <div className={`mx-auto text-center ${Styles.submitOptions}`}>
                   <button
                     type="button"
-                    className="btn btn-success"
+                    className="btn btn-outline-dark"
                     onClick={save}
                   >
                     Save
