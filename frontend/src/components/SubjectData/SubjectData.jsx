@@ -1,37 +1,42 @@
 import Title from "../forms/Title/Title";
-import Style from "./SubjectData.module.css";
+import Styles from "./SubjectData.module.css";
 const SubjectData = (props) => {
   const courseData = props.courseData;
   console.log(courseData);
   const options = [
     {
       name: "Name",
-      value: courseData.name,
+      value: courseData.course.name,
     },
     {
       name: "Subject Code",
-      value: courseData.subject_code,
+      value: courseData.course.subject_code,
     },
     {
       name: "Credits",
-      value: courseData.credits,
+      value: courseData.course.credits,
     },
     {
       name: "Department",
-      value: courseData.department.dept_name,
+      value: courseData.course.department.dept_name,
+    },
+    {
+      name: "Semester",
+      value: courseData.semester,
+    },
+    {
+      name: "Batch",
+      value: courseData.batch.start_year + "-" + courseData.batch.end_year,
     },
   ];
   return (
-    <div className="subjectDetails m-3 mb-5">
-      <div className="mb-4 ">
-        <Title title="Subject details" />
-      </div>
-      <div className="row mx-5">
-        <div className="col-6">
+    <div className={`${Styles.subjectDetails}`}>
+      <div className="row mx-sm-auto mx-md-5">
+        <div className="col-lg-6 col-md-12">
           {options.map((option, indx) => {
             if (indx < options.length / 2)
               return (
-                <div className={`${Style.category}`} key={Math.random()}>
+                <div className={`${Styles.category}`} key={Math.random()}>
                   <p>
                     {option.name} : <span>{option.value}</span>
                   </p>
@@ -39,11 +44,11 @@ const SubjectData = (props) => {
               );
           })}
         </div>
-        <div className="col-6">
+        <div className="col-lg-6 col-md-12">
           {options.map((option, indx) => {
             if (indx >= options.length / 2)
               return (
-                <div className={`${Style.category}`} key={Math.random()}>
+                <div className={`${Styles.category}`} key={Math.random()}>
                   <p>
                     {option.name} : <span>{option.value}</span>
                   </p>

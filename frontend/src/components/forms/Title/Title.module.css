@@ -2,10 +2,17 @@
   font-size: 2rem;
   font-weight: 500;
 }
+.md {
+  font-size: 1.5rem;
+  font-weight: 500;
+}
 
 @media screen and (max-width: 768px) {
   .title {
     font-size: 1.7rem;
+  }
+  .md {
+    font-size: 1.2rem;
   }
 }
 
@@ -13,10 +20,16 @@
   .title {
     font-size: 1.7rem;
   }
+  .md {
+    font-size: 1rem;
+  }
 }
 
 @media screen and (max-width: 400px) {
   .title {
     font-size: 1.4rem;
+  }
+  .md {
+    font-size: 0.9rem;
   }
 }

@@ -17,6 +17,9 @@
 .bgPink {
   background: linear-gradient(45deg, #ff5370, #ff869a);
 }
+.bgRed {
+  background: linear-gradient(45deg, #ff5370, #ff869a);
+}
 
 .card {
   border-radius: 5px;
@@ -26,7 +29,6 @@
   margin-bottom: 30px;
   -webkit-transition: all 0.3s ease-in-out;
   transition: all 0.3s ease-in-out;
-  width: 350px;
 }
 
 .card .cardBlock {
@@ -75,4 +77,37 @@
 
 .bgPink .moreInfo {
   background: linear-gradient(45deg, #a8004d, #d4006b);
+}
+.bgRed .moreInfo {
+  background: linear-gradient(45deg, #a8004d, #d4006b);
+}
+
+@media screen and (max-width: 768px) {
+  .card {
+    margin-bottom: 15px;
+  }
+  .card .cardBlock {
+    padding: 20px 20px;
+  }
+  .card .cardBlock svg {
+    font-size: 30px;
+  }
+  .card .cardBlock h6 {
+    font-size: 1rem;
+  }
+  .orderCard i {
+    font-size: 20px;
+  }
+  .card .cardBody {
+    flex-direction: column;
+  }
+  .card .cardBody .fLeft {
+    margin-bottom: 10px;
+  }
+  .card .cardBody .fRight {
+    margin-top: 10px;
+  }
+  .card .cardBody .fRight .moreInfo {
+    margin-top: 10px;
+  }
 }

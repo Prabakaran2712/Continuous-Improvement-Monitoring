@@ -1,0 +1,46 @@
+.body {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+.options {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+  width: 100%;
+}
+.option {
+  margin: 10px 40px;
+  width: 200px;
+}
+.studentList {
+  width: max-content;
+}
+@media screen and (max-width: 1366px) {
+  .table {
+    width: 100%;
+  }
+  .options {
+    flex-direction: column;
+    align-items: center;
+  }
+  .option {
+    width: 350px;
+  }
+}
+@media screen and (max-width: 992px) {
+  .body {
+    flex-direction: column;
+  }
+
+  .studentList {
+    width: 100%;
+  }
+}
+
+@media screen and (max-width: 468px) {
+  .option {
+    width: 250px;
+  }
+}

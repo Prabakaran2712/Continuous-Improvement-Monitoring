@@ -20,10 +20,10 @@
   width: 40%;
   margin: 5px;
 }
-.option {
+.examOption {
   width: 100%;
 }
-.option {
+.batchOption {
   width: 100%;
 }
 
@@ -41,10 +41,10 @@
     flex-direction: row;
     justify-content: space-around;
   }
-  .option {
+  .examOption {
     width: 35%;
   }
-  .option {
+  .batchOption {
     width: 35%;
   }
 }
@@ -53,10 +53,10 @@
     flex-direction: column;
     align-items: center;
   }
-  .option {
+  .examOption {
     width: 70%;
   }
-  .option {
+  .batchOption {
     width: 70%;
   }
 }
@@ -65,10 +65,10 @@
   .body {
     margin: 5px 0px;
   }
-  .option {
+  .examOption {
     width: 100%;
   }
-  .option {
+  .batchOption {
     width: 100%;
   }
   .optionPane {

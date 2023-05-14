@@ -30,23 +30,19 @@ const DashboardCard = (props) => {
   }, []);
 
   return (
-    <div className="row">
-      <div className="col-md-4 col-xl-3">
-        <div className={`${Styles.card}  ${Styles.orderCard}  ${color}`}>
-          <div className={`${Styles.cardBlock}`}>
-            <h6 className="">Orders Received</h6>
-            <h4 className={`${Styles.cardBody}`}>
-              <span>486</span>
-              <FontAwesomeIcon icon={faCartShopping} />
-            </h4>
-          </div>
-          <div className={`${Styles.moreInfo}`}>
-            More info{" "}
-            <span>
-              <FontAwesomeIcon icon={faArrowAltCircleRight} />
-            </span>
-          </div>
-        </div>
+    <div className={`${Styles.card}  ${Styles.orderCard}  ${color}`}>
+      <div className={`${Styles.cardBlock}`}>
+        <h6 className="">{props.title}</h6>
+        <h4 className={`${Styles.cardBody}`}>
+          <span>{props.value && props.value}</span>
+          <FontAwesomeIcon icon={props.icon && props.icon} />
+        </h4>
+      </div>
+      <div className={`${Styles.moreInfo}`}>
+        {props.message}{" "}
+        <span>
+          <FontAwesomeIcon icon={faArrowAltCircleRight} />
+        </span>
       </div>
     </div>
   );

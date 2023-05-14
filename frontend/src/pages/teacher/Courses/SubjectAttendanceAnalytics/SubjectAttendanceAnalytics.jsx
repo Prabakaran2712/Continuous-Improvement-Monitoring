@@ -1,16 +1,16 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import Container from "../../../components/Container/Container";
-import Title from "../../../components/forms/Title/Title";
-import MarkHistogram from "../../../components/Graphs/MarkHistogram";
-import SubjectData from "../../../components/SubjectData/SubjectData";
-import PieChart from "../../../components/Graphs/PieChart";
-import Header from "../../../components/Page/Header/Header";
+import Container from "../../../../components/Container/Container";
+import Title from "../../../../components/forms/Title/Title";
+import MarkHistogram from "../../../../components/Graphs/MarkHistogram";
+import SubjectData from "../../../../components/SubjectData/SubjectData";
+import PieChart from "../../../../components/Graphs/PieChart";
+import Header from "../../../../components/Page/Header/Header";
 import { Tab, Tabs, Box, Typography } from "@mui/material";
-import Loading from "../../../components/Loading/Loading";
+import Loading from "../../../../components/Loading/Loading";
 
-const SubjectMarkAnalytics = () => {
+const SubjectAttendanceAnalytics = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [courseData, setCourseData] = useState(null);
@@ -136,7 +136,7 @@ const SubjectMarkAnalytics = () => {
         <Tab label={<span style={{ color: "black" }}>Graphs</span>} index={1} />
       </Tabs>
       <TabPanel value={tabs} index={0}>
-        Marks
+        Attendance
       </TabPanel>
       <TabPanel value={tabs} index={1}>
         <SubjectData courseData={courseData} />
@@ -170,4 +170,4 @@ const SubjectMarkAnalytics = () => {
   );
 };
 
-export default SubjectMarkAnalytics;
+export default SubjectAttendanceAnalytics;

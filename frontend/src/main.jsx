@@ -62,6 +62,9 @@ import CreateChat from "./pages/Chat/CreateChat/CreateChat";
 import ViewStudentAttendance from "./pages/student/ViewStudentAttendance/ViewStudentAttendance";
 import AttendanceDetails from "./pages/student/AttendanceDetails/AttendanceDetails";
 import UpdateExam from "./pages/teacher/Exam/UpdateExam/UpdateExam";
+import TeacherCourseDetails from "./pages/teacher/Courses/CourseDetails/CourseDetails";
+import SubjectAttendanceAnalytics from "./pages/teacher/Courses/SubjectAttendanceAnalytics/SubjectAttendanceAnalytics";
+import SubjectClasses from "./pages/teacher/Class/SubjectClasses/SubjectClasses";
 
 const router = createBrowserRouter([
   {
@@ -191,7 +194,12 @@ const router = createBrowserRouter([
           },
           {
             path: "marks",
-            element: <Marks />,
+            children: [
+              {
+                path: "subject/:id",
+                element: <SubjectMarkAnalytics />,
+              },
+            ],
           },
           {
             path: "exams",
@@ -219,7 +227,7 @@ const router = createBrowserRouter([
             element: <Grade />,
           },
           {
-            path: "subject/:id/student/:sid",
+            path: "subject/:id",
             element: <SubjectMarkAnalytics />,
           },
           {
@@ -249,6 +257,10 @@ const router = createBrowserRouter([
               {
                 path: "add",
                 element: <AddCourse />,
+              },
+              {
+                path: ":id",
+                element: <TeacherCourseDetails />,
               },
               {
                 path: "view/:id",
@@ -289,6 +301,19 @@ const router = createBrowserRouter([
               {
                 path: "delete",
                 element: <CreateClass />,
+              },
+              {
+                path: "subject/:id",
+                element: <SubjectClasses />,
+              },
+            ],
+          },
+          {
+            path: "attendance",
+            children: [
+              {
+                path: "subject/:id",
+                element: <SubjectAttendanceAnalytics />,
               },
             ],
           },
