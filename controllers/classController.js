@@ -1,4 +1,5 @@
 const Class = require("../models/Class");
+const Attendance = require("../models/Attendance");
 
 //get all classes
 const getAllClasses = async (req, res) => {
@@ -69,6 +70,7 @@ const addNewClass = async (req, res) => {
 const deleteClass = async (req, res) => {
   try {
     await Class.findByIdAndDelete(req.params.id);
+    await Attendance.deleteMany({ class: req.params.id });
     res.status(200).json({ message: "Class deleted successfully" });
   } catch (error) {
     res.status(500).json({ message: error.message });
@@ -80,9 +82,15 @@ const updateClass = async (req, res) => {
   try {
     const classs = await Class.findById(req.params.id);
     if (classs) {
-      classs.name = req.body.name;
-      classs.department = req.body.department;
+      classs.teaches = req.body.teaches;
+      classs.topic = req.body.topic;
+      classs.date = req.body.date;
+      classs.time = req.body.time;
+      classs.duration = req.body.duration;
+      classs.unit = req.body.unit;
+
       const updatedClass = await classs.save();
+
       res.status(200).json(updatedClass);
     } else {
       res.status(404).json({ message: "Class not found" });

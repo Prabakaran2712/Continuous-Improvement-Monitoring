@@ -65,6 +65,7 @@ import UpdateExam from "./pages/teacher/Exam/UpdateExam/UpdateExam";
 import TeacherCourseDetails from "./pages/teacher/Courses/CourseDetails/CourseDetails";
 import SubjectAttendanceAnalytics from "./pages/teacher/Courses/SubjectAttendanceAnalytics/SubjectAttendanceAnalytics";
 import SubjectClasses from "./pages/teacher/Class/SubjectClasses/SubjectClasses";
+import UpdateClass from "./pages/teacher/Class/UpdateClass/UpdateClass";
 
 const router = createBrowserRouter([
   {
@@ -295,8 +296,8 @@ const router = createBrowserRouter([
                 element: <CreateClass />,
               },
               {
-                path: "update",
-                element: <CreateClass />,
+                path: "update/:id",
+                element: <UpdateClass />,
               },
               {
                 path: "delete",

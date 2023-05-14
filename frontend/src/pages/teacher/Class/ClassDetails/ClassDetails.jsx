@@ -26,18 +26,17 @@ const ClassDetails = () => {
   const [checked, setChecked] = useState(false);
   const [loading, setLoading] = useState(true);
   const [open, setOpen] = useState(false);
-
+  const [courseId, setCourseId] = useState("");
   const navigate = useNavigate();
   const deleteExam = () => {
-    // axios
-    //   .delete(`/api/classes/${id}`)
-    //   .then((res) => {
-    //     navigate("/teacher/class");
-    //   })
-    //   .catch((err) => {
-    //     console.log(err);
-    //   });
-    alert("delete");
+    axios
+      .delete(`/api/classes/${id}`)
+      .then((res) => {
+        navigate(`/teacher/class/subject/${courseId}`);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   const notify = (option) => {
@@ -76,6 +75,7 @@ const ClassDetails = () => {
       .get(`/api/classes/${id}`)
       .then((res) => {
         console.log(res.data);
+        setCourseId(res.data.teaches._id);
         //set default values
         setValue("course_name", res.data.teaches.course.name);
         setValue(
@@ -88,7 +88,7 @@ const ClassDetails = () => {
         setValue("topic", res.data.topic);
         setValue("class_date", moment(res.data.date).format("YYYY-MM-DD"));
         setValue("class_time", res.data.time);
-
+        setValue("duration", res.data.duration);
         //get student from batch
         axios.get(`/api/teaches/${res.data.teaches._id}`).then((res) => {
           //get attendance for class
@@ -142,7 +142,7 @@ const ClassDetails = () => {
     <Container>
       <Confirm
         title="Delete Exam"
-        content="Are you sure you want to delete this exam?"
+        content="Are you sure you want to delete this Class?"
         success="Yes"
         fail="No"
         open={open}
@@ -157,7 +157,11 @@ const ClassDetails = () => {
               navigate("/teacher/class/update/" + id);
             }}
           />,
-          <DeleteButton onClick={() => {}} />,
+          <DeleteButton
+            onClick={() => {
+              setOpen(true);
+            }}
+          />,
         ]}
       />
 
@@ -193,10 +197,10 @@ const ClassDetails = () => {
             </div>
             <div className="col-md-6 col-12">
               <Input
-                name="batch_name"
-                label="Batch Name"
+                name="duration"
+                label="Duration"
                 register={register}
-                type="text"
+                type="Number"
                 conditions={{ required: true, maxLength: 100 }}
                 disabled={true}
               />
@@ -241,7 +245,7 @@ const ClassDetails = () => {
                               setStudents(temp);
                             }}
                           />
-                          ,
+
                           <br />
                           {x.present ? "Present" : "Absent"}
                         </>,

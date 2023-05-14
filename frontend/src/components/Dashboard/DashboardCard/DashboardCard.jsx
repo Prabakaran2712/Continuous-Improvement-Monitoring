@@ -35,7 +35,7 @@ const DashboardCard = (props) => {
         <h6 className="">{props.title}</h6>
         <h4 className={`${Styles.cardBody}`}>
           <span>{props.value && props.value}</span>
-          <FontAwesomeIcon icon={props.icon && props.icon} />
+          {props.icon && <FontAwesomeIcon icon={props.icon && props.icon} />}
         </h4>
       </div>
       <div className={`${Styles.moreInfo}`}>
