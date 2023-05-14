@@ -92,7 +92,7 @@ const AttendanceDetails = () => {
   return (
     <div>
       <div className={`${Styles.subjectData}`}>
-        <SubjectData courseData={teaches.course} />
+        <SubjectData courseData={teaches} />
       </div>
       <div className="row  mx-auto align-items-center my-5">
         <div className="report w-75 mx-auto ">

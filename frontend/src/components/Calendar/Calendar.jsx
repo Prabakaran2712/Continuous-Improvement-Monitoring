@@ -8,6 +8,7 @@ import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import { Badge } from "@mui/material";
 import CheckIcon from "@mui/icons-material/Check";
 import ClearIcon from "@mui/icons-material/Clear";
+import Styles from "./Calendar.module.css";
 const Calendar = (props) => {
   useEffect(() => {
     console.log(props.presentDays);
@@ -15,6 +16,7 @@ const Calendar = (props) => {
   return (
     <LocalizationProvider dateAdapter={AdapterDateFns}>
       <StaticDatePicker
+        className={`${Styles.calendar}`}
         orientation="portrait"
         value={props.value}
         disableFuture

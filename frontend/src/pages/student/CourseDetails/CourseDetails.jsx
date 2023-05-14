@@ -2,6 +2,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import SubjectData from "../../../components/SubjectData/SubjectData";
+import Loading from "../../../components/Loading/Loading";
 const CourseDetails = () => {
   const { id } = useParams();
   const [subjectData, setSubjectData] = useState({});
@@ -19,11 +20,13 @@ const CourseDetails = () => {
         setLoading(false);
       });
   }, []);
-
+  if (loading) {
+    return <Loading />;
+  }
   return (
     <div>
-      {console.log(subjectData.course)}
-      <SubjectData courseData={subjectData.course} />
+      {console.log(subjectData)}
+      <SubjectData courseData={subjectData} />
       <div className="options ">
         <div className="row ">
           <div className="col-6 text-center">

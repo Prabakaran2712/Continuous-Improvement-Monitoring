@@ -20,6 +20,7 @@
   width: 40%;
   margin: 5px;
 }
+
 .examOption {
   width: 100%;
 }
@@ -40,6 +41,7 @@
     display: flex;
     flex-direction: row;
     justify-content: space-around;
+    margin-top: 1rem;
   }
   .examOption {
     width: 35%;
@@ -73,5 +75,9 @@
   }
   .optionPane {
     padding-top: 0px;
+  }
+  .calendar {
+    width: 50%;
+    height: 50%;
   }
 }
