@@ -65,8 +65,8 @@ const StudentLayout = () => {
       icon: <FontAwesomeIcon icon={faBell} />,
     },
     {
-      name: "Chats",
-      link: "/student/chats",
+      name: "Discussions",
+      link: "/student/discussions/view",
       icon: <FontAwesomeIcon icon={faMessage} />,
     },
     {
@@ -127,10 +127,10 @@ const StudentLayout = () => {
           <input type="checkbox" id="nav-toggle" />
           <div className="sidebar">
             <div className="sidebar-brand">
-              <h2>
+              <h3>
                 <FontAwesomeIcon icon={faChartLine} size="sm" />
                 <span> CIM</span>
-              </h2>
+              </h3>
             </div>
             <div className="sidebar-menu">
               <ul>

@@ -10,6 +10,10 @@ import Title from "../../../components/forms/Title/Title";
 import { Switch } from "@mui/material";
 import Select from "../../../components/forms/Select/Select";
 import SubjectData from "../../../components/SubjectData/SubjectData";
+import Loading from "../../../components/Loading/Loading";
+import Header from "../../../components/Page/Header/Header";
+import Table from "../../../components/Table/Table";
+import Styles from "./Grade.module.css";
 
 const ExamDetails = () => {
   const [courseData, setCourseData] = useState();
@@ -18,6 +22,39 @@ const ExamDetails = () => {
   const { register, handleSubmit, setValue } = useForm();
   const [userData, setUserData] = useState();
   const [loading, setLoading] = useState(true);
+  const [data, setData] = useState([]);
+  const [publish, setPublish] = useState(false);
+
+  const setDataValues = (data) => {
+    var temp = [];
+    data.forEach((x) => {
+      temp.push([
+        x.student.name,
+        x.student.roll_number,
+        <select
+          className="form-control"
+          value={x.grade}
+          onChange={(event) => {
+            //update a value in the array and then set the array
+            var temp = [...students];
+            temp[indx].grade = event.target.value;
+            setStudents(temp);
+            console.log(temp[indx]);
+          }}
+        >
+          <option value="O">O</option>
+          <option value="A+">A+</option>
+          <option value="A">A</option>
+          <option value="B+">B+</option>
+          <option value="B">B</option>
+          <option value="RA">RA</option>
+          <option value="NA">NA</option>
+        </select>,
+        () => {},
+      ]);
+    });
+    setData(temp);
+  };
 
   const notify = (option) => {
     if (option == "success") {
@@ -56,13 +93,14 @@ const ExamDetails = () => {
     axios
       .get(`/api/teaches/${id}`)
       .then((res) => {
-        console.log("course data");
-        console.log(res.data.course);
-        setCourseData(res.data.course);
+        setCourseData(res.data);
+        setPublish(res.data.isPublished);
         //get grade for teaches
         axios.get(`/api/grades/teaches/${id}`).then((res) => {
           console.log(res.data);
           setStudents(res.data);
+
+          setDataValues(res.data);
           setLoading(false);
         });
       })
@@ -94,97 +132,45 @@ const ExamDetails = () => {
   };
 
   if (loading) {
-    return <h1>Loading...</h1>;
+    return <Loading />;
   }
 
   return (
     <Container>
-      <div className="header">
-        <Title title="Exam Details" />
-        <SubjectData courseData={courseData} />
+      <div className="header mx-lg-3">
+        <Header title={courseData.course.name} />
       </div>
-      <div className="body m-2">
-        <form onSubmit={handleSubmit((data) => console.log(data))}>
-          <div className="row"></div>
-          <div className="student-list m-2">
-            <div className="row   table-responsive p-5">
-              <div className="header">
-                <p className="display-6 my-3">Students</p>
-              </div>
-              <table className="table table-striped w-75 mx-auto">
-                <thead>
-                  <tr>
-                    <th>#</th>
-                    <th>Name</th>
-                    <th>Roll Number</th>
-                    <td>Grade</td>
-                    <th>Status</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {students &&
-                    students.map((student, indx) => {
-                      return (
-                        <tr key={Math.random()}>
-                          <td>{indx + 1}</td>
-                          <td>{student.student.name}</td>
-                          <td>{student.student.roll_number}</td>
-                          <td>
-                            <select
-                              className="form-control"
-                              value={student.grade}
-                              onChange={(event) => {
-                                //update a value in the array and then set the array
-                                var temp = [...students];
-                                temp[indx].grade = event.target.value;
-                                setStudents(temp);
-                                console.log(temp[indx]);
-                              }}
-                            >
-                              <option value="O">O</option>
-                              <option value="A+">A+</option>
-                              <option value="A">A</option>
-                              <option value="B+">B+</option>
-                              <option value="B">B</option>
-                              <option value="RA">RA</option>
-                              <option value="NA">NA</option>
-                            </select>
-                          </td>
+      <div className={`${Styles.body}`}>
+        <div className={`${Styles.table}`}>
+          <Table
+            thead={["#", "Name", "Roll Number", "Grade"]}
+            tbody={data}
+            tooltip={false}
+            hover={false}
+          />
+        </div>
 
-                          <td>
-                            <Switch
-                              color="warning"
-                              checked={student.published}
-                              onChange={(event) => {
-                                //update a value in the array and then set the array
-                                var temp = [...students];
-                                temp[indx].published = event.target.checked;
+        <div className={`mx-auto text-center ${Styles.submitOptions}`}>
+          <button type="button" className="btn btn-outline-dark" onClick={save}>
+            Save
+          </button>
+          <div className={`${Styles.publish}`}>
+            <label className="me-2">Publish</label>
+            <Switch
+              color="warning"
+              checked={publish}
+              onChange={(event) => {
+                //update a value in the array and then set the array
+                var temp = [...students];
+                temp[indx].published = event.target.checked;
 
-                                setStudents(temp);
-                              }}
-                            />
-                            <br />
-                            {student.published
-                              ? "    Published"
-                              : "Not Published"}
-                          </td>
-                        </tr>
-                      );
-                    })}
-                </tbody>
-              </table>
-              <div className="mx-auto my-5 p-2 text-center">
-                <button
-                  type="button"
-                  className="btn btn-success"
-                  onClick={save}
-                >
-                  Save
-                </button>
-              </div>
-            </div>
+                setStudents(temp);
+              }}
+              width={100}
+              height={50}
+            />
           </div>
-        </form>
+        </div>
       </div>
     </Container>
   );

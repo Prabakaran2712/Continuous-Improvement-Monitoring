@@ -1,9 +1,12 @@
 import Title from "../../forms/Title/Title";
+import Styles from "./Header.module.css";
 const Header = (props) => {
   return (
-    <div className="header d-flex flex-row justify-content-between mt-lg-3 mt-sm-1 mx-lg-5">
-      <div className="title">
-        <Title title={props.title} />
+    <div
+      className={`header d-flex flex-row justify-content-between my-lg-3 mt-sm-1 mx-lg-5 ${Styles.header}`}
+    >
+      <div className={`${Styles.title}`}>
+        <Title title={props.title} size={props.size} />
       </div>
 
       <div className="options d-flex flex-row justify-content-end m-lg-2">

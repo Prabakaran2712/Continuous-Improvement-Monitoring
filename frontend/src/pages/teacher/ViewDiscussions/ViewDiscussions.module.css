@@ -1,0 +1,40 @@
+.pagination {
+  width: max-content;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 2rem;
+}
+.chatContainer {
+  margin: 2rem;
+  margin-bottom: 0.2rem;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-gap: 2rem;
+  grid-auto-rows: minmax(100px, auto);
+}
+.pageOptions {
+  margin-bottom: 1rem;
+}
+
+@media screen and (max-width: 1376px) {
+  .chatContainer {
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+}
+@media screen and (max-width: 1200px) {
+  .chatContainer {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .chatContainer {
+    grid-template-columns: 1fr 1fr;
+    margin: 1rem 0rem;
+  }
+}
+@media screen and (max-width: 468px) {
+  .chatContainer {
+    grid-template-columns: 1fr;
+  }
+}

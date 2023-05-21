@@ -21,7 +21,7 @@ const adminRoutes = require("./routes/adminRoutes");
 const teachesRoutes = require("./routes/teachesRoutes");
 const authRoutes = require("./routes/authRoutes");
 const gradeRoutes = require("./routes/gradeRoutes");
-const chatRoutes = require("./routes/chatRoutes");
+const discussionRoutes = require("./routes/discussionRoutes");
 const messageRoutes = require("./routes/messageRoutes");
 
 //set up express app and middleware
@@ -51,7 +51,7 @@ app.use("/api/marks", markRoutes);
 app.use("/api/teaches", teachesRoutes);
 app.use("/api/auth", authRoutes);
 app.use("/api/grades", gradeRoutes);
-app.use("/api/chats", chatRoutes);
+app.use("/api/discussions", discussionRoutes);
 app.use("/api/messages", messageRoutes);
 
 //production mode

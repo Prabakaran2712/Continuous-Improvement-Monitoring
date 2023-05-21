@@ -23,6 +23,10 @@ const TeacherSchema = new mongoose.Schema({
     type: Number,
     required: true,
   },
+  isPublished: {
+    type: Boolean,
+    default: false,
+  },
 });
 
 module.exports = mongoose.model("Teaches", TeacherSchema);

@@ -4,7 +4,7 @@ const Message = require("../models/Message");
 const createMessage = async (req, res) => {
   try {
     const message = new Message({
-      chat: req.body.chat,
+      discussion: req.body.discussion,
       sender: req.body.sender,
       message: req.body.message,
     });
@@ -28,7 +28,7 @@ const deleteMessage = async (req, res) => {
 //view all messages of chat
 const viewMessages = async (req, res) => {
   try {
-    const messages = await Message.find({ chat: req.params.id });
+    const messages = await Message.find({ discussion: req.params.id });
     res.status(200).json(messages);
   } catch (err) {
     res.status(500).json(err);

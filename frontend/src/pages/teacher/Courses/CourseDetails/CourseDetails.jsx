@@ -275,6 +275,14 @@ const CourseDetails = () => {
             >
               <DashboardCard title="Marks" />
             </div>
+            <div
+              className={`${Styles.option}`}
+              onClick={() => {
+                navigate(`/teacher/grades/${course._id}`);
+              }}
+            >
+              <DashboardCard title="Grades" color={"green"} />
+            </div>
           </div>
         </div>
       </div>

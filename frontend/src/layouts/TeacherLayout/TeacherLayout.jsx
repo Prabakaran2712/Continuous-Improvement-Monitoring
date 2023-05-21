@@ -61,10 +61,10 @@ const TeacherLayout = () => {
       title: "Notifications",
     },
     {
-      name: "Chats",
-      link: "/teacher/chats",
+      name: "Discussions",
+      link: "/teacher/discussions",
       icon: <FontAwesomeIcon icon={faMessage} size="sm" />,
-      title: "Chats",
+      title: "Discussions",
     },
     {
       name: "Students",
@@ -137,10 +137,10 @@ const TeacherLayout = () => {
           <input type="checkbox" id="nav-toggle" />
           <div className="sidebar">
             <div className="sidebar-brand">
-              <h2>
+              <h3>
                 <FontAwesomeIcon icon={faChartLine} size="sm" />
                 <span> CIM</span>
-              </h2>
+              </h3>
             </div>
             <div className="sidebar-menu">
               <ul>
@@ -160,11 +160,11 @@ const TeacherLayout = () => {
 
           <div className="main-content">
             <header>
-              <h2>
+              <h3>
                 <label htmlFor="nav-toggle" className="toggleIcon">
                   <FontAwesomeIcon icon={faBars} size="sm" />
                 </label>
-              </h2>
+              </h3>
 
               <div className="user-wrapper">
                 <Dropdown option={profile} />

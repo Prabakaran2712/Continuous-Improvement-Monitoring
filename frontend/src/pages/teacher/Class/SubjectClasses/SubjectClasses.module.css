@@ -1,6 +1,7 @@
 .body {
   display: flex;
   flex-direction: row;
+  align-items: start;
   margin: 10px 20px;
 }
 .table {
@@ -29,10 +30,6 @@
 }
 
 @media screen and (max-width: 1366px) {
-  .body {
-    flex-direction: column-reverse;
-    align-items: center;
-  }
   .table {
     width: 100%;
   }

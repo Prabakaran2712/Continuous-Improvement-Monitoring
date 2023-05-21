@@ -1,8 +1,8 @@
 import Styles from "./Select.module.css";
 const Select = (props) => {
   return (
-    <div className={`form-group mx-md-5 my-sm-3 mx-5    ${Styles.select}`}>
-      <label className={`my-3 ${Styles.label}`}>{props.label}</label>
+    <div className={`form-group mx-md-5 my-lg-3 mx-5    ${Styles.select}`}>
+      <label className={`my-lg-3 ${Styles.label}`}>{props.label}</label>
       <select
         className={`form-select ${Styles.input}`}
         {...props.register(props.name, { required: true })}

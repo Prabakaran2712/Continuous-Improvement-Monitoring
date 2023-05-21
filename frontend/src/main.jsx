@@ -53,10 +53,10 @@ import SubjectMarkAnalytics from "./pages/teacher/SubjectMarkAnalytics/SubjectMa
 import Grade from "./pages/teacher/Grade/Grade";
 import ViewGrade from "./pages/student/ViewGrade/ViewGrade";
 import ViewStudentMarks from "./pages/student/ViewStudentMarks/ViewStudentMarks";
-import ViewChats from "./pages/student/ViewChats/ViewChats";
+import ViewD from "./pages/student/ViewDiscussions/ViewDiscussions";
 import Logout from "./pages/Logout/Logout";
 import Chat from "./pages/student/Chat/Chat";
-import ViewChatsTeacher from "./pages/teacher/ViewChats/ViewChats";
+import ViewDiscusssionsTeacher from "./pages/teacher/ViewDiscussions/ViewDiscussions";
 import CourseDetails from "./pages/student/CourseDetails/CourseDetails";
 import CreateChat from "./pages/Chat/CreateChat/CreateChat";
 import ViewStudentAttendance from "./pages/student/ViewStudentAttendance/ViewStudentAttendance";
@@ -66,6 +66,7 @@ import TeacherCourseDetails from "./pages/teacher/Courses/CourseDetails/CourseDe
 import SubjectAttendanceAnalytics from "./pages/teacher/Courses/SubjectAttendanceAnalytics/SubjectAttendanceAnalytics";
 import SubjectClasses from "./pages/teacher/Class/SubjectClasses/SubjectClasses";
 import UpdateClass from "./pages/teacher/Class/UpdateClass/UpdateClass";
+import ViewDiscussions from "./pages/student/ViewDiscussions/ViewDiscussions";
 
 const router = createBrowserRouter([
   {
@@ -153,12 +154,17 @@ const router = createBrowserRouter([
             element: <ViewStudentMarks />,
           },
           {
-            path: "createChat",
-            element: <CreateChat />,
-          },
-          {
-            path: "chats",
-            element: <ViewChats />,
+            path: "discussions",
+            children: [
+              {
+                path: "create",
+                element: <ViewDiscussions />,
+              },
+              {
+                path: "view",
+                element: <ViewDiscussions />,
+              },
+            ],
           },
           {
             path: "attendance",
@@ -270,12 +276,17 @@ const router = createBrowserRouter([
             ],
           },
           {
-            path: "chats",
-            element: <ViewChatsTeacher />,
-          },
-          {
-            path: "chat/:id",
-            element: <Chat />,
+            path: "discussions",
+            children: [
+              {
+                path: "",
+                element: <ViewDiscusssionsTeacher />,
+              },
+              {
+                path: ":id",
+                element: <Chat />,
+              },
+            ],
           },
 
           //view course on id

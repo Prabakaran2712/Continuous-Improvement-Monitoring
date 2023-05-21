@@ -157,7 +157,7 @@ const SubjectClasses = () => {
           />
         </div>
       </div>
-      <div className={`${Styles.options}`}>
+      <div className={`${Styles.options} mt-lg-3 mt-sm-1 mx-lg-5`}>
         <Tabs
           value={tabs}
           onChange={(e, newValue) => setTabs(newValue)}

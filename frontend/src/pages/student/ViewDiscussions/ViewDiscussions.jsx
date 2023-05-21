@@ -3,14 +3,23 @@ import { useEffect, useState } from "react";
 import { useAuthContext } from "../../../hooks/useAuthContext";
 import Loading from "../../../components/Loading/Loading";
 import { useNavigate } from "react-router-dom";
+import CreateButton from "../../../components/Button/CreateButton/CreateButton";
 
-const ViewChats = () => {
+const ViewDiscussions = () => {
   const [chats, setChats] = useState([]);
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
   const auth = useAuthContext();
+  const createChat = (auth) => {
+    console.log(auth.userType);
+    if (auth.userType == "student") {
+      navigate("/student/chat/create");
+    } else {
+      navigate("/teacher/chat/create");
+    }
+  };
   useEffect(() => {
-    axios.get(`/api/chats/teacher/${auth.user._id}`).then((res) => {
+    axios.get(`/api/discussions/student/${auth.user._id}`).then((res) => {
       console.log(res.data);
       setChats(res.data);
       setLoading(false);
@@ -25,12 +34,20 @@ const ViewChats = () => {
     );
   return (
     <div>
-      <h1>View Chats</h1>
+      <div className="header d-flex flex-row justify-content-between my-3">
+        <h1>View Chats</h1>
+
+        <CreateButton
+          onClick={() => {
+            createChat(auth);
+          }}
+        />
+      </div>
       <div className="chatsContainer">
         <table className="table ">
           <thead>
             <tr>
-              <th scope="col">Student</th>
+              <th scope="col">Teacher</th>
               <th scope="col">Subject</th>
               <th scope="col">Title</th>
             </tr>
@@ -40,10 +57,10 @@ const ViewChats = () => {
               <tr
                 key={chat._id}
                 onClick={() => {
-                  navigate(`/teacher/chat/${chat._id}`);
+                  navigate(`/student/chat/${chat._id}`);
                 }}
               >
-                <td>{chat.student.name}</td>
+                <td>{chat.teaches.teacher.name}</td>
                 <td>{chat.teaches.course.name}</td>
                 <td>{chat.title}</td>
               </tr>
@@ -55,4 +72,4 @@ const ViewChats = () => {
   );
 };
 
-export default ViewChats;
+export default ViewDiscussions;

@@ -98,7 +98,7 @@ const TeacherChatCreate = () => {
     console.log(data);
     //add new chat
     axios
-      .post(`/api/chats`, data)
+      .post(`/api/discussions`, data)
       .then((res) => {
         notify("success");
         navigate(`/student/chats`);

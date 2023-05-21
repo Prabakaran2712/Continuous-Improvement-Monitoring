@@ -176,7 +176,7 @@ const ViewExam = () => {
   } else {
     return (
       <Container>
-        <div className="header d-flex flex-row justify-content-between my-lg-3 mt-sm-1">
+        <div className="header d-flex flex-row justify-content-between my-lg-3 mx-lg-5 mt-sm-1">
           <div className="title">
             <Title title="Exams" />
           </div>
@@ -189,7 +189,7 @@ const ViewExam = () => {
             />
           </div>
         </div>
-        <div className={`${Styles.body}`}>
+        <div className={`${Styles.body} `}>
           <div className={`${Styles.table}`}>
             <Table
               thead={[

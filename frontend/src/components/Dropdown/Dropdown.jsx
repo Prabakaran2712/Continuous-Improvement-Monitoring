@@ -11,7 +11,7 @@ const Dropdown = (props) => {
     <div className={`${Styles.dropdown}`}>
       <div className={`${Styles.dropdownBtn}`} onClick={handleDropdownClick}>
         <div>
-          <h4>{props.option.name}</h4>
+          <h5>{props.option.name}</h5>
           <small>{props.option.role}</small>
         </div>
       </div>

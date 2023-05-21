@@ -1,0 +1,114 @@
+.card {
+  background-color: white;
+  border: 2px solid var(--primary);
+  padding: 1.2rem;
+  border-radius: 10px;
+}
+.view {
+  display: flex;
+  flex-direction: row;
+  justify-content: end;
+  align-items: center;
+  margin: 1rem;
+}
+
+.view button {
+  cursor: pointer;
+  background-color: var(--primary);
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 5px;
+  cursor: pointer;
+}
+.view button span:first-child {
+  margin-right: 1rem;
+}
+.view button:hover {
+  background-color: var(--primary);
+}
+.title {
+  font-size: 1.6rem;
+  font-weight: 400;
+}
+.recipient {
+  font-size: 1rem;
+  font-weight: 300;
+}
+.course {
+  font-size: 1rem;
+  font-weight: 200;
+}
+.card hr {
+  border: 1px solid var(--primary);
+}
+
+@media screen and (max-width: 1376px) {
+  .card {
+    padding: 1rem;
+  }
+  .view button {
+    padding: 0.5rem 0.8rem;
+  }
+  .title {
+    font-size: 1.4rem;
+  }
+  .recipient {
+    font-size: 0.9rem;
+  }
+  .course {
+    font-size: 0.9rem;
+  }
+  .card hr {
+    margin: 0.5rem 0;
+  }
+  .view {
+    justify-content: center;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .card {
+    padding: 0.8rem;
+  }
+  .view button {
+    padding: 0.5rem 0.8rem;
+  }
+  .title {
+    font-size: 1.2rem;
+  }
+  .recipient {
+    font-size: 0.8rem;
+  }
+  .course {
+    font-size: 0.8rem;
+  }
+  .card hr {
+    margin: 0.5rem 0;
+  }
+  .view {
+    justify-content: end;
+  }
+}
+
+@media screen and (max-width: 576px) {
+  .card {
+    padding: 0.5rem;
+  }
+  .view button {
+    padding: 0.5rem 0.5rem;
+    font-size: 0.6rem;
+  }
+  .title {
+    font-size: 1rem;
+  }
+  .recipient {
+    font-size: 0.7rem;
+  }
+  .course {
+    font-size: 0.7rem;
+  }
+  .card hr {
+    margin: 0.5rem 0;
+  }
+}

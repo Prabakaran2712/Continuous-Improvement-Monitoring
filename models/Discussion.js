@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-const ChatSchema = new mongoose.Schema(
+const DiscussionSchema = new mongoose.Schema(
   {
     teaches: {
       type: mongoose.Types.ObjectId,
@@ -14,8 +14,13 @@ const ChatSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    status: {
+      type: String,
+      enum: ["open", "closed"],
+      default: "open",
+    },
   },
   { timestamps: true }
 );
 
-module.exports = mongoose.model("Chat", ChatSchema);
+module.exports = mongoose.model("Chat", DiscussionSchema);

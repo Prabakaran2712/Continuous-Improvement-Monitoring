@@ -1,33 +1,33 @@
-const Chat = require("../models/Chat");
+const Discussion = require("../models/Discussion");
 
-//create a chat
-const createChat = async (req, res) => {
+//create a Discussion
+const createDiscussion = async (req, res) => {
   try {
-    const chat = new Chat({
+    const Discussion = new Discussion({
       teaches: req.body.teaches,
       student: req.body.student,
       title: req.body.title,
     });
-    await chat.save();
-    res.status(200).json(chat);
+    await Discussion.save();
+    res.status(200).json(Discussion);
   } catch (err) {
     res.status(500).json(err);
   }
 };
-//delete a chat
-const deleteChat = async (req, res) => {
+//delete a Discussion
+const deleteDiscussion = async (req, res) => {
   try {
-    await Chat.findByIdAndDelete(req.params.id);
-    res.status(200).json("Chat has been deleted...");
+    await Discussion.findByIdAndDelete(req.params.id);
+    res.status(200).json("Discussion has been deleted...");
   } catch (err) {
     res.status(500).json(err);
   }
 };
 
-//view all chats of student
-const viewChats = async (req, res) => {
+//view all Discussions of student
+const viewDiscussions = async (req, res) => {
   try {
-    const chats = await Chat.find({ student: req.params.id })
+    const Discussions = await Discussion.find({ student: req.params.id })
       .populate({
         path: "teaches",
         populate: { path: "course", populate: { path: "department" } },
@@ -42,16 +42,16 @@ const viewChats = async (req, res) => {
       })
       .populate({ path: "teaches", populate: { path: "batch" } })
       .populate({ path: "student", populate: { path: "department batch" } });
-    res.status(200).json(chats);
+    res.status(200).json(Discussions);
   } catch (err) {
     res.status(500).json(err);
   }
 };
 
-//view all chats of teacher  with teacher id in teaches
-const viewChatsTeacher = async (req, res) => {
+//view all Discussions of teacher  with teacher id in teaches
+const viewDiscussionsTeacher = async (req, res) => {
   try {
-    const chats = await Chat.find()
+    const Discussions = await Discussion.find()
       .populate({
         path: "teaches",
         populate: { path: "teacher", populate: "address department" },
@@ -69,18 +69,20 @@ const viewChatsTeacher = async (req, res) => {
         },
       })
       .populate({ path: "student", populate: { path: "department batch" } });
-    console.log(chats);
+    console.log(Discussions);
     //remove objects with teaches as null
-    const filteredChats = chats.filter((chat) => chat.teaches !== null);
-    res.status(200).json(filteredChats);
+    const filteredDiscussions = Discussions.filter(
+      (Discussion) => Discussion.teaches !== null
+    );
+    res.status(200).json(filteredDiscussions);
   } catch (err) {
     res.status(500).json(err);
   }
 };
-//get chat details by id
-const getChat = async (req, res) => {
+//get Discussion details by id
+const getDiscussion = async (req, res) => {
   try {
-    const chat = await Chat.findById(req.params.id)
+    const details = await Discussion.findById(req.params.id)
 
       .populate({
         path: "teaches",
@@ -96,16 +98,16 @@ const getChat = async (req, res) => {
       })
       .populate({ path: "teaches", populate: { path: "batch" } })
       .populate({ path: "student", populate: { path: "department batch" } });
-    res.status(200).json(chat);
+    res.status(200).json(details);
   } catch (err) {
     res.status(500).json(err);
   }
 };
 
 module.exports = {
-  createChat,
-  deleteChat,
-  viewChats,
-  viewChatsTeacher,
-  getChat,
+  createDiscussion,
+  deleteDiscussion,
+  viewDiscussions,
+  viewDiscussionsTeacher,
+  getDiscussion,
 };

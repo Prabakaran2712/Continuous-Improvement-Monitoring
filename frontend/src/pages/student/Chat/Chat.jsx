@@ -19,7 +19,7 @@ const Chat = () => {
   const sendMessage = () => {
     axios
       .post("/api/messages", {
-        chat: id,
+        discussion: id,
         sender: auth.user._id,
         message: message,
       })
@@ -46,7 +46,7 @@ const Chat = () => {
         console.log(res.data);
         //get  chat details
         axios
-          .get(`/api/chats/${id}`)
+          .get(`/api/discussions/${id}`)
           .then((res) => {
             console.log(res.data);
             setChatDetails(res.data);
