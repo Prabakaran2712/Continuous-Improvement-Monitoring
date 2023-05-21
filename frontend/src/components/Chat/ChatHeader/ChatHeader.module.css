@@ -1,16 +1,95 @@
-.category p {
-  font-size: 20px;
+.chatDetails {
+  font-size: 1.1rem;
+  font-weight: 300;
+  margin: 0.5rem;
+}
+.chatHeader .name {
+  font-size: 1.4rem;
   font-weight: 500;
 }
-.category p span {
-  font-size: 20px;
-  font-weight: normal;
+.chatDetails .created {
+  font-size: 1rem;
+  font-weight: 500;
+}
+.chatHeader .title {
+  font-size: 2.4rem;
+  font-weight: 350;
+}
+
+.titleOptions {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  margin: 0.5rem;
+}
+
+.titleOptions .option button {
+  background-color: rgb(19, 172, 44);
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.titleOptions .option button span:first-child {
+  margin-left: 1rem;
 }
 @media screen and (max-width: 768px) {
-  .category p {
-    font-size: 15px;
+  .chatContainer {
+    border-radius: 0px;
   }
-  .category p span {
-    font-size: 15px;
+  .chatHeader .title {
+    font-size: 1.8rem;
+  }
+  .chatHeader .name {
+    font-size: 1.2rem;
+  }
+  .chatDetails .created {
+    font-size: 0.8rem;
+  }
+  .titleOptions .option button {
+    padding: 0.3rem 0.5rem;
+  }
+  .titleOptions .option button span:first-child {
+    margin-left: 0.5rem;
+  }
+}
+
+@media screen and (max-width: 576px) {
+  .chatHeader .title {
+    font-size: 1.6rem;
+  }
+  .chatHeader .name {
+    font-size: 1rem;
+  }
+  .chatDetails .created {
+    font-size: 0.7rem;
+  }
+  .titleOptions .option button {
+    padding: 0.3rem 0.5rem;
+  }
+  .titleOptions .option button span:first-child {
+    margin-left: 0.5rem;
+  }
+}
+
+@media screen and (max-width: 400px) {
+  .chatHeader .title {
+    font-size: 1.4rem;
+  }
+  .chatHeader .name {
+    font-size: 0.9rem;
+  }
+  .chatDetails .created {
+    font-size: 0.6rem;
+  }
+  .titleOptions .option button {
+    padding: 0.3rem 0.5rem;
+    font-size: 0.7rem;
+  }
+  .titleOptions .option button span:first-child {
+    margin-left: 0.5rem;
   }
 }

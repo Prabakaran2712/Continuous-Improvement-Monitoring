@@ -72,40 +72,50 @@ const Chat = () => {
       <div className={` ${Styles.chatHeader} row `}>
         <ChatHeader data={chatDetails} role={auth.userType} />
       </div>
-      <div
-        className={` ${Styles.chatContainer} row d-flex flex-column justify-content-start `}
-      >
-        {messages.map((message) => {
-          return (
-            <div
-              className={
-                message.yourMessage
-                  ? `d-flex flex-row justify-content-end align-items-center`
-                  : `d-flex flex-row justify-content-start align-items-center`
-              }
-              key={Math.random()}
-            >
-              <Message
-                message={message.message}
-                yourMessage={message.yourMessage}
-              />
-            </div>
-          );
-        })}
-      </div>
-      <div className={`${Styles.options} row`}>
-        <div className="textBox col-11 ">
-          <TextBox message={message} setMessage={setMessage} />
+      <div className={` ${Styles.chatContainer} row `}>
+        <div className={` ${Styles.chatHeader} row d-flex flex-column `}>
+          Messages
         </div>
-        <div className="sendButton col-1">
-          <SendButton
-            loading={sendLoading}
-            onClick={() => {
-              setSendLoading(true);
-              sendMessage();
-              setMessage("");
-            }}
-          />
+        <div className={` ${Styles.chatBody} row d-flex flex-column `}>
+          {messages.map((message) => {
+            return (
+              <div
+                className={
+                  message.yourMessage
+                    ? `d-flex flex-row justify-content-end align-items-center`
+                    : `d-flex flex-row justify-content-start align-items-center`
+                }
+                key={Math.random()}
+              >
+                <Message
+                  message={message.message}
+                  yourMessage={message.yourMessage}
+                  createdAt={message.createdAt}
+                  you={auth.user.name}
+                  other={
+                    auth.userType === "student"
+                      ? chatDetails.teaches.teacher.name
+                      : chatDetails.student.name
+                  }
+                />
+              </div>
+            );
+          })}
+        </div>
+        <div className={`${Styles.options} row`}>
+          <div className="textBox col-md-11 col-10 ">
+            <TextBox message={message} setMessage={setMessage} />
+          </div>
+          <div className="sendButton col-md-1 col-2">
+            <SendButton
+              loading={sendLoading}
+              onClick={() => {
+                setSendLoading(true);
+                sendMessage();
+                setMessage("");
+              }}
+            />
+          </div>
         </div>
       </div>
     </div>

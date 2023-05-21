@@ -3,49 +3,24 @@
   --my-chat: #d9dfde;
 }
 .message {
-  max-width: 300px;
-
+  max-width: 500px;
   border-radius: 10px;
   margin-top: 10px;
   margin-bottom: 10px;
-
   background: #00bfb6;
-  padding: 15px;
+  padding: 1rem;
   word-wrap: break-word;
   font-weight: 900;
   color: #fff;
   font-family: arial;
   position: relative;
-}
-.message pre {
-  word-wrap: break-word;
+  overflow-y: scroll;
 }
 
-.sb3:before {
-  content: "";
-  width: 0px;
-  height: 0px;
-  position: absolute;
-  border-left: 10px solid var(--my-chat);
-  border-right: 10px solid transparent;
-  border-top: 10px solid var(--my-chat);
-  border-bottom: 10px solid transparent;
-  left: 19px;
-  bottom: -19px;
+.message p {
+  overflow-wrap: break-a;
 }
 
-.sb4:before {
-  content: "";
-  width: 0px;
-  height: 0px;
-  position: absolute;
-  border-left: 10px solid transparent;
-  border-right: 10px solid var(--their-chat);
-  border-top: 10px solid var(--their-chat);
-  border-bottom: 10px solid transparent;
-  right: 19px;
-  bottom: -19px;
-}
 .fromMe {
   background-color: #16a7fc;
   color: #fff;
@@ -55,9 +30,58 @@
   color: black;
 }
 
+.name {
+  font-size: 1rem;
+  font-weight: 300;
+}
+.time {
+  font-size: 0.7rem;
+  font-weight: 500;
+}
+.message pre {
+  padding: 0rem;
+}
+@media screen and (max-width: 1200px) {
+  .message {
+    margin-top: 7px;
+    margin-bottom: 7px;
+    border-radius: 7px;
+    padding: 10px;
+  }
+}
+
 @media screen and (max-width: 768px) {
   .message {
-    max-width: 100px;
+    max-width: 100%;
+    margin-top: 7px;
+    margin-bottom: 7px;
+    border-radius: 7px;
+    padding: 10px;
+  }
+  .name {
+    font-size: 0.9rem;
+  }
+  .time {
+    font-size: 0.6rem;
+  }
+  .message {
+    font-size: 0.8rem;
+  }
+}
+
+@media screen and (max-width: 576px) {
+  .message {
+    max-width: 100%;
+    margin-top: 7px;
+    margin-bottom: 7px;
+    border-radius: 7px;
+    padding: 10px;
+  }
+}
+
+@media screen and (max-width: 400px) {
+  .message {
+    max-width: 100%;
     margin-top: 7px;
     margin-bottom: 7px;
     border-radius: 7px;

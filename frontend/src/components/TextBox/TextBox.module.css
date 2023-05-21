@@ -6,9 +6,42 @@
   width: 100%;
   border-radius: 40px;
   min-height: 50px;
-  padding: 10px;
+  padding: 1.1rem;
   outline: none;
   font-family: "Poppins", sans-serif;
+  border: 1px solid #e0e0e0;
   font-weight: 400;
   font-size: 1.1em;
+}
+
+@media screen and (max-width: 1200px) {
+  .messageText {
+    font-size: 1rem;
+  }
+}
+@media screen and (max-width: 768px) {
+  .messageText {
+    font-size: 0.9rem;
+    padding: 0.9rem;
+    border-radius: 30px;
+    min-height: 35px;
+  }
+}
+
+@media screen and (max-width: 576px) {
+  .messageText {
+    font-size: 0.8rem;
+    padding: 0.8rem;
+    border-radius: 20px;
+    min-height: 30px;
+  }
+}
+
+@media screen and (max-width: 400px) {
+  .messageText {
+    font-size: 0.7rem;
+    padding: 0.7rem;
+    border-radius: 15px;
+    min-height: 25px;
+  }
 }
