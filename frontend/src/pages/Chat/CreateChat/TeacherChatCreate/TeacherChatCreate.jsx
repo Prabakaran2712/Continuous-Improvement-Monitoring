@@ -124,6 +124,8 @@ const TeacherChatCreate = () => {
       //set first value for student options
       setStudentOptions(res.data[0].students.map(selectProps("name")));
       setStudentValues(res.data[0].students.map(selectProps("_id")));
+      setStudent(res.data[0].students[0]._id);
+      setTeaches(res.data[0]._id);
       console.log(res.data[0].students.map(selectProps("name")));
       console.log(res.data[0].students.map(selectProps("_id")));
 
@@ -168,7 +170,6 @@ const TeacherChatCreate = () => {
                 <Select
                   name="teaches"
                   label="Course"
-                  register={register}
                   options={teachesOption}
                   values={teachesValue}
                   onChange={handleTeachesChange}
@@ -176,11 +177,11 @@ const TeacherChatCreate = () => {
                 <Select
                   name="student"
                   label="Student"
-                  register={register}
                   options={studentOptions}
                   values={studentValues}
                   onChange={(e) => {
                     setStudent(e.target.value);
+                    console.log(e.target.value);
                   }}
                 />
               </div>
