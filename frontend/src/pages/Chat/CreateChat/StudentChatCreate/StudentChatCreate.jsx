@@ -11,7 +11,7 @@ import Submit from "../../../../components/forms/Submit/Submit";
 import TimeComponent from "../../../../components/forms/Time/TimeComponent";
 import Select from "../../../../components/forms/Select/Select";
 import { useNavigate } from "react-router-dom";
-
+import Styles from "./StudentChatCreate.module.css";
 const StudentChatCreate = () => {
   const { register, handleSubmit } = useForm();
   const [examDate, setExamDate] = useState();
@@ -112,7 +112,7 @@ const StudentChatCreate = () => {
       .post(`/api/discussions`, data)
       .then((res) => {
         notify("success");
-        navigate(`/student/chats`);
+        navigate(`/student/discussions`);
       })
       .catch((err) => {
         notify("error");
@@ -122,7 +122,7 @@ const StudentChatCreate = () => {
   return (
     <Container>
       <div className="  w-100 mx-auto my-5 ">
-        <Title title="Create Chat" />
+        <Title title="Create Discussion" />
         <div className="form-body w-75 mx-auto">
           <form onSubmit={handleSubmit(onSubmit)}>
             <div className="row">

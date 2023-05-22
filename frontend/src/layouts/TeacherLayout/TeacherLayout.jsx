@@ -36,9 +36,15 @@ const TeacherLayout = () => {
   const options = [
     {
       name: "Dashboard",
-      link: "/teacher/dashboard",
+      link: "/teacher",
       icon: <FontAwesomeIcon icon={faHouse} size="sm" />,
       title: "Dashboard",
+    },
+    {
+      name: "Courses",
+      link: "/teacher/courses",
+      icon: <FontAwesomeIcon icon={faEnvelope} size="sm" />,
+      title: "Courses",
     },
 
     {
@@ -55,12 +61,6 @@ const TeacherLayout = () => {
     },
 
     {
-      name: "Notifications",
-      link: "/teacher/notifications",
-      icon: <FontAwesomeIcon icon={faEnvelope} size="sm" />,
-      title: "Notifications",
-    },
-    {
       name: "Discussions",
       link: "/teacher/discussions",
       icon: <FontAwesomeIcon icon={faMessage} size="sm" />,
@@ -71,12 +71,6 @@ const TeacherLayout = () => {
       link: "/teacher/students",
       icon: <FontAwesomeIcon icon={faPerson} size="sm" />,
       title: "Students",
-    },
-    {
-      name: "Courses",
-      link: "/teacher/courses",
-      icon: <FontAwesomeIcon icon={faEnvelope} size="sm" />,
-      title: "Courses",
     },
   ];
   const admin = [...options];

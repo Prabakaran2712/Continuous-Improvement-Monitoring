@@ -65,7 +65,7 @@ const TeacherLogin = () => {
         });
         notify("success");
         console.log("redirect");
-        navigate("/teacher/dashboard");
+        navigate("/teacher");
       })
       .catch((err) => {
         dispatch({ type: "LOGOUT" });

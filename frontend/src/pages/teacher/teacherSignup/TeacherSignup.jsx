@@ -94,7 +94,7 @@ const TeacherSignup = () => {
       .post("/api/teachers", data)
       .then((res) => {
         console.log(res);
-        navigate("/teacher/dashboard");
+        navigate("/teacher");
         notify("success");
       })
       .catch((err) => {

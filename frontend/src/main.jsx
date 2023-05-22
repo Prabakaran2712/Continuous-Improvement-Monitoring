@@ -27,7 +27,6 @@ import TeacherLayout from "./layouts/TeacherLayout/TeacherLayout";
 import Dashboard from "./pages/teacher/Dashboard/Dashboard";
 import Marks from "./pages/teacher/Marks";
 import Attendance from "./pages/teacher/Attendance";
-import Notifications from "./pages/teacher/Notifications";
 import TeacherSignup from "./pages/teacher/teacherSignup/TeacherSignup";
 import TeacherProfile from "./pages/teacher/teacherProfile/TeacherProfile";
 import Courses from "./pages/admin/Courses/Courses";
@@ -53,10 +52,11 @@ import SubjectMarkAnalytics from "./pages/teacher/SubjectMarkAnalytics/SubjectMa
 import Grade from "./pages/teacher/Grade/Grade";
 import ViewGrade from "./pages/student/ViewGrade/ViewGrade";
 import ViewStudentMarks from "./pages/student/ViewStudentMarks/ViewStudentMarks";
-import ViewD from "./pages/student/ViewDiscussions/ViewDiscussions";
 import Logout from "./pages/Logout/Logout";
 import Chat from "./pages/student/Chat/Chat";
+import ViewDiscussions from "./pages/student/ViewDiscussions/ViewDiscussions";
 import ViewDiscusssionsTeacher from "./pages/teacher/ViewDiscussions/ViewDiscussions";
+
 import CourseDetails from "./pages/student/CourseDetails/CourseDetails";
 import CreateChat from "./pages/Chat/CreateChat/CreateChat";
 import ViewStudentAttendance from "./pages/student/ViewStudentAttendance/ViewStudentAttendance";
@@ -66,7 +66,8 @@ import TeacherCourseDetails from "./pages/teacher/Courses/CourseDetails/CourseDe
 import SubjectAttendanceAnalytics from "./pages/teacher/Courses/SubjectAttendanceAnalytics/SubjectAttendanceAnalytics";
 import SubjectClasses from "./pages/teacher/Class/SubjectClasses/SubjectClasses";
 import UpdateClass from "./pages/teacher/Class/UpdateClass/UpdateClass";
-import ViewDiscussions from "./pages/student/ViewDiscussions/ViewDiscussions";
+import StudentChatCreate from "./pages/Chat/CreateChat/StudentChatCreate/StudentChatCreate";
+import TeacherChatCreate from "./pages/Chat/CreateChat/TeacherChatCreate/TeacherChatCreate";
 
 const router = createBrowserRouter([
   {
@@ -93,14 +94,6 @@ const router = createBrowserRouter([
                   },
                   {
                     path: "signup",
-                    element: <StudentRegister />,
-                  },
-                  {
-                    path: "dashboard",
-                    element: <StudentRegister />,
-                  },
-                  {
-                    path: "marks",
                     element: <StudentRegister />,
                   },
                 ],
@@ -133,7 +126,7 @@ const router = createBrowserRouter([
         element: <StudentLayout />,
         children: [
           {
-            path: "dashboard",
+            path: "",
             element: <StudentDasboard />,
           },
           {
@@ -158,11 +151,15 @@ const router = createBrowserRouter([
             children: [
               {
                 path: "create",
+                element: <StudentChatCreate />,
+              },
+              {
+                path: "",
                 element: <ViewDiscussions />,
               },
               {
-                path: "view",
-                element: <ViewDiscussions />,
+                path: ":id",
+                element: <Chat />,
               },
             ],
           },
@@ -196,7 +193,7 @@ const router = createBrowserRouter([
           },
 
           {
-            path: "dashboard",
+            path: "",
             element: <Dashboard />,
           },
           {
@@ -253,10 +250,7 @@ const router = createBrowserRouter([
             path: "attendance",
             element: <Attendance />,
           },
-          {
-            path: "notifications",
-            element: <Notifications />,
-          },
+
           {
             path: "courses",
             children: [
@@ -285,6 +279,10 @@ const router = createBrowserRouter([
               {
                 path: ":id",
                 element: <Chat />,
+              },
+              {
+                path: "create",
+                element: <TeacherChatCreate />,
               },
             ],
           },

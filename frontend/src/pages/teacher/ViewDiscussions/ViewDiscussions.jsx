@@ -9,6 +9,7 @@ import Select from "../../../components/Select/Select";
 import Styles from "./ViewDiscussions.module.css";
 import Header from "../../../components/Page/Header/Header";
 import Container from "../../../components/Container/Container";
+import CreateButton from "../../../components/Button/CreateButton/CreateButton";
 
 const ViewChats = () => {
   const [chats, setChats] = useState([]);
@@ -60,7 +61,17 @@ const ViewChats = () => {
     );
   return (
     <Container>
-      <Header title="Discussions" size={"lg"} />
+      <Header
+        title="Discussions"
+        size={"lg"}
+        buttons={[
+          <CreateButton
+            onClick={() => {
+              navigate("/teacher/discussions/create");
+            }}
+          />,
+        ]}
+      />
       <div className={`${Styles.chatContainer}`}>
         {currentChats.map((chat, indx) => (
           <div key={Math.random()}>

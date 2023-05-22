@@ -1,4 +1,18 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useForm } from "react-hook-form";
+import axios from "axios";
+import { Store } from "react-notifications-component";
+import Container from "../../../../components/Container/Container";
+import Title from "../../../../components/forms/Title/Title";
+import { useAuthContext } from "../../../../hooks/useAuthContext";
+import Input from "../../../../components/forms/Input/Input";
+import DateComponent from "../../../../components/forms/Date/DateComponent";
+import Submit from "../../../../components/forms/Submit/Submit";
+import TimeComponent from "../../../../components/forms/Time/TimeComponent";
+import Select from "../../../../components/Select/Select";
+import { useNavigate } from "react-router-dom";
+import Loading from "../../../../components/Loading/Loading";
+import Styles from "./TeacherChatCreate.module.css";
 
 const TeacherChatCreate = () => {
   const { register, handleSubmit } = useForm();
@@ -9,6 +23,9 @@ const TeacherChatCreate = () => {
   const [teachesOption, setTeachesOption] = useState([]);
   const [teachesValue, setTeachesValue] = useState([]);
   const [studentOptions, setStudentOptions] = useState([]);
+  const [studentValues, setStudentValues] = useState([]);
+  const [student, setStudent] = useState();
+  const [teaches, setTeaches] = useState();
   const auth = useAuthContext();
   const navigate = useNavigate();
   const user = auth.user._id;
@@ -57,8 +74,18 @@ const TeacherChatCreate = () => {
     }
   };
 
+  //function to update student list when teacher changes
+  const handleTeachesChange = (e) => {
+    const index = teachesValue.indexOf(e.target.value);
+    setStudentOptions(userData[index].students.map(selectProps("name")));
+    setStudentValues(userData[index].students.map(selectProps("_id")));
+    setTeaches(e.target.value);
+    console.log(e.target.value);
+  };
+
   useEffect(() => {
-    axios.get(`/api/teaches/teacher/${user}`).then((res) => {
+    axios.get(`/api/teaches/staff/${user}`).then((res) => {
+      console.log(res.data);
       setUserData(res.data);
       //get course Details
       const courseDetails = res.data.map(selectProps("course"));
@@ -84,35 +111,49 @@ const TeacherChatCreate = () => {
         return subjectCode[index] + "-" + x + " " + batchName[index];
       });
 
+      const teachesValue = courseName.map((x, index) => {
+        return res.data[index]._id;
+      });
+
       //set teaches option as value
       setTeachesOption(teachesOption);
 
       //set teaches id as value
-      setTeachesValue(res.data.map(selectProps("_id")));
+      setTeachesValue(teachesValue);
+
+      //set first value for student options
+      setStudentOptions(res.data[0].students.map(selectProps("name")));
+      setStudentValues(res.data[0].students.map(selectProps("_id")));
+      console.log(res.data[0].students.map(selectProps("name")));
+      console.log(res.data[0].students.map(selectProps("_id")));
 
       setLoading(false);
     });
   }, []);
   const onSubmit = (data) => {
-    data.student = auth.user._id;
+    data.student = student;
+    data.teaches = teaches;
     console.log(data);
-    //add new chat
+
     axios
       .post(`/api/discussions`, data)
       .then((res) => {
         notify("success");
-        navigate(`/student/chats`);
+        navigate(`/teacher/discussions`);
       })
       .catch((err) => {
         notify("error");
         console.log(err);
       });
   };
+  if (loading) return <Loading />;
   return (
     <Container>
-      <div className="  w-100 mx-auto my-5 ">
-        <Title title="Create Chat" />
-        <div className="form-body w-75 mx-auto">
+      <div className="  ">
+        <div className={`${Styles.title} mx-5`}>
+          <Title title="Create Discussion" />
+        </div>
+        <div className={`${Styles.form}`}>
           <form onSubmit={handleSubmit(onSubmit)}>
             <div className="row">
               <div className="col">
@@ -130,6 +171,17 @@ const TeacherChatCreate = () => {
                   register={register}
                   options={teachesOption}
                   values={teachesValue}
+                  onChange={handleTeachesChange}
+                />
+                <Select
+                  name="student"
+                  label="Student"
+                  register={register}
+                  options={studentOptions}
+                  values={studentValues}
+                  onChange={(e) => {
+                    setStudent(e.target.value);
+                  }}
                 />
               </div>
             </div>

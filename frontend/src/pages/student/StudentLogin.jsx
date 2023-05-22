@@ -50,7 +50,7 @@ const StudentLogin = () => {
 
   useEffect(() => {
     if (auth.isAuthenticated == true && auth.userType == "student") {
-      navigate("/student/dashboard");
+      navigate("/student");
     }
   }, [user]);
 

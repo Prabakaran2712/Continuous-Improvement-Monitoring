@@ -75,7 +75,7 @@ const StudentRegister = () => {
       .then((data) => {
         console.log(data);
         notify("success");
-        navigate("/student/dashboard");
+        navigate("/student");
       })
       .catch((err) => {
         setError(err.response.data.message);

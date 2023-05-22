@@ -3,6 +3,7 @@
   border: 2px solid var(--primary);
   padding: 1.2rem;
   border-radius: 10px;
+  width: 300px;
 }
 .view {
   display: flex;
@@ -30,6 +31,9 @@
 .title {
   font-size: 1.6rem;
   font-weight: 400;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 .recipient {
   font-size: 1rem;

@@ -46,7 +46,7 @@ const StudentLayout = () => {
   const options = [
     {
       name: "Dashboard",
-      link: "/student/dashboard",
+      link: "/student",
       icon: <FontAwesomeIcon icon={faHouse} />,
     },
     {
@@ -59,14 +59,10 @@ const StudentLayout = () => {
       link: "/student/attendance",
       icon: <FontAwesomeIcon icon={faList} />,
     },
-    {
-      name: "Notifications",
-      link: "/student/notifications",
-      icon: <FontAwesomeIcon icon={faBell} />,
-    },
+
     {
       name: "Discussions",
-      link: "/student/discussions/view",
+      link: "/student/discussions",
       icon: <FontAwesomeIcon icon={faMessage} />,
     },
     {

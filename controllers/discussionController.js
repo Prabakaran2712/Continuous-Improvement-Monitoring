@@ -3,14 +3,15 @@ const Discussion = require("../models/Discussion");
 //create a Discussion
 const createDiscussion = async (req, res) => {
   try {
-    const Discussion = new Discussion({
+    const resDiscussion = new Discussion({
       teaches: req.body.teaches,
       student: req.body.student,
       title: req.body.title,
     });
-    await Discussion.save();
-    res.status(200).json(Discussion);
+    await resDiscussion.save();
+    res.status(200).json(resDiscussion);
   } catch (err) {
+    console.log(err);
     res.status(500).json(err);
   }
 };

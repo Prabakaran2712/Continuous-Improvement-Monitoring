@@ -1,0 +1,13 @@
+@media screen and (max-width: 576px) {
+  .form {
+    overflow: scroll;
+  }
+  .form input {
+    width: 100%;
+    margin: 0.5rem 0;
+  }
+  .form select {
+    width: 100%;
+    margin: 0.5rem 0;
+  }
+}
