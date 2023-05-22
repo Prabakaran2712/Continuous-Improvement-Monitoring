@@ -8,6 +8,7 @@ import axios from "axios";
 import Input from "../../components/forms/Input/Input";
 import Select from "../../components/forms/Select/Select";
 import { set } from "mongoose";
+import Loading from "../../components/Loading/Loading";
 
 const StudentRegister = () => {
   const { register, handleSubmit } = useForm();
@@ -84,125 +85,171 @@ const StudentRegister = () => {
   };
 
   useEffect(() => {
-    return () => {
-      axios
-        .get("/api/departments")
-        .then((data) => {
-          setDepartmentNames(data.data.map(selectProps("dept_name")));
-          setDepartmentValues(data.data.map(selectProps("_id")));
-          axios
-            .get("/api/batches")
-            .then((data) => {
-              setBatchNames(
-                data.data.map((data) => {
-                  return data.start_year + "-" + data.end_year;
-                })
-              );
-              setBatchValues(data.data.map(selectProps("_id")));
-              setLoading(false);
-            })
-            .catch((err) => {
-              console.log(err);
-            });
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    };
+    axios
+      .get("/api/departments")
+      .then((res) => {
+        var data = res.data;
+        console.log(data);
+        setDepartmentNames(data.map(selectProps("dept_name")));
+        setDepartmentValues(data.map(selectProps("_id")));
+        axios
+          .get("/api/batches")
+          .then((res) => {
+            var data = res.data;
+
+            setBatchNames(
+              data.map((data) => {
+                return data.start_year + "-" + data.end_year;
+              })
+            );
+            setBatchValues(data.map(selectProps("_id")));
+            setLoading(false);
+          })
+          .catch((err) => {
+            setLoading(false);
+            console.log(err);
+          });
+      })
+      .catch((err) => {
+        setLoading(false);
+        console.log(err);
+      });
   }, []);
 
-  if (loading) return <div>Loading...</div>;
-  else
-    return (
-      <div className="card  w-75 mx-auto m-5 p-5">
-        <div className="option-pane card-title d-flex flex-row justify-content-center ">
-          <div className="display-6">Sign up (Student) </div>
-        </div>
-        <form onSubmit={handleSubmit(onSubmit)}>
-          <div className="row">
-            <div className="col">
-              <Input
-                register={register}
-                name="name"
-                label="Name"
-                type="text"
-                conditions={{ required: true, maxLength: 100 }}
-              ></Input>
-              <Input
-                register={register}
-                name="roll_number"
-                label="Roll Number"
-                type="text"
-                conditions={{ required: true, maxLength: 100 }}
-              ></Input>
-              <Input
-                register={register}
-                name="phone"
-                label="Phone Number"
-                type="text"
-                conditions={{ required: true, maxLength: 100 }}
-              ></Input>
+  if (loading) return <Loading />;
 
-              <Select
-                options={departmentNames}
-                values={departmentValues}
-                label={"Department"}
-                name="department"
-                register={register}
-              />
-
-              <Select
-                options={batchNames}
-                values={batchValues}
-                label={"Batch"}
-                name="batch"
-                register={register}
-              />
-            </div>
-            <div className="col">
-              <Input
-                register={register}
-                name="email"
-                label="Email"
-                type="email"
-                conditions={{ required: true, maxLength: 100 }}
-              ></Input>
-              <Input
-                register={register}
-                name="password"
-                label="Password"
-                type="password"
-                conditions={{ required: true, maxLength: 100 }}
-              ></Input>
-              <Input
-                register={register}
-                name="cpassword"
-                label="Confirm Password"
-                type="password"
-                conditions={{ required: true, maxLength: 100 }}
-              ></Input>
-            </div>
-          </div>
-          {error && (
-            <div className="alert alert-danger mx-auto mt-3 text-center w-75">
-              {error}
-            </div>
-          )}
-          <div className="form-group text-center mx-5 my-3">
-            <input
-              type="submit"
-              className="btn btn-outline-dark  form-control w-25 my-3"
-              value="Register"
-            />
-          </div>
-
-          <div className="form-group text-center mx-5 my-3">
-            <span>Already Having an account </span>
-            <NavLink to={"auth/student/signin"}>Signin</NavLink>
-          </div>
-        </form>
+  return (
+    <div className="card  w-75 mx-auto m-5 p-5">
+      <div className="option-pane card-title d-flex flex-row justify-content-center ">
+        <div className="display-6">Sign up (Student) </div>
       </div>
-    );
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <div className="row">
+          <div className="col">
+            <Input
+              register={register}
+              name="name"
+              label="Name"
+              type="text"
+              conditions={{ required: true, maxLength: 100 }}
+            ></Input>
+            <Input
+              register={register}
+              name="roll_number"
+              label="Roll Number"
+              type="text"
+              conditions={{ required: true, maxLength: 100 }}
+            ></Input>
+            <Input
+              register={register}
+              name="phone"
+              label="Phone Number"
+              type="text"
+              conditions={{ required: true, maxLength: 100 }}
+            ></Input>
+
+            <Select
+              options={batchNames}
+              values={batchValues}
+              label={"Batch"}
+              name="batch"
+              register={register}
+            />
+            <Input
+              register={register}
+              name="city"
+              label="City"
+              type="text"
+              conditions={{ required: true, maxLength: 100 }}
+            ></Input>
+
+            <Input
+              register={register}
+              name="state"
+              label="State"
+              type="text"
+              conditions={{ required: true, maxLength: 100 }}
+            ></Input>
+            <Input
+              register={register}
+              name="country"
+              label="Country"
+              type="text"
+              conditions={{ required: true, maxLength: 100 }}
+            ></Input>
+          </div>
+          <div className="col">
+            <Input
+              register={register}
+              name="email"
+              label="Email"
+              type="email"
+              conditions={{ required: true, maxLength: 100 }}
+            ></Input>
+            <Input
+              register={register}
+              name="password"
+              label="Password"
+              type="password"
+              conditions={{ required: true, maxLength: 100 }}
+            ></Input>
+            <Input
+              register={register}
+              name="cpassword"
+              label="Confirm Password"
+              type="password"
+              conditions={{ required: true, maxLength: 100 }}
+            ></Input>
+            <Select
+              options={departmentNames}
+              values={departmentValues}
+              label={"Department"}
+              name="department"
+              register={register}
+            />
+            <Input
+              register={register}
+              name="pincode"
+              label="Pincode"
+              type="text"
+              conditions={{ required: true, maxLength: 100 }}
+            ></Input>
+            <Input
+              register={register}
+              name="address_line_1"
+              label="Address Line-1"
+              type="text"
+              conditions={{ required: true, maxLength: 100 }}
+            ></Input>
+            <Input
+              register={register}
+              name="address_line_2"
+              label="Address Line-2"
+              type="text"
+              conditions={{ required: true, maxLength: 100 }}
+            ></Input>
+          </div>
+        </div>
+        {error && (
+          <div className="alert alert-danger mx-auto mt-3 text-center w-75">
+            {error}
+          </div>
+        )}
+        <div className="form-group text-center mx-5 my-3">
+          <input
+            type="submit"
+            className="btn btn-outline-dark  form-control w-25 my-3"
+            value="Register"
+          />
+        </div>
+
+        <div className="form-group text-center mx-5 my-3">
+          <span>Already Having an account </span>
+          <NavLink to={"auth/student/signin"}>Signin</NavLink>
+        </div>
+      </form>
+    </div>
+  );
 };
 
 export default StudentRegister;

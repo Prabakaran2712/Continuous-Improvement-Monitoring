@@ -34,6 +34,10 @@ const StudentSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    address: {
+      type: mongoose.Types.ObjectId,
+      ref: "Address",
+    },
   },
   { timestamps: true }
 );

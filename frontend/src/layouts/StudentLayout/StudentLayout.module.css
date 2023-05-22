@@ -29,7 +29,7 @@
 }
 .sidebar-brand {
   height: 90px;
-  padding: 1rem 0rem 1rem 2rem;
+  padding: 2rem 0rem 1rem 2rem;
   color: #fff;
 }
 .sidebar-brand span {
@@ -89,7 +89,7 @@
   padding-left: 1rem;
 }
 
-#nav-toggle:checked + .sidebar .sidebar-brand h2 span:last-child,
+#nav-toggle:checked + .sidebar .sidebar-brand h3 span:last-child,
 #nav-toggle:checked + .sidebar li a span:last-child {
   display: none;
 }
@@ -104,6 +104,10 @@
 .main-content {
   transition: margin-left 300ms;
   margin-left: var(--side-bar-width);
+  height: 100%;
+}
+.main-content main {
+  height: 100%;
 }
 header {
   display: flex;
@@ -126,7 +130,7 @@ header {
 
 header h2 {
   color: #222;
-  font-size: 1.8rem;
+  font-size: 2rem;
 }
 header label span {
   font-size: 1.5rem;
@@ -156,13 +160,7 @@ main {
   min-height: calc(100vh - 90px);
 }
 
-.cards {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  grid-gap: 2rem;
-  margin-top: 1rem;
-}
-.cardSingle {
+/* .cardSingle {
   display: flex;
   justify-content: space-between;
   background: #fff;
@@ -170,23 +168,30 @@ main {
   border-radius: 2px;
 }
 
+.cardSingle div:last-child span {
+  font-size: 3rem;
+  color: var(--main-color);
+}
+.cardSingle div:first-child span {
+  color: var(--text-grey);
+}
+
+.cardSingle:last-child div:last-child span {
+  color: #fff;
+} */
 @media only screen and (max-width: 1200px) {
   .sidebar .sidebar-brand,
   .sidebar li {
     padding-left: 1rem;
   }
 }
-@media only screen and (max-width: 960px) {
-  .cards {
-    grid-template-columns: repeat(3, 1fr);
-  }
-}
+
 @media only screen and (max-width: 768px) {
   main {
-    margin-left: 70px;
+    margin-left: 0px;
   }
   .sidebar {
-    width: 70px;
+    width: 0px;
   }
   .sidebar .sidebar-brand h2 span:last-child,
   .sidebar li a span:last-child {
@@ -195,9 +200,7 @@ main {
   .main-content {
     margin-left: 70px;
   }
-  .cards {
-    grid-template-columns: repeat(2, 1fr);
-  }
+
   .search-wrapper {
     display: none;
   }
@@ -254,10 +257,5 @@ main {
   }
   #nav-toggle:checked ~ .main-content header {
     margin-left: 0px !important;
-  }
-}
-@media only screen and (max-width: 530px) {
-  .cards {
-    grid-template-columns: 100%;
   }
 }

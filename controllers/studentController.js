@@ -1,6 +1,7 @@
 const Student = require("../models/Student");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
+const Address = require("../models/Address");
 
 const createToken = (payload) => {
   return jwt.sign(payload, process.env.SECRET, { expiresIn: "14 days" });
@@ -19,8 +20,26 @@ const addNewStudent = async (req, res) => {
     } else if (email) {
       throw new Error("A student with this email already exists");
     } else {
-      const gensalt = bcrypt.genSaltSync(10);
+      const address = await Address({
+        city: req.body.city,
+        state: req.body.state,
+        country: req.body.country,
+        pincode: req.body.pincode,
+        address_line_1: req.body.address_line_1,
+        address_line_2: req.body.address_line_2,
+      });
+      address.save();
+      console.log(address);
+      delete req.body.city;
+      delete req.body.state;
+      delete req.body.country;
+      delete req.body.pincode;
+      delete req.body.address_line_1;
+      delete req.body.address_line_2;
       delete req.body.cpassword;
+      req.body.address = address._id;
+      const gensalt = bcrypt.genSaltSync(10);
+
       const hpass = await bcrypt.hashSync(req.body.password, gensalt);
       req.body.password = hpass;
       const newUser = await Student.create(req.body);
