@@ -66,7 +66,7 @@ const StudentLogin = () => {
         });
         console.log(user);
         notify("success");
-        navigate("/student/dashboard");
+        navigate("/student");
       })
       .catch((err) => {
         setError(err.response.data.message);

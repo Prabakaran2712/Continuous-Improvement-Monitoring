@@ -127,12 +127,43 @@ const getMarkByTeacherStaffId = async (req, res) => {
   try {
     const mark = await Mark.find({})
       .populate({
-        path: "teacher",
-        match: { staff_id: req.params.staff_id },
+        path: "exam",
+        populate: {
+          path: "teaches",
+
+          populate: { path: "course", populate: { path: "department" } },
+        },
       })
-      .populate("student")
-      .populate("exam");
-    res.status(200).json(mark);
+      .populate({
+        path: "exam",
+        populate: {
+          path: "teaches",
+
+          populate: {
+            path: "teacher",
+            populate: "address department",
+          },
+        },
+      })
+      .populate({
+        path: "exam",
+        populate: {
+          path: "teaches",
+
+          populate: { path: "batch" },
+        },
+      })
+      .populate({
+        path: "student",
+        populate: { path: "department batch" },
+      });
+
+    //filter out marks with teacher _id equals to req.params.id
+    const filteredMarks = mark.filter((m) => {
+      return m.exam.teaches.teacher._id == req.params.staff_id;
+    });
+
+    res.status(200).json(filteredMarks);
   } catch (error) {
     res.status(500).json({ message: error.message });
   }

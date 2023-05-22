@@ -29,13 +29,14 @@
   margin-bottom: 30px;
   -webkit-transition: all 0.3s ease-in-out;
   transition: all 0.3s ease-in-out;
+  cursor: pointer;
 }
 
 .card .cardBlock {
   padding: 30px 30px;
 }
 .card .cardBlock svg {
-  font-size: 40px;
+  font-size: 25px;
 }
 .card .cardBlock h6 {
   font-size: 1.1rem;
@@ -58,6 +59,7 @@
   justify-content: space-between;
   align-items: center;
 }
+
 .moreInfo {
   text-align: center;
   padding-top: 6px;
@@ -98,9 +100,7 @@
   .orderCard i {
     font-size: 20px;
   }
-  .card .cardBody {
-    flex-direction: column;
-  }
+
   .card .cardBody .fLeft {
     margin-bottom: 10px;
   }

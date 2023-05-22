@@ -17,7 +17,7 @@ const TeacherLogin = () => {
       auth.isAuthenticated == true &&
       (auth.userType == "teacher" || auth.userType == "admin")
     ) {
-      navigate("/teacher/dashboard");
+      navigate("/teacher/");
     }
   }, [auth]);
   //notifications

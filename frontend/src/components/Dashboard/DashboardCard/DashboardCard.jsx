@@ -30,12 +30,15 @@ const DashboardCard = (props) => {
   }, []);
 
   return (
-    <div className={`${Styles.card}  ${Styles.orderCard}  ${color}`}>
+    <div
+      className={`${Styles.card}  ${Styles.orderCard}  ${color}`}
+      onClick={props.onClick}
+    >
       <div className={`${Styles.cardBlock}`}>
         <h6 className="">{props.title}</h6>
         <h4 className={`${Styles.cardBody}`}>
           <span>{props.value && props.value}</span>
-          {props.icon && <FontAwesomeIcon icon={props.icon && props.icon} />}
+          <span className={`${Styles.icon}`}>{props.icon && props.icon}</span>
         </h4>
       </div>
       <div className={`${Styles.moreInfo}`}>
