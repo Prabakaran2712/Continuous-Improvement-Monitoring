@@ -122,10 +122,15 @@ const TeacherChatCreate = () => {
       setTeachesValue(teachesValue);
 
       //set first value for student options
-      setStudentOptions(res.data[0].students.map(selectProps("name")));
-      setStudentValues(res.data[0].students.map(selectProps("_id")));
-      setStudent(res.data[0].students[0]._id);
-      setTeaches(res.data[0]._id);
+      if (res.data.length > 0) {
+        setStudentOptions(res.data[0].students.map(selectProps("name")));
+        setStudentValues(res.data[0].students.map(selectProps("_id")));
+        setTeaches(res.data[0]._id);
+
+        if (res.data[0].students.length > 0) {
+          setStudent(res.data[0].students[0]._id);
+        }
+      }
       console.log(res.data[0].students.map(selectProps("name")));
       console.log(res.data[0].students.map(selectProps("_id")));
 
