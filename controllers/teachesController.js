@@ -1,5 +1,9 @@
 const Teaches = require("../models/Teaches");
 const Grades = require("../models/Grades");
+const Marks = require("../models/Mark");
+const Attendance = require("../models/Attendance");
+const Exam = require("../models/Exam");
+const Class = require("../models/Class");
 
 //get all Teaches
 const getAllTeaches = async (req, res) => {
@@ -167,6 +171,29 @@ const addStudentsToTeaches = async (req, res) => {
         published: false,
       });
       const newGrades = await grades.save();
+      //add marks for the student for all exams with the teaches id
+      const exams = await Exam.find({ teaches: updatedTeachesPopulated._id });
+      exams.forEach(async (exam) => {
+        const marks = new Marks({
+          student: req.body.student,
+
+          exam: exam._id,
+          marks: 0,
+        });
+        await marks.save();
+      });
+      //add attendance for the student for all classes with the teaches id
+      const classes = await Class.find({
+        teaches: updatedTeachesPopulated._id,
+      });
+      classes.forEach(async (classs) => {
+        const attendance = new Attendance({
+          student: req.body.student,
+          class: classs._id,
+          present: false,
+        });
+        await attendance.save();
+      });
 
       res.status(200).json(updatedTeachesPopulated);
     } else {
@@ -183,7 +210,7 @@ const removeStudentsFromTeaches = async (req, res) => {
     const teaches = await Teaches.findById(req.params.id);
     if (teaches) {
       teaches.students = teaches.students.filter(
-        (student) => student._id != req.body.student
+        (student) => student._id != req.body.student._id
       );
       const updatedTeaches = await teaches.save();
       const updatedTeachesPopulated = await Teaches.findById(updatedTeaches._id)
@@ -205,6 +232,27 @@ const removeStudentsFromTeaches = async (req, res) => {
       const grades = await Grades.findOne({
         teaches: updatedTeachesPopulated._id,
         student: req.body.student,
+      });
+      //remove marks for the student in all exams with the teaches id
+      const exams = await Exam.find({ teaches: updatedTeachesPopulated._id });
+      exams.forEach(async (exam) => {
+        const marks = await Marks.findOne({
+          student: req.body.student,
+          exam: exam._id,
+        });
+        await marks.remove();
+      });
+      //remove attendance for the student in all classes with the teaches id
+
+      const classes = await Class.find({
+        teaches: updatedTeachesPopulated._id,
+      });
+      classes.forEach(async (classs) => {
+        const attendance = await Attendance.findOne({
+          student: req.body.student,
+          class: classs._id,
+        });
+        await attendance.remove();
       });
 
       console.log(grades);

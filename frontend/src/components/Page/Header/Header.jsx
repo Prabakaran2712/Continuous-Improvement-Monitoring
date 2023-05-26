@@ -3,7 +3,7 @@ import Styles from "./Header.module.css";
 const Header = (props) => {
   return (
     <div
-      className={`header d-flex flex-row justify-content-between my-lg-3 mt-sm-1 mx-lg-5 ${Styles.header}`}
+      className={`header d-flex flex-row justify-content-between  mt-sm-1 mx-lg-5 ${Styles.header}`}
     >
       <div className={`${Styles.title}`}>
         <Title title={props.title} size={props.size} />

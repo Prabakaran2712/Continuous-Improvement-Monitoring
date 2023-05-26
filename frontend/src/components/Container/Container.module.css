@@ -1,5 +1,7 @@
 .container {
   margin: 2rem;
+  margin-left: 3rem;
+  margin-right: 3rem;
 }
 @media screen and (max-width: 1376px) {
   .container {

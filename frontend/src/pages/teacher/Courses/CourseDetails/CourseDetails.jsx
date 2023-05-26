@@ -37,7 +37,7 @@ const CourseDetails = () => {
   const [tabs, setTabs] = useState(0);
 
   const navigate = useNavigate();
-
+  var batchstud;
   function TabPanel(props) {
     const { children, value, index, ...other } = props;
 
@@ -92,8 +92,16 @@ const CourseDetails = () => {
       })
       .then((res) => {
         setYourStudentValue(res.data.students);
+        //filter out the students who are already in the yourstudents array
         setNewStudentValue(
-          batchStudents.filter((student) => {
+          batchstud.filter((student) => {
+            return !res.data.students.some((obj) => {
+              return obj._id === student._id;
+            });
+          })
+        );
+        console.log(
+          batchstud.filter((student) => {
             return !res.data.students.some((obj) => {
               return obj._id === student._id;
             });
@@ -109,7 +117,18 @@ const CourseDetails = () => {
       })
       .then((res) => {
         setYourStudentValue(res.data.students);
+
+        //filter out the students who are already in the yourstudents array
         setNewStudentValue(
+          batchstud.filter((student) => {
+            return !res.data.students.some((obj) => {
+              return obj._id === student._id;
+            });
+          })
+        );
+        console.log(batchstud);
+        console.log(res.data.students);
+        console.log(
           batchStudents.filter((student) => {
             return !res.data.students.some((obj) => {
               return obj._id === student._id;
@@ -122,7 +141,6 @@ const CourseDetails = () => {
     axios
       .get(`/api/teaches/${id}`)
       .then((res) => {
-        console.log(res.data);
         setCourse(res.data);
 
         //filling the data of course
@@ -132,6 +150,7 @@ const CourseDetails = () => {
           .then((batchstudents) => {
             //filter out the students who are already in the yourstudents array
             setBatchStudents(batchstudents.data);
+            batchstud = batchstudents.data;
             setNewStudentValue(
               batchstudents.data.filter((student) => {
                 return !res.data.students.some((obj) => {

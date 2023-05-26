@@ -73,7 +73,7 @@ const ViewDiscussions = () => {
   return (
     <Container>
       <Header
-        title="Discussionss"
+        title="Discussions"
         size={"lg"}
         buttons={[
           <CreateButton

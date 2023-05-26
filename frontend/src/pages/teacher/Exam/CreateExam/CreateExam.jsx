@@ -12,6 +12,7 @@ import Select from "../../../../components/forms/Select/Select";
 import { useAuthContext } from "../../../../hooks/useAuthContext";
 import Styles from "./CreateExam.module.css";
 import Loading from "../../../../components/Loading/Loading";
+import { useNavigate } from "react-router-dom";
 
 const CreateExam = () => {
   const { register, handleSubmit } = useForm();
@@ -21,7 +22,9 @@ const CreateExam = () => {
   const [userData, setUserData] = useState({});
   const [teachesOption, setTeachesOption] = useState([]);
   const [teachesValue, setTeachesValue] = useState([]);
+  const [btnloading, setBtnLoading] = useState(false);
   const auth = useAuthContext();
+  const navigate = useNavigate();
 
   const user = auth.user._id;
   //function to select properties from an object
@@ -106,6 +109,7 @@ const CreateExam = () => {
     });
   }, []);
   const onSubmit = (data) => {
+    setBtnLoading(true);
     data.exam_date = examDate.$d;
     //get only time from examTime
     const time12 = examTime.$d.toLocaleTimeString("en-US", {
@@ -135,13 +139,17 @@ const CreateExam = () => {
           .then((res) => {
             console.log(res);
             notify("success");
+            navigate("/teacher/exams");
+            setBtnLoading(false);
           })
           .catch((err) => {
             console.log(err);
             notify("error");
+            setBtnLoading(false);
           });
       })
       .catch((err) => {
+        setBtnLoading(false);
         console.log(err);
         notify("error");
       });
@@ -211,9 +219,13 @@ const CreateExam = () => {
                 />
               </div>
             </div>
-            <div className="row my-5 justify-content-end   ">
+            <div className="row my-3 justify-content-end   ">
               <div className=" mx-auto text-center">
-                <Submit name="Create" />
+                <Submit
+                  name="Create"
+                  loading={btnloading}
+                  loadingText={"Creating the exam"}
+                />
               </div>
             </div>
           </form>
