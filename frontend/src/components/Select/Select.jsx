@@ -1,7 +1,7 @@
 import Styles from "./Select.module.css";
 const Select = (props) => {
   return (
-    <div className={` form-group mx-md-5 my-sm-3 mx-5  ${Styles.select}`}>
+    <div className={` form-group  ${Styles.select}`}>
       {props.label && (
         <label className={`my-lg-3 ${Styles.label}`}>{props.label}</label>
       )}

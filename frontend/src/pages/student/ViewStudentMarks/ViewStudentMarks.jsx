@@ -228,7 +228,8 @@ const ViewStudentMarks = () => {
           });
           marks.push(obj);
         });
-
+        console.log("Marks");
+        console.log(marks);
         setMarkData(marks);
         setTableData(marks);
         setFilteredMarkData(marks);
