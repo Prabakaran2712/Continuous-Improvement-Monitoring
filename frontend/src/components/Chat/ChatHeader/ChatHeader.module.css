@@ -24,6 +24,14 @@
   margin: 0.5rem;
 }
 
+.titleOptions .coption button {
+  background-color: rgba(176, 1, 1, 0.859);
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 5px;
+  cursor: pointer;
+}
 .titleOptions .option button {
   background-color: rgb(19, 172, 44);
   color: white;
@@ -35,6 +43,33 @@
 
 .titleOptions .option button span:first-child {
   margin-left: 1rem;
+}
+
+@media screen and (max-width: 1376px) {
+  .chatContainer {
+    border-radius: 0px;
+  }
+  .chatHeader .title {
+    font-size: 1.8rem;
+  }
+  .chatHeader .name {
+    font-size: 1.2rem;
+  }
+  .chatDetails .created {
+    font-size: 0.8rem;
+  }
+  .titleOptions .option button {
+    padding: 0.3rem 0.5rem;
+  }
+  .titleOptions .option button span:first-child {
+    margin-left: 0.5rem;
+  }
+  .chatHeader .subjectName {
+    font-size: 1rem;
+  }
+  .chatHeader .department {
+    font-size: 1rem;
+  }
 }
 @media screen and (max-width: 768px) {
   .chatContainer {
@@ -55,6 +90,12 @@
   .titleOptions .option button span:first-child {
     margin-left: 0.5rem;
   }
+  .chatHeader .subjectName {
+    font-size: 1rem;
+  }
+  .chatHeader .department {
+    font-size: 1rem;
+  }
 }
 
 @media screen and (max-width: 576px) {
@@ -72,6 +113,12 @@
   }
   .titleOptions .option button span:first-child {
     margin-left: 0.5rem;
+  }
+  .chatHeader .subjectName {
+    font-size: 0.8rem;
+  }
+  .chatHeader .department {
+    font-size: 0.8rem;
   }
 }
 

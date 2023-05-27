@@ -15,7 +15,22 @@ const Chat = () => {
   const [chatDetails, setChatDetails] = useState({});
   const [sendLoading, setSendLoading] = useState(false);
   const [message, setMessage] = useState("");
+  const [btnloading, setBtnLoading] = useState(false);
   const auth = useAuthContext();
+  const closeDiscussion = (id) => {
+    axios
+      .put(`/api/discussions/close/${id}`, {
+        isClosed: true,
+      })
+      .then((res) => {
+        console.log(res.data);
+        setChatDetails({ ...chatDetails, isClosed: true });
+      })
+      .catch((err) => {
+        console.log(err);
+        setBtnLoading(false);
+      });
+  };
   const sendMessage = () => {
     axios
       .post("/api/messages", {
@@ -70,7 +85,15 @@ const Chat = () => {
   return (
     <div className={`${Styles.chat} `}>
       <div className={` ${Styles.chatHeader} row `}>
-        <ChatHeader data={chatDetails} role={auth.userType} />
+        <ChatHeader
+          data={chatDetails}
+          role={auth.userType}
+          onClick={() => {
+            closeDiscussion(id);
+            console.log("close");
+          }}
+          isClosed={chatDetails.isClosed}
+        />
       </div>
       <div className={` ${Styles.chatContainer} row `}>
         <div className={` ${Styles.chatHeader} row d-flex flex-column `}>
@@ -102,21 +125,23 @@ const Chat = () => {
             );
           })}
         </div>
-        <div className={`${Styles.options} row`}>
-          <div className="textBox col-md-11 col-10 ">
-            <TextBox message={message} setMessage={setMessage} />
+        {!chatDetails.isClosed && (
+          <div className={`${Styles.options} row`}>
+            <div className="textBox col-md-11 col-10 ">
+              <TextBox message={message} setMessage={setMessage} />
+            </div>
+            <div className="sendButton col-md-1 col-2">
+              <SendButton
+                loading={sendLoading}
+                onClick={() => {
+                  setSendLoading(true);
+                  sendMessage();
+                  setMessage("");
+                }}
+              />
+            </div>
           </div>
-          <div className="sendButton col-md-1 col-2">
-            <SendButton
-              loading={sendLoading}
-              onClick={() => {
-                setSendLoading(true);
-                sendMessage();
-                setMessage("");
-              }}
-            />
-          </div>
-        </div>
+        )}
       </div>
     </div>
   );

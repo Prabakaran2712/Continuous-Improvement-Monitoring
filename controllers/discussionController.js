@@ -105,10 +105,23 @@ const getDiscussion = async (req, res) => {
   }
 };
 
+//close a Discussion
+const closeDiscussion = async (req, res) => {
+  try {
+    const discussion = await Discussion.findById(req.params.id);
+    discussion.isClosed = true;
+    await discussion.save();
+    res.status(200).json("Discussion has been closed...");
+  } catch (err) {
+    res.status(500).json(err);
+  }
+};
+
 module.exports = {
   createDiscussion,
   deleteDiscussion,
   viewDiscussions,
   viewDiscussionsTeacher,
   getDiscussion,
+  closeDiscussion,
 };

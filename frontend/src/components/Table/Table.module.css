@@ -48,7 +48,20 @@
   margin: 5px;
 }
 
-@media screen and (max-width: 992px) {
+@media screen and (max-width: 1377px) {
+  .styledTable {
+    min-width: 300px;
+    font-size: 0.75rem;
+    margin: 15px 0;
+    width: 100%;
+  }
+
+  .styledTable th,
+  .styledTable td {
+    padding: 10px 12px;
+  }
+}
+@media screen and (max-width: 1200px) {
   .styledTable {
     min-width: 200px;
     font-size: 0.75rem;

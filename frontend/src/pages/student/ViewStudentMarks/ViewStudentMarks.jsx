@@ -24,6 +24,7 @@ import Loading from "../../../components/Loading/Loading";
 import { Tab, Tabs, Box, Typography } from "@mui/material";
 import Header from "../../../components/Page/Header/Header";
 import Table from "../../../components/Table/Table";
+import TabPanel from "../../../components/TabPanel/TabPanel";
 
 ChartJS.register(
   CategoryScale,
@@ -54,30 +55,24 @@ export const options = {
     },
   },
 };
-function TabPanel(props) {
-  const { children, value, index, ...other } = props;
-
-  return (
-    <div
-      role="tabpanel"
-      hidden={value !== index}
-      id={`simple-tabpanel-${index}`}
-      aria-labelledby={`simple-tab-${index}`}
-      {...other}
-    >
-      {value === index && <Box sx={{ p: 3 }}>{children}</Box>}
-    </div>
-  );
-}
 
 const setTableData = (data) => {
   return data.map((mark) => {
+    var overall = "NaN";
+    if (mark.assessment1 && mark.assessment2 && mark.end_semester) {
+      overall =
+        mark.assessment1 * 0.25 +
+        mark.assessment2 * 0.25 +
+        mark.end_semester * 0.5;
+    }
     return [
       mark.subject_name,
       mark.subject_code,
       mark.assessment1,
       mark.assessment2,
       mark.end_semester,
+      overall,
+
       () => {},
     ];
   });
@@ -95,6 +90,7 @@ const ViewStudentMarks = () => {
   const [tabs, setTabs] = useState(0);
   const [lineData, setLineData] = useState([]);
   const [gtab, setGtab] = useState(0);
+  const [ctab, setCtab] = useState(0);
 
   const navigate = useNavigate();
   const setChartData = (marks) => {
@@ -102,11 +98,17 @@ const ViewStudentMarks = () => {
     var ass1 = [],
       ass2 = [],
       es = [],
-      lbls = [];
+      lbls = [],
+      overall = [];
     marks.forEach((x) => {
       ass1.push(x.assessment1 ? x.assessment1 * 2 : 0);
       ass2.push(x.assessment2 ? x.assessment2 * 2 : 0);
       es.push(x.end_semester ? x.end_semester : 0);
+      if (x.assessment1 && x.assessment2 && x.end_semester)
+        overall.push(
+          x.assessment1 * 0.25 + x.assessment2 * 0.25 + x.end_semester * 0.5
+        );
+      else overall.push(0);
       lbls.push(x.subject_name);
     });
     console.log(ass1);
@@ -137,6 +139,12 @@ const ViewStudentMarks = () => {
           backgroundColor: "rgba(255, 192, 0, 0.5)",
           borderColor: "rgba(255, 192, 0, 1)",
         },
+        {
+          label: "Overall",
+          data: overall,
+          backgroundColor: "rgba(75, 192, 192, 0.5)",
+          borderColor: "rgba(75, 192, 192, 1)",
+        },
       ],
     });
   };
@@ -149,6 +157,11 @@ const ViewStudentMarks = () => {
       temp.push(x.assessment1 ? x.assessment1 * 2 : 0);
       temp.push(x.assessment2 ? x.assessment2 * 2 : 0);
       temp.push(x.end_semester ? x.end_semester : 0);
+      if (x.assessment1 && x.assessment2 && x.end_semester)
+        temp.push(
+          x.assessment1 * 0.25 + x.assessment2 * 0.25 + x.end_semester * 0.5
+        );
+      else temp.push("NaN");
       markdata.push(temp);
     });
     var datasets = [];
@@ -166,7 +179,7 @@ const ViewStudentMarks = () => {
     }
     console.log(markdata);
     setLineData({
-      labels: ["Assessment-1", "Assessment-2", "End Semester"],
+      labels: ["Assessment-1", "Assessment-2", "End Semester", "Overall"],
       datasets: datasets,
     });
   };
@@ -183,60 +196,60 @@ const ViewStudentMarks = () => {
       });
     //get teaches with the student
     var uniqueSubjects = [];
-    axios.get(`/api/teaches/student/${auth.user._id}`).then((res) => {
-      res.data.forEach((x) => {
-        uniqueSubjects.push({
-          name: x.course.name,
-          subject_code: x.course.subject_code,
-          _id: x._id,
-          semester: x.semester,
-        });
-      });
-      console.log(uniqueSubjects);
-    });
-
-    //get student marks from student id
     axios
-      .get(`/api/marks/student/${auth.user._id}`)
+      .get(`/api/teaches/student/${auth.user._id}`)
       .then((res) => {
-        console.log(res.data);
-        //for each subject get marks of each exam type if not present use zero
-        //filter data where exam have publised true
-        res.data = res.data.filter((x) => x.exam.published);
-
-        var marks = [];
-        uniqueSubjects.forEach((x) => {
-          var obj = {
+        res.data.forEach((x) => {
+          uniqueSubjects.push({
+            name: x.course.name,
+            subject_code: x.course.subject_code,
             _id: x._id,
-            subject_name: x.name,
-            subject_code: x.subject_code,
-            assessment1: "NaN",
-            assessment2: "NaN",
-            end_semester: "NaN",
             semester: x.semester,
-          };
-          res.data.forEach((y) => {
-            if (y.exam.teaches.course.name == x.name) {
-              if (y.exam.exam_type == "Assessment-1") {
-                obj.assessment1 = y.mark;
-              } else if (y.exam.exam_type == "Assessment-2") {
-                obj.assessment2 = y.mark;
-              } else if (y.exam.exam_type == "End-Semester") {
-                obj.end_semester = y.mark;
-              }
-            }
           });
-          marks.push(obj);
         });
-        console.log("Marks");
-        console.log(marks);
-        setMarkData(marks);
-        setTableData(marks);
-        setFilteredMarkData(marks);
-        setLineChartData(marks);
-        setFilteredData(res.data);
-        setChartData(marks);
-        setLoading(false);
+        console.log("subjects");
+        console.log(uniqueSubjects);
+        //get student marks from student id
+        axios.get(`/api/marks/student/${auth.user._id}`).then((res) => {
+          console.log(res.data);
+          //for each subject get marks of each exam type if not present use zero
+          //filter data where exam have publised true
+          res.data = res.data.filter((x) => x.exam.published);
+
+          var marks = [];
+          uniqueSubjects.forEach((x) => {
+            var obj = {
+              _id: x._id,
+              subject_name: x.name,
+              subject_code: x.subject_code,
+              assessment1: "NaN",
+              assessment2: "NaN",
+              end_semester: "NaN",
+              semester: x.semester,
+            };
+            res.data.forEach((y) => {
+              if (y.exam.teaches.course.name == x.name) {
+                if (y.exam.exam_type == "Assessment-1") {
+                  obj.assessment1 = y.mark;
+                } else if (y.exam.exam_type == "Assessment-2") {
+                  obj.assessment2 = y.mark;
+                } else if (y.exam.exam_type == "End-Semester") {
+                  obj.end_semester = y.mark;
+                }
+              }
+            });
+            marks.push(obj);
+          });
+          console.log("Marks");
+          console.log(marks);
+          setMarkData(marks);
+          setTableData(marks);
+          setFilteredMarkData(marks);
+          setLineChartData(marks);
+          setFilteredData(res.data);
+          setChartData(marks);
+          setLoading(false);
+        });
       })
       .catch((err) => {
         setLoading(false);
@@ -248,12 +261,13 @@ const ViewStudentMarks = () => {
     return <Loading />;
   } else {
     return (
-      <Container>
-        <Header title="Marks" />
+      <div className="mx-2">
+        <Title title="Marks" />
 
         <div className="analytics">
-          <div className="analytics-header mx-auto w-75">
+          <div className="analytics-header ">
             <Select
+              label="Semester"
               options={[
                 "All",
                 "Semester-1",
@@ -285,7 +299,7 @@ const ViewStudentMarks = () => {
               }}
             />
           </div>
-          <div className="analytics-body  my-2 mx-5">
+          <div className="analytics-body  my-2">
             <Tabs
               value={tabs}
               onChange={(e, newValue) => setTabs(newValue)}
@@ -295,10 +309,14 @@ const ViewStudentMarks = () => {
                   color: "#000000",
                 },
               }}
-              className={`${Styles.tabs}  mx-lg-5 mx-sm-1 mt-lg-3 mt-sm-1`}
+              className={`${Styles.tabs}  `}
             >
               <Tab
-                label={<span style={{ color: "black" }}>Table</span>}
+                label={
+                  <span style={{ color: "black" }} className={Styles.tab}>
+                    Table
+                  </span>
+                }
                 index={0}
               />
               <Tab
@@ -309,17 +327,60 @@ const ViewStudentMarks = () => {
 
             <div className={"marks "}>
               <TabPanel value={tabs} index={0}>
-                <Table
-                  thead={[
-                    "#",
-                    "Subject",
-                    "Subject Code",
-                    "Assessment-1",
-                    "Assessment-2",
-                    "End Semester",
-                  ]}
-                  tbody={setTableData(filteredMarkData)}
-                />
+                <Tabs
+                  value={ctab}
+                  onChange={(e, newValue) => setCtab(newValue)}
+                  TabIndicatorProps={{
+                    style: {
+                      backgroundColor: "#000000",
+                      color: "#000000",
+                    },
+                  }}
+                  className={`${Styles.tabs}  `}
+                >
+                  <Tab
+                    label={<span style={{ color: "black" }}>All</span>}
+                    index={0}
+                  />
+                  <Tab
+                    label={
+                      <span style={{ color: "black" }}>Below Average</span>
+                    }
+                    index={1}
+                  />
+                </Tabs>
+                <TabPanel value={ctab} index={0}>
+                  <Table
+                    thead={[
+                      "#",
+                      "Subject",
+                      "Subject Code",
+                      "Assessment-1",
+                      "Assessment-2",
+                      "End Semester",
+                      "Overall",
+                    ]}
+                    tbody={setTableData(filteredMarkData)}
+                    tooltip={false}
+                  />
+                </TabPanel>
+                <TabPanel value={ctab} index={1}>
+                  <Table
+                    thead={[
+                      "#",
+                      "Subject",
+                      "Subject Code",
+                      "Assessment-1",
+                      "Assessment-2",
+                      "End Semester",
+                      "Overall",
+                    ]}
+                    tbody={setTableData(filteredMarkData).filter((x) => {
+                      return x[5] < 50;
+                    })}
+                    tooltip={false}
+                  />
+                </TabPanel>
               </TabPanel>
 
               <TabPanel value={tabs} index={1}>
@@ -332,7 +393,7 @@ const ViewStudentMarks = () => {
                       color: "#000000",
                     },
                   }}
-                  className={`${Styles.tabs}  mx-lg-5 mx-sm-1 mt-lg-3 mt-sm-1`}
+                  className={`${Styles.tabs}  my-2`}
                 >
                   <Tab
                     label={<span style={{ color: "black" }}>Bar </span>}
@@ -370,7 +431,7 @@ const ViewStudentMarks = () => {
             </div>
           </div>
         </div>
-      </Container>
+      </div>
     );
   }
 };

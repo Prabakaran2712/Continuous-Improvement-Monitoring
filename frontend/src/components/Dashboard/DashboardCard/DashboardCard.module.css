@@ -84,6 +84,37 @@
   background: linear-gradient(45deg, #a8004d, #d4006b);
 }
 
+@media screen and (max-width: 1377px) {
+  .card {
+    margin-bottom: 15px;
+  }
+  .card .cardBlock .cardBody {
+    font-size: 1.2rem;
+  }
+  .card .cardBlock {
+    padding: 20px 20px;
+  }
+  .card .cardBlock svg {
+    font-size: 20px;
+  }
+  .card .cardBlock h6 {
+    font-size: 1rem;
+  }
+  .orderCard i {
+    font-size: 20px;
+  }
+
+  .card .cardBody .fLeft {
+    margin-bottom: 10px;
+  }
+  .card .cardBody .fRight {
+    margin-top: 10px;
+  }
+  .card .cardBody .fRight .moreInfo {
+    margin-top: 10px;
+  }
+}
+
 @media screen and (max-width: 768px) {
   .card {
     margin-bottom: 15px;

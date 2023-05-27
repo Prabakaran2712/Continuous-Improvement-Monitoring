@@ -8,6 +8,7 @@ const Select = (props) => {
       <select
         className={`form-select ${Styles.input}`}
         onChange={props.onChange && props.onChange}
+        value={props.value && props.value}
       >
         {props.options &&
           props.options.map((option, i) => (

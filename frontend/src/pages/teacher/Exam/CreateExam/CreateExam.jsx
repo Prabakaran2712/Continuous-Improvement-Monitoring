@@ -75,21 +75,27 @@ const CreateExam = () => {
   useEffect(() => {
     axios.get(`/api/teaches/staff/${user}`).then((res) => {
       setUserData(res.data);
+      console.log(res.data);
       //get course Details
       const courseDetails = res.data.map(selectProps("course"));
-      //get course name form course details
-      const courseName = courseDetails.map((x) => {
-        return x[0].name;
-      });
+      var courseName = [];
+      var subjectCode = [];
+      if (courseDetails.length > 0) {
+        //get course name form course details
+        courseName = courseDetails.map((x) => {
+          return x[0].name;
+        });
 
-      //get subject code from course details
-      const subjectCode = courseDetails.map((x) => {
-        return x[0].subject_code;
-      });
-
+        //get subject code from course details
+        subjectCode = courseDetails.map((x) => {
+          return x[0].subject_code;
+        });
+      }
       //get batch details
       const batchDetails = res.data.map(selectProps("batch"));
+      console.log(batchDetails);
       //get batch name from batch details
+
       const batchName = batchDetails.map((x) => {
         return x[0].start_year + "-" + x[0].end_year;
       });

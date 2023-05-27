@@ -4,6 +4,7 @@ const {
   viewDiscussions,
   viewDiscussionsTeacher,
   getDiscussion,
+  closeDiscussion,
 } = require("../controllers/discussionController");
 
 const router = require("express").Router();
@@ -22,5 +23,8 @@ router.get("/teacher/:id", viewDiscussionsTeacher);
 
 //view a Discussion
 router.get("/:id", getDiscussion);
+
+//close a Discussion
+router.put("/close/:id", closeDiscussion);
 
 module.exports = router;

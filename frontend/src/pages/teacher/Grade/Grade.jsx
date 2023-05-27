@@ -8,12 +8,13 @@ import Container from "../../../components/Container/Container";
 import Title from "../../../components/forms/Title/Title";
 
 import { Switch } from "@mui/material";
-import Select from "../../../components/forms/Select/Select";
+import Select from "../../../components/Select/Select";
 import SubjectData from "../../../components/SubjectData/SubjectData";
 import Loading from "../../../components/Loading/Loading";
 import Header from "../../../components/Page/Header/Header";
 import Table from "../../../components/Table/Table";
 import Styles from "./Grade.module.css";
+import { set } from "mongoose";
 
 const ExamDetails = () => {
   const [courseData, setCourseData] = useState();
@@ -27,29 +28,28 @@ const ExamDetails = () => {
 
   const setDataValues = (data) => {
     var temp = [];
-    data.forEach((x) => {
+    data.forEach((x, indx) => {
       temp.push([
         x.student.name,
         x.student.roll_number,
-        <select
+        <Select
           className="form-control"
           value={x.grade}
           onChange={(event) => {
             //update a value in the array and then set the array
-            var temp = [...students];
+
+            var temp = [...data];
             temp[indx].grade = event.target.value;
+            console.log(event.target.value);
             setStudents(temp);
-            console.log(temp[indx]);
+            setDataValues(temp);
+
+            console.log(temp);
           }}
-        >
-          <option value="O">O</option>
-          <option value="A+">A+</option>
-          <option value="A">A</option>
-          <option value="B+">B+</option>
-          <option value="B">B</option>
-          <option value="RA">RA</option>
-          <option value="NA">NA</option>
-        </select>,
+          values={["O", "A+", "A", "B+", "B", "RA", "NA"]}
+          options={["O", "A+", "A", "B+", "B", "RA", "NA"]}
+        />,
+
         () => {},
       ]);
     });
@@ -101,6 +101,7 @@ const ExamDetails = () => {
           setStudents(res.data);
 
           setDataValues(res.data);
+
           setLoading(false);
         });
       })
@@ -116,10 +117,10 @@ const ExamDetails = () => {
         student: x.student._id,
         teaches: id,
         grade: x.grade,
-        published: x.published,
       };
     });
 
+    var data = { grades: data, publish: publish, teaches: id };
     axios
       .post("/api/grades/grades", data)
       .then((res) => {
@@ -160,11 +161,7 @@ const ExamDetails = () => {
               color="warning"
               checked={publish}
               onChange={(event) => {
-                //update a value in the array and then set the array
-                var temp = [...students];
-                temp[indx].published = event.target.checked;
-
-                setStudents(temp);
+                setPublish(event.target.checked);
               }}
               width={100}
               height={50}

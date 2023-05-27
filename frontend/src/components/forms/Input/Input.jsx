@@ -1,7 +1,7 @@
 import Styles from "./Input.module.css";
 const Input = (props) => {
   return (
-    <div className={`form-group mx-md-5 my-sm-3 mx-5  ${Styles.container}`}>
+    <div className={`form-group   ${Styles.container}`}>
       <label className={`my-3 ${Styles.label}`}>{props.label}</label>
       <input
         type={props.type}

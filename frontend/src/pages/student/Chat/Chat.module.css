@@ -34,7 +34,7 @@
   margin: 1rem 0;
 }
 
-@media screen and (max-width: 1200px) {
+@media screen and (max-width: 1376px) {
   .chatContainer {
     padding: 15px;
   }
@@ -42,7 +42,7 @@
     margin: 0.5rem 0;
   }
   .chatContainer .chatHeader {
-    font-size: 1rem;
+    font-size: 0.8rem;
   }
 }
 @media screen and (max-width: 992px) {

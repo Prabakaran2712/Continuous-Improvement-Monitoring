@@ -3,11 +3,13 @@ import moment from "moment";
 import { useState } from "react";
 import IconButton from "../../Button/IconButton/IconButton";
 import { faCheck } from "@fortawesome/free-solid-svg-icons";
-import { Button } from "@mui/material";
+
+import Button from "../../Button/Button/Button";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 const ChatHeader = (props) => {
   const data = props.data;
   const [name, setName] = useState("");
+
   useState(() => {
     if (props.role == "student") {
       setName(data.teaches.teacher.name);
@@ -20,14 +22,26 @@ const ChatHeader = (props) => {
     <div className={`${Styles.chatHeader} mb-3`}>
       <div className={`${Styles.titleOptions}`}>
         <div className={`${Styles.title}`}>{data.title}</div>
-        <div className={`${Styles.option}`}>
-          <Button>
-            Close Discussion
-            <span>
-              <FontAwesomeIcon icon={faCheck} size={"1x"} />
-            </span>
-          </Button>
-        </div>
+        {props.isClosed ? (
+          <div className={`${Styles.coption}`}>
+            <Button disabled={true} name={"Discussion Closed"}></Button>
+          </div>
+        ) : (
+          <div className={`${Styles.option}`}>
+            <Button
+              loadingText={"Closing Discussion"}
+              name={
+                <span>
+                  Close Discussion
+                  <span>
+                    <FontAwesomeIcon icon={faCheck} size={"1x"} />
+                  </span>
+                </span>
+              }
+              onClick={props.onClick}
+            ></Button>
+          </div>
+        )}
       </div>
       <div className={`${Styles.chatDetails}`}>
         <div className={`${Styles.name}`}>{data.student.name}</div>

@@ -37,23 +37,6 @@ const ExamSchema = new mongoose.Schema({
     default: false,
   },
 });
+ExamSchema.index({ exam_type: 1, teaches: 1 }, { unique: true });
 
 module.exports = mongoose.model("Exam", ExamSchema);
-
-// "exam_name": "Python",
-// "exam_code": "EX500",
-// "exam_date": "12/05/2023",
-// "exam_time": "9:30AM",
-// "exam_duration": "3 hrs",
-// "exam_type": "Offline",
-// "course": {
-//   "$oid": "641e7e87ad661ed7a6db76b3"
-// },
-// "batch": {
-//   "$oid": "641e7d31ad661ed7a6db76b1"
-// },
-// "department": {
-//   "$oid": "6401ef691c39630f2527dcad"
-// },
-// "total_marks": 100,
-// "semester":4

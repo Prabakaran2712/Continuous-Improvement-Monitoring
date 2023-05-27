@@ -1,9 +1,10 @@
 const Grade = require("../models/Grades");
+const Teaches = require("../models/Teaches");
 
 // add or update more marks
 const addMoreGrades = async (req, res) => {
   try {
-    const grades = req.body;
+    const grades = req.body.grades;
     grades.forEach(async (grade) => {
       const md = await Grade.find({
         teaches: grade.teaches,
@@ -13,13 +14,22 @@ const addMoreGrades = async (req, res) => {
       if (md.length > 0) {
         await Grade.updateOne(
           { teaches: grade.teaches, student: grade.student },
-          { $set: { grade: grade.grade, published: grade.published } }
+          { $set: { grade: grade.grade } }
         );
       } else {
         const m = new Grade(mark);
         await m.save();
       }
     });
+    //update publish status to teaches
+    await Teaches.updateOne(
+      {
+        _id: req.body.teaches,
+      },
+      {
+        $set: { isPublished: req.body.publish },
+      }
+    );
 
     res.status(200).json(grades);
   } catch (error) {

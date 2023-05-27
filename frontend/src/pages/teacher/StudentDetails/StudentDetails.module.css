@@ -4,3 +4,116 @@
 .show {
   display: block;
 }
+.red {
+  background-color: rgba(245, 63, 63, 0.718) !important;
+  width: 200px !important;
+  height: 200px !important;
+  border-radius: 50%;
+}
+.green {
+  background-color: rgba(63, 245, 66, 0.718) !important;
+  width: 200px !important;
+  height: 200px !important;
+  border-radius: 50%;
+}
+.yellow {
+  background-color: rgba(245, 245, 63, 0.718) !important;
+  width: 200px !important;
+  height: 200px !important;
+  border-radius: 50%;
+}
+.blue {
+  background-color: rgba(63, 245, 245, 0.718) !important;
+  width: 200px !important;
+  height: 200px !important;
+  border-radius: 50%;
+}
+.purple {
+  background-color: rgba(245, 63, 245, 0.718) !important;
+  width: 200px !important;
+  height: 200px !important;
+  border-radius: 50%;
+}
+.orange {
+  background-color: rgba(245, 145, 63, 0.718) !important;
+  width: 200px !important;
+  height: 200px !important;
+  border-radius: 50%;
+}
+.pink {
+  background-color: rgba(245, 63, 145, 0.718) !important;
+  width: 200px !important;
+  height: 200px !important;
+  border-radius: 50%;
+}
+.teal {
+  background-color: rgba(63, 245, 145, 0.718) !important;
+  width: 200px !important;
+  height: 200px !important;
+  border-radius: 50%;
+}
+.cyan {
+  background-color: rgba(63, 145, 245, 0.718) !important;
+  width: 200px !important;
+  height: 200px !important;
+  border-radius: 50%;
+}
+.lime {
+  background-color: rgba(145, 245, 63, 0.718) !important;
+  width: 200px !important;
+  height: 200px !important;
+  border-radius: 50%;
+}
+.amber {
+  background-color: rgba(145, 63, 245, 0.718) !important;
+  width: 200px !important;
+  height: 200px !important;
+  border-radius: 50%;
+}
+.indigo {
+  background-color: rgba(63, 63, 245, 0.718) !important;
+  width: 200px !important;
+  height: 200px !important;
+  border-radius: 50%;
+}
+.brown {
+  background-color: rgba(145, 63, 63, 0.718) !important;
+  width: 200px !important;
+  height: 200px !important;
+  border-radius: 50%;
+}
+.grey {
+  background-color: rgba(145, 145, 145, 0.718) !important;
+  width: 200px !important;
+  height: 200px !important;
+  border-radius: 50%;
+}
+.black {
+  background-color: rgba(0, 0, 0, 0.718) !important;
+  width: 200px !important;
+  height: 200px !important;
+  border-radius: 50%;
+}
+.logo {
+  text-align: center;
+  vertical-align: middle;
+}
+
+.category p {
+  font-size: 1rem;
+  font-weight: 500;
+}
+.category p span {
+  font-size: 1rem;
+  font-weight: normal;
+}
+@media screen and (max-width: 568px) {
+  .category p {
+    font-size: 0.7rem;
+  }
+
+  .category p span {
+    font-size: 0.5rem;
+    font-weight: normal;
+  }
+}

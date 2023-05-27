@@ -40,7 +40,7 @@ const StudentChatCreate = () => {
     if (option == "success") {
       Store.addNotification({
         title: "Success!",
-        message: `New Chat has been created`,
+        message: `New Discussion has been created`,
         type: "success",
         insert: "top",
         container: "top-right",
@@ -54,7 +54,7 @@ const StudentChatCreate = () => {
     } else {
       Store.addNotification({
         title: "Error!",
-        message: `Error while creating  Chat`,
+        message: `Error while creating  Discussion`,
         type: "danger",
         insert: "top",
         container: "top-right",
@@ -120,13 +120,15 @@ const StudentChatCreate = () => {
       });
   };
   return (
-    <Container>
-      <div className="  w-100 mx-auto my-5 ">
+    <div className="w-100 mx-auto my-2 mx-lg-2 ">
+      <div className="title ">
         <Title title="Create Discussion" />
-        <div className="form-body w-75 mx-auto">
-          <form onSubmit={handleSubmit(onSubmit)}>
-            <div className="row">
-              <div className="col">
+      </div>
+      <div className="form-body w-100 mx-auto">
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <div className="row">
+            <div className="col">
+              <div className="elements">
                 <Input
                   name="title"
                   label="Tile"
@@ -134,7 +136,8 @@ const StudentChatCreate = () => {
                   type="text"
                   conditions={{ required: true, maxLength: 100 }}
                 />
-
+              </div>
+              <div className="elements my-1">
                 <Select
                   name="teaches"
                   label="Course"
@@ -144,13 +147,13 @@ const StudentChatCreate = () => {
                 />
               </div>
             </div>
-            <div className="w-50 mx-auto text-center my-5 ">
-              <Submit name="Create" />
-            </div>
-          </form>
-        </div>
+          </div>
+          <div className="w-50 mx-auto text-center my-5 ">
+            <Submit name="Create" />
+          </div>
+        </form>
       </div>
-    </Container>
+    </div>
   );
 };
 

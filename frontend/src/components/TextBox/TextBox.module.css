@@ -14,9 +14,15 @@
   font-size: 1.1em;
 }
 
+@media screen and (max-width: 1376px) {
+  .messageText {
+    font-size: 0.9rem;
+    min-height: 40px;
+  }
+}
 @media screen and (max-width: 1200px) {
   .messageText {
-    font-size: 1rem;
+    font-size: 0.9rem;
   }
 }
 @media screen and (max-width: 768px) {
@@ -39,7 +45,7 @@
 
 @media screen and (max-width: 400px) {
   .messageText {
-    font-size: 0.7rem;
+    font-size: 0.6rem;
     padding: 0.7rem;
     border-radius: 15px;
     min-height: 25px;

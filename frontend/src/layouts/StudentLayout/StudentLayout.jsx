@@ -123,10 +123,10 @@ const StudentLayout = () => {
           <input type="checkbox" id="nav-toggle" />
           <div className="sidebar">
             <div className="sidebar-brand">
-              <h3>
+              <h2>
                 <FontAwesomeIcon icon={faChartLine} size="sm" />
                 <span> CIM</span>
-              </h3>
+              </h2>
             </div>
             <div className="sidebar-menu">
               <ul>

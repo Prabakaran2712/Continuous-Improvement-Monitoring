@@ -16,10 +16,9 @@ const DiscussionSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    status: {
-      type: String,
-      enum: ["open", "closed"],
-      default: "open",
+    isClosed: {
+      type: Boolean,
+      default: false,
     },
   },
   { timestamps: true }
