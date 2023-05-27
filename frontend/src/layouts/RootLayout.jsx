@@ -4,7 +4,7 @@ import Footer from "../components/Home/Footer";
 
 const RootLayout = () => {
   return (
-    <div style={{ height: "100%", width: "100%", background: "white" }}>
+    <div style={{ width: "100%", background: "white" }} className="pb-3">
       <Header />
       <div className="min-h-screen">
         <Outlet />
