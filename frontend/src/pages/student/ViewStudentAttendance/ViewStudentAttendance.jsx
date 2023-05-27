@@ -17,6 +17,8 @@ import {
 } from "chart.js";
 import { Bar } from "react-chartjs-2";
 import Select from "../../../components/Select/Select";
+import Loading from "../../../components/Loading/Loading";
+import Table from "../../../components/Table/Table";
 
 ChartJS.register(
   CategoryScale,
@@ -47,14 +49,17 @@ const ViewStudentAttendance = () => {
   const id = auth.user._id;
   const [student, setStudent] = useState({});
   const [loading, setLoading] = useState(true);
-  const [filteredAttendanceData, setFilteredAttendanceData] = useState([]);
+
   const [data, setData] = useState({});
-  const [page, setPage] = useState("marks");
+
   const [AttendanceData, setAttendanceData] = useState([]);
   const [AttendanceChartData, setAttendanceChartData] = useState([]);
 
   const navigate = useNavigate();
 
+  const setTableData = (data) => {
+    return [data.subject_name, data.subject_code, data.percentage, () => {}];
+  };
   const setFilteredAttendanceChartData = (data) => {
     var attendance = [];
     data.forEach((x) => {
@@ -96,19 +101,51 @@ const ViewStudentAttendance = () => {
       .get(`/api/students/${id}`)
       .then((res) => {
         setStudent(res.data);
-        //get attendance data
-
+        var uniqueSubjects = [];
+        //get teaches of student
         axios
-          .get(`/api/attendances/student/${id}/all/courses`)
+          .get(`/api/teaches/student/${id}`)
           .then((res) => {
-            console.log(res.data);
-            setAttendanceData(res.data);
-            setFilteredAttendanceData(res.data);
-            setFilteredAttendanceChartData(res.data);
-            setLoading(false);
+            res.data.forEach((x) => {
+              uniqueSubjects.push({
+                name: x.course.name,
+                subject_code: x.course.subject_code,
+                _id: x._id,
+                semester: x.semester,
+              });
+            });
+            console.log("subjects");
+            console.log(uniqueSubjects);
+            axios
+              .get(`/api/attendances/student/${id}/all/courses`)
+              .then((res) => {
+                var attendance = [];
+
+                uniqueSubjects.forEach((x) => {
+                  var obj = {
+                    course: x,
+                    percentage: "NA",
+                    teaches: x._id,
+                  };
+                  res.data.forEach((y) => {
+                    if (y.teaches == x._id) {
+                      obj.percentage = y.percentage;
+                    }
+                  });
+                  attendance.push(obj);
+                });
+                console.log("attendance");
+                console.log(attendance);
+                setAttendanceData(attendance);
+                setData(setTableData(attendance));
+                setLoading(false);
+              })
+              .catch((err) => {
+                setLoading(false);
+                console.log(err);
+              });
           })
           .catch((err) => {
-            setLoading(false);
             console.log(err);
           });
       })
@@ -119,10 +156,10 @@ const ViewStudentAttendance = () => {
   }, []);
 
   if (loading) {
-    return <div>Loading...</div>;
+    return <Loading />;
   } else {
     return (
-      <Container>
+      <div>
         <Title title="Attendance" />
 
         <div className="analytics-body my-5 mx-auto w-75">
@@ -143,58 +180,28 @@ const ViewStudentAttendance = () => {
               onChange={(e) => {
                 const semester = e.target.value;
                 if (semester === "All") {
-                  setFilteredAttendanceData(AttendanceData);
-                  setFilteredAttendanceChartData(AttendanceData);
-                  console.log(AttendanceData);
+                  setData(setTableData(AttendanceData));
                 } else {
                   const filteredAttendanceData = AttendanceData.filter(
                     (x) => x.semester == semester
                   );
-                  console.log(filteredAttendanceData);
-                  setFilteredAttendanceChartData(filteredAttendanceData);
-                  setFilteredAttendanceData(filteredAttendanceData);
-                  setFilteredAttendanceChartData(filteredAttendanceData);
+                  setData(setTableData(filteredAttendanceData));
                 }
               }}
             />
           </div>
           <div className="dataSection row align-items-center">
             <div className="AttendanceTable col-6">
-              <table className="table table-striped">
-                <thead className="table-dark">
-                  <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">Subject</th>
-                    <th scope="col">Subject Code</th>
-                    <th scope="col">Attendance %</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {filteredAttendanceData.map((x, i) => {
-                    return (
-                      <tr
-                        key={Math.random()}
-                        onClick={() => {
-                          navigate(`/student/attendance/${x.teaches._id}`);
-                        }}
-                      >
-                        <th scope="row">{i + 1}</th>
-                        <td>{x.course.name}</td>
-                        <td>{x.course.subject_code}</td>
-                        <td>{x.percentage}</td>
-                      </tr>
-                    );
-                  })}
-                </tbody>
-              </table>
+              <Table
+                thead={["#", "Subject", "Subject Code", "Attendance %"]}
+                tbody={data}
+              />
             </div>
 
-            <div className="graph col-6">
-              <Bar options={options} data={AttendanceChartData} />
-            </div>
+            <div className="graph col-6"></div>
           </div>
         </div>
-      </Container>
+      </div>
     );
   }
 };

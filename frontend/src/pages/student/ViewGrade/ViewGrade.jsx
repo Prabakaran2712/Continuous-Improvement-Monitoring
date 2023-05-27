@@ -71,7 +71,7 @@ const ViewGrade = () => {
   const [data, setData] = useState({});
   const [tabs, setTabs] = useState(0);
   const [gtabs, setGtabs] = useState(0);
-
+  const [mtabs, setMtabs] = useState(0);
   const [loading, setLoading] = useState(true);
   const [gradeData, setGradeData] = useState([]);
   const [lineData, setLineData] = useState([]);
@@ -290,18 +290,54 @@ const ViewGrade = () => {
         </div>
 
         <TabPanel value={tabs} index={0}>
-          <div className="gpa-title d-flex flex-direction-row justify-content-end mx-3 fs-5 ">
-            GPA :{" "}
-            <span className="gpa-value ">
-              {calculateGPA(filteredGrades).toString().slice(0, 4)}
-            </span>
-          </div>
-          <div className="markTable ">
-            <Table
-              thead={["#", "Subject Name", "Subject Code", "Grade"]}
-              tbody={setTableData(filteredGrades)}
+          <Tabs
+            value={mtabs}
+            onChange={(e, newValue) => setMtabs(newValue)}
+            TabIndicatorProps={{
+              style: {
+                backgroundColor: "#000000",
+                color: "#000000",
+              },
+            }}
+            className={`${Styles.tabs}  `}
+          >
+            <Tab
+              label={
+                <span style={{ color: "black" }} className={Styles.tab}>
+                  All
+                </span>
+              }
+              index={0}
             />
-          </div>
+            <Tab
+              label={<span style={{ color: "black" }}>Backlogs</span>}
+              index={1}
+            />
+          </Tabs>
+          <TabPanel value={mtabs} index={0}>
+            <div className="gpa-title d-flex flex-direction-row justify-content-end mx-3 fs-5 ">
+              GPA :{" "}
+              <span className="gpa-value ">
+                {calculateGPA(filteredGrades).toString().slice(0, 4)}
+              </span>
+            </div>
+            <div className="markTable ">
+              <Table
+                thead={["#", "Subject Name", "Subject Code", "Grade"]}
+                tbody={setTableData(filteredGrades)}
+              />
+            </div>
+          </TabPanel>
+          <TabPanel value={mtabs} index={1}>
+            <div className="markTable">
+              <Table
+                thead={["#", "Subject Name", "Subject Code", "Grade"]}
+                tbody={setTableData(
+                  filteredGrades.filter((grade) => grade.grade == "RA")
+                )}
+              />
+            </div>
+          </TabPanel>
         </TabPanel>
         <TabPanel value={tabs} index={1}>
           <Tabs
