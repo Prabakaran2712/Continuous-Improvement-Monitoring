@@ -1,0 +1,36 @@
+.barChart {
+  width: 600px;
+  height: 400px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.lineChart {
+  width: 600px;
+  height: 400px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+@media screen and (max-width: 768px) {
+  .barChart {
+    width: 500px;
+    height: 300px;
+  }
+  .lineChart {
+    width: 500px;
+    height: 300px;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .barChart {
+    width: 400px;
+    height: 400px;
+    margin: 0px;
+  }
+  .lineChart {
+    width: 400px;
+    height: 400px;
+    margin: 0px;
+  }
+}

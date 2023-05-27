@@ -94,7 +94,6 @@ const ViewStudentMarks = () => {
 
   const navigate = useNavigate();
   const setChartData = (marks) => {
-    setLabels(marks.map((x) => x.subject_name));
     var ass1 = [],
       ass2 = [],
       es = [],
