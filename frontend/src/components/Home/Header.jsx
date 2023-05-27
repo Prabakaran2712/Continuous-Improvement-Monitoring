@@ -2,16 +2,8 @@ import logo from "../../assets/annaUniv.svg";
 import { NavLink } from "react-router-dom";
 const Header = () => {
   return (
-    <nav className="navbar navbar-expand-lg m-0 py-lg-3 display h4">
+    <nav className="navbar navbar-expand-lg m-0 py-lg-3 display h5">
       <div className="container-fluid">
-        <NavLink className="nav-link" to="#">
-          <img
-            src={logo}
-            style={{ width: "100px", height: "100px" }}
-            alt="logo"
-            className="logo"
-          />
-        </NavLink>
         <button
           className="navbar-toggler"
           type="button"
@@ -28,16 +20,6 @@ const Header = () => {
             <li className="nav-item">
               <NavLink className="nav-link active py-7 px-4" to="/">
                 HOME
-              </NavLink>
-            </li>
-            <li className="nav-item">
-              <NavLink className="nav-link py-7 px-4" to="#">
-                ABOUT
-              </NavLink>
-            </li>
-            <li className="nav-item">
-              <NavLink className="nav-link py-7 px-4" to="#">
-                CONTACT
               </NavLink>
             </li>
           </ul>
@@ -59,7 +41,7 @@ const Header = () => {
                 LOG IN
               </NavLink>
               <ul
-                className="dropdown-menu fs-4"
+                className="dropdown-menu fs-5"
                 aria-labelledby="navbarDropdown"
               >
                 <li>
@@ -79,7 +61,7 @@ const Header = () => {
                 </li>
               </ul>
             </li>
-            <li className="nav-item dropdown mx-2">
+            <li className="nav-item dropdown mx-2 ">
               <button
                 className="btn btn-dark btn-lg dropdown-toggle py-7 px-5 nav-link dropdown-toggle py-7 px-5"
                 to="#"
@@ -95,7 +77,7 @@ const Header = () => {
                 SIGN UP
               </button>
               <ul
-                className="dropdown-menu fs-4"
+                className="dropdown-menu fs-5"
                 aria-labelledby="navbarDropdown"
               >
                 <li>
