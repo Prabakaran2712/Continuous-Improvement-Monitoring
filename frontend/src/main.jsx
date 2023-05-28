@@ -29,6 +29,7 @@ import Marks from "./pages/teacher/Marks";
 import Attendance from "./pages/teacher/Attendance";
 import TeacherSignup from "./pages/teacher/teacherSignup/TeacherSignup";
 import TeacherProfile from "./pages/teacher/teacherProfile/TeacherProfile";
+import StudentProfile from "./pages/student/StudentProfile/StudentProfile";
 import Courses from "./pages/admin/Courses/Courses";
 import UpdateCourses from "./pages/admin/Courses/UpdateCourses";
 import AddCourses from "./pages/admin/Courses/AddCourses/AddCourses";
@@ -125,6 +126,10 @@ const router = createBrowserRouter([
         path: "student",
         element: <StudentLayout />,
         children: [
+          {
+            path: "profile",
+            element: <StudentProfile />,
+          },
           {
             path: "",
             element: <StudentDasboard />,
