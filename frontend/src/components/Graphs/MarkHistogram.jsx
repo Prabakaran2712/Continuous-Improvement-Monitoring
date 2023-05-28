@@ -32,7 +32,10 @@ const MarkHistogram = (props) => {
     legend: { position: "none" },
     vAxis: { title: "Frequency" },
     hAxis: {
-      title: props.options.hAxis.title ? props.options.hAxis.title : "Marks",
+      title:
+        props.options.hAxis && props.options.hAxis.title
+          ? props.options.hAxis.title
+          : "Marks",
     },
     histogram: {
       bucketSize: 10,

@@ -414,7 +414,17 @@ const SubjectMarkAnalytics = () => {
             <TabPanel value={gtabs} index={0}>
               <div className={`${Styles.graph} `}>
                 {asses1Table.length != 0 && (
-                  <MarkHistogram data={assesment1Data} />
+                  <MarkHistogram
+                    data={assesment1Data}
+                    options={{
+                      title: "Assesment-1 Marks Distribution",
+                      vAxis: {
+                        title: "Marks",
+                        minValue: 0,
+                        maxValue: 100,
+                      },
+                    }}
+                  />
                 )}
               </div>
 
@@ -463,7 +473,17 @@ const SubjectMarkAnalytics = () => {
             <TabPanel value={gtabs} index={0}>
               <div className={`${Styles.graph} `}>
                 {asses2Table.length != 0 && (
-                  <MarkHistogram data={assesment2Data} />
+                  <MarkHistogram
+                    data={assesment2Data}
+                    options={{
+                      title: "Assesment-2 Marks Distribution",
+                      vAxis: {
+                        title: "Marks",
+                        minValue: 0,
+                        maxValue: 100,
+                      },
+                    }}
+                  />
                 )}
 
                 {asses2Table.length == 0 && <div>Marks not published yet</div>}
@@ -513,7 +533,17 @@ const SubjectMarkAnalytics = () => {
             <TabPanel value={gtabs} index={0}>
               <div className={`${Styles.graph} `}>
                 {endTable.length != 0 && (
-                  <MarkHistogram data={endsemesterData} />
+                  <MarkHistogram
+                    data={endsemesterData}
+                    options={{
+                      title: "End Semester Marks Distribution",
+                      vAxis: {
+                        title: "Marks",
+                        minValue: 0,
+                        maxValue: 100,
+                      },
+                    }}
+                  />
                 )}
                 {endTable.length == 0 && <div>Marks not published yet</div>}
               </div>
