@@ -4,13 +4,13 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import { useAuthContext } from "../../../hooks/useAuthContext";
 
-export default function TeacherProfile() {
+export default function StudentProfile() {
   const auth = useAuthContext();
   const [userData, setUserData] = useState({
-    staff_id: "",
+    roll_number: "",
     name: "",
     email: "",
-    phone_number: "",
+    phone: "",
     address: "",
     department: {
       _id: "",
@@ -37,13 +37,10 @@ export default function TeacherProfile() {
 
   useEffect(() => {
     console.log(auth);
-    if (
-      auth.isAuthenticated == false ||
-      (auth.userType != "teacher" && auth.userType != "admin")
-    ) {
-      navigate("/teacher/login");
+    if (auth.isAuthenticated == false || auth.userType != "student") {
+      navigate("/student/login");
     }
-    axios.get(`/api/teachers/${auth.user.staff_id}`).then((res) => {
+    axios.get(`/api/students/${auth.user._id}`).then((res) => {
       console.log("--", res.data);
       res.data.password = "";
       setUserData(res.data);
@@ -53,7 +50,7 @@ export default function TeacherProfile() {
   const handleUpdate = (e) => {
     e.preventDefault();
     axios
-      .put(`/api/teachers/${auth.user.staff_id}`, userData)
+      .put(`/api/students/${auth.user._id}`, userData)
       .then((res) => {
         console.log(res.data);
         res.data.password = "";
@@ -69,7 +66,7 @@ export default function TeacherProfile() {
     <Container>
       <div className="card">
         <div className="card-body">
-          <h1 className="card-title">Teacher Profile</h1>
+          <h1 className="card-title">Student Profile</h1>
           <hr />
           <form onSubmit={handleUpdate}>
             <div className="mb-3">
@@ -100,14 +97,14 @@ export default function TeacherProfile() {
             </div>
             <div className="mb-3">
               <label htmlFor="staffid" className="form-label">
-                Staff ID
+                Roll number
               </label>
               <input
                 disabled={isdisabled}
                 type="text"
                 className="form-control"
                 id="staff_id"
-                value={userData.staff_id}
+                value={userData.roll_number}
                 onChange={handleinputChange}
               />
             </div>
@@ -132,9 +129,9 @@ export default function TeacherProfile() {
                 disabled={isdisabled}
                 type="tel"
                 className="form-control"
-                id="phone_number"
+                id="phone"
                 onChange={handleinputChange}
-                value={userData.phone_number}
+                value={userData.phone}
               />
             </div>
 

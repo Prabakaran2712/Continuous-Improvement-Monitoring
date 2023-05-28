@@ -130,6 +130,13 @@ const updateStudent = async (req, res) => {
       student.courses = req.body.courses;
       student.attendance = req.body.attendance;
       student.marks = req.body.marks;
+      if (req.body.password) {
+        const gensalt = bcrypt.genSaltSync(10);
+        const hpass = bcrypt.hashSync(req.body.password, gensalt);
+        student.password = hpass;
+      } else {
+        student.password = student.password;
+      }
       const updatedStudent = await student.save();
       res.status(200).json(updatedStudent);
     } else {
