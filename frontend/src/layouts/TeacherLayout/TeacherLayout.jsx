@@ -17,6 +17,7 @@ import {
   faChartLine,
   faBars,
   faMessage,
+  faGraduationCap,
 } from "@fortawesome/free-solid-svg-icons";
 import { faStar } from "@fortawesome/free-solid-svg-icons";
 import { useAuthContext } from "../../hooks/useAuthContext";
@@ -73,7 +74,15 @@ const TeacherLayout = () => {
       title: "Students",
     },
   ];
-  const admin = [...options];
+  const admin = [
+    ...options,
+    {
+      name: "Teachers",
+      link: "/teacher/all",
+      icon: <FontAwesomeIcon icon={faGraduationCap} size="sm" />,
+      title: "Teachers",
+    },
+  ];
   const logout = () => {
     console.log("logout");
     axios
@@ -201,7 +210,7 @@ const TeacherLayout = () => {
           </div>
           <div className="sidebar-menu">
             <ul>
-              {options.map((option) => {
+              {admin.map((option) => {
                 return (
                   <li key={Math.random()}>
                     <Link

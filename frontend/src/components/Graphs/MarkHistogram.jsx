@@ -28,10 +28,12 @@ const MarkHistogram = (props) => {
   options = props.options ? props.options : options;
   const [selectedValues, setSelectedValues] = useState([]);
   var options = {
-    title: "Marks Distribution",
+    title: props.options.title ? props.options.title : "Marks Distribution",
     legend: { position: "none" },
     vAxis: { title: "Frequency" },
-    hAxis: { title: "Marks" },
+    hAxis: {
+      title: props.options.hAxis.title ? props.options.hAxis.title : "Marks",
+    },
     histogram: {
       bucketSize: 10,
       minValue: 0,

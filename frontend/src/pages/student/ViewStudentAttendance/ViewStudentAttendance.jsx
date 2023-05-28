@@ -42,6 +42,12 @@ export const options = {
       text: "Marks",
     },
   },
+  scales: {
+    y: {
+      min: 0,
+      max: 100,
+    },
+  },
 };
 
 //subject names as labels
@@ -57,6 +63,7 @@ const ViewStudentAttendance = () => {
   const [AttendanceData, setAttendanceData] = useState([]);
   const [AttendanceChartData, setAttendanceChartData] = useState([]);
   const [tabs, setTabs] = useState(0);
+  const [subtab, setSubTab] = useState(0);
 
   const navigate = useNavigate();
 
@@ -64,7 +71,15 @@ const ViewStudentAttendance = () => {
     var tableData = [];
 
     data.forEach((x) => {
-      tableData.push([x.subject_name, x.subject_code, x.percentage, () => {}]);
+      tableData.push([
+        x.subject_name,
+        x.subject_code,
+
+        parseFloat(x.percentage).toFixed(2),
+        () => {
+          navigate(`/student/attendance/${x.teaches}`);
+        },
+      ]);
     });
     return tableData;
   };
@@ -109,6 +124,7 @@ const ViewStudentAttendance = () => {
                 subject_code: x.course.subject_code,
                 _id: x._id,
                 semester: x.semester,
+                teaches: x._id,
               });
             });
             console.log("subjects");
@@ -123,11 +139,15 @@ const ViewStudentAttendance = () => {
                     subject_name: x.name,
                     subject_code: x.subject_code,
                     percentage: "NA",
-                    teaches: x._id,
+                    teaches: x.teaches,
                     semester: x.semester,
                   };
+                  console.log("obj");
+                  console.log(obj);
+                  console.log("x");
+                  console.log(res.data);
                   res.data.forEach((y) => {
-                    if (y.teaches == x._id) {
+                    if (y.teaches._id == x._id) {
                       obj.percentage = y.percentage;
                     }
                   });
@@ -222,16 +242,70 @@ const ViewStudentAttendance = () => {
           </Tabs>
           <div className="dataSection row align-items-center">
             <TabPanel value={tabs} index={0}>
-              <div className="AttendanceTable ">
-                <Table
-                  thead={["#", "Subject", "Subject Code", "Attendance %"]}
-                  tbody={data}
+              <Tabs
+                value={subtab}
+                onChange={(e, newValue) => setSubTab(newValue)}
+                TabIndicatorProps={{
+                  style: {
+                    backgroundColor: "#000000",
+                    color: "#000000",
+                  },
+                }}
+                className={`${Styles.tabs}  `}
+              >
+                <Tab
+                  label={
+                    <span style={{ color: "black" }} className={Styles.tab}>
+                      All
+                    </span>
+                  }
+                  index={0}
                 />
-              </div>
+                <Tab
+                  label={<span style={{ color: "black" }}>Shortage</span>}
+                  index={1}
+                />
+              </Tabs>
+              <TabPanel value={subtab} index={0}>
+                <div className="AttendanceTable ">
+                  <Table
+                    thead={["#", "Subject", "Subject Code", "Attendance %"]}
+                    tbody={data}
+                  />
+                </div>
+              </TabPanel>
+              <TabPanel value={subtab} index={1}>
+                <div className="AttendanceTable ">
+                  <Table
+                    thead={["#", "Subject", "Subject Code", "Attendance %"]}
+                    tbody={data.filter((x) => x[2] < 75)}
+                  />
+                </div>
+              </TabPanel>
             </TabPanel>
             <TabPanel value={tabs} index={1}>
-              <div className="graph ">
-                <Bar data={AttendanceChartData} options={options} />
+              <div className={Styles.graph}>
+                <Bar
+                  data={AttendanceChartData}
+                  options={{
+                    responsive: true,
+                    plugins: {
+                      legend: {
+                        position: "top",
+                      },
+                      title: {
+                        display: true,
+                        text: "Attendance",
+                      },
+                    },
+                    scales: {
+                      y: {
+                        min: 0,
+                        max: 100,
+                      },
+                    },
+                  }}
+                />
               </div>
             </TabPanel>
           </div>

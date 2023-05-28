@@ -51,6 +51,22 @@ const setTableData = (data) => {
       mark.assessment1,
       mark.assessment2,
       mark.end_semester,
+      mark.assessment1 && mark.assessment2 && mark.end_semester
+        ? mark.assessment1 * 0.5 +
+          mark.assessment2 * 0.5 +
+          mark.end_semester * 0.5
+        : "NaN",
+      () => {},
+    ];
+  });
+};
+
+const setAttendanceTableData = (data) => {
+  return data.map((attendance) => {
+    return [
+      attendance.subject_name,
+      attendance.subject_code,
+      attendance.percentage,
       () => {},
     ];
   });
@@ -70,8 +86,12 @@ const StudentDetails = () => {
   const [subTabs, setSubTabs] = useState(0);
   const [lineData, setLineData] = useState([]);
   const [labels, setLabels] = useState([]);
+  const [filteredAttendanceData, setFilteredAttendanceData] = useState([]);
+  const [atab, setAtab] = useState(0);
+  const [mgtab, setMgtab] = useState(0);
 
   const navigate = useNavigate();
+
   const setChartData = (marks) => {
     setLabels(marks.map((x) => x.subject_name));
     var ass1 = [],
@@ -88,6 +108,12 @@ const StudentDetails = () => {
     console.log(ass2);
     console.log(es);
     console.log(lbls);
+    var overall = [];
+    if (ass1.length > 0 && ass2.length > 0 && es.length > 0) {
+      for (let i = 0; i < ass1.length; i++) {
+        overall.push((ass1[i] * 0.5 + ass2[i] * 0.5 + es[i]) / 2);
+      }
+    }
     setData({
       labels: lbls,
       datasets: [
@@ -111,6 +137,12 @@ const StudentDetails = () => {
 
           backgroundColor: "rgba(255, 192, 0, 0.5)",
           borderColor: "rgba(255, 192, 0, 1)",
+        },
+        {
+          label: "Overall",
+          data: overall,
+          backgroundColor: "rgba(10, 255, 20, 0.5)",
+          borderColor: "rgba(0, 255, 0, 1)",
         },
       ],
     });
@@ -145,9 +177,7 @@ const StudentDetails = () => {
       datasets: datasets,
     });
   };
-  const switchPage = (page) => {
-    setPage(page);
-  };
+
   useEffect(() => {
     axios
       .get(`/api/students/${id}`)
@@ -208,6 +238,7 @@ const StudentDetails = () => {
         setMarkData(marks);
         setTableData(marks);
         setFilteredMarkData(marks);
+
         setLineChartData(marks);
         setChartData(marks);
       });
@@ -224,9 +255,11 @@ const StudentDetails = () => {
               subject_name: x.course.name,
               subject_code: x.course.subject_code,
               percentage: x.percentage,
+              semester: x.teaches.semester,
             };
             attendance.push(obj);
           });
+          console.log(attendance);
 
           setAttendanceData(attendance);
           var attendanceLabels = [],
@@ -249,6 +282,7 @@ const StudentDetails = () => {
               },
             ],
           });
+          setFilteredAttendanceData(attendance);
           setLoading(false);
         })
         .catch((err) => {
@@ -353,14 +387,19 @@ const StudentDetails = () => {
                     setFilteredMarkData(markData);
                     setChartData(markData);
                     setLineChartData(markData);
+                    setFilteredAttendanceData(AttendanceData);
                   } else {
                     const filteredMarkData = markData.filter(
+                      (x) => x.semester == semester
+                    );
+                    const filteredAttendanceData = AttendanceData.filter(
                       (x) => x.semester == semester
                     );
 
                     setFilteredMarkData(filteredMarkData);
                     setChartData(filteredMarkData);
                     setLineChartData(filteredMarkData);
+                    setFilteredAttendanceData(filteredAttendanceData);
                   }
                 }}
               />
@@ -385,64 +424,136 @@ const StudentDetails = () => {
                   label={<span style={{ color: "black" }}>Graph</span>}
                   index={1}
                 />
-                <Tab
-                  label={
-                    <span style={{ color: "black" }}>
-                      Below Average Subjects
-                    </span>
-                  }
-                  index={2}
-                />
               </Tabs>
               <TabPanel value={subTabs} index={0}>
-                <Table
-                  thead={[
-                    "#",
-                    "Subject",
-                    "Subject Code",
-                    "Assessment-1",
-                    "Assessment-2",
-                    "End Semester",
-                  ]}
-                  tbody={setTableData(filteredMarkData)}
-                />
+                <Tabs
+                  value={mgtab}
+                  onChange={(e, newValue) => setMgtab(newValue)}
+                  TabIndicatorProps={{
+                    style: {
+                      backgroundColor: "#000000",
+                      color: "#000000",
+                    },
+                  }}
+                  className={`${Styles.tabs} `}
+                >
+                  <Tab
+                    label={<span style={{ color: "black" }}>All</span>}
+                    index={0}
+                  />
+                  <Tab
+                    label={<span style={{ color: "black" }}>Backlog</span>}
+                    index={1}
+                  />
+                </Tabs>
+                <TabPanel value={mgtab} index={0}>
+                  <Table
+                    thead={[
+                      "#",
+                      "Subject",
+                      "Subject Code",
+                      "Assessment-1",
+                      "Assessment-2",
+                      "End Semester",
+                      "Overall",
+                    ]}
+                    tbody={setTableData(filteredMarkData)}
+                  />
+                </TabPanel>
+                <TabPanel value={mgtab} index={1}>
+                  <Table
+                    thead={[
+                      "#",
+                      "Subject",
+                      "Subject Code",
+                      "Assessment-1",
+                      "Assessment-2",
+                      "End Semester",
+                      "Overall",
+                    ]}
+                    tbody={setTableData(
+                      filteredMarkData.filter((x) => {
+                        if (x.assessment1 && x.assessment2 && x.end_semester) {
+                          return (
+                            x.assessment1 * 0.5 +
+                              x.assessment2 * 0.5 +
+                              x.end_semester * 0.5 <
+                            50
+                          );
+                        } else return false;
+                      })
+                    )}
+                  />
+                </TabPanel>
               </TabPanel>
               <TabPanel value={subTabs} index={1}>
                 <div className="graph">
                   <Bar options={options} data={data} />
                 </div>
               </TabPanel>
-              <TabPanel value={subTabs} index={2}>
-                <div className="graph">Students</div>
-              </TabPanel>
             </TabPanel>
             <TabPanel value={tabs} index={1}>
-              <table className="table table-striped">
-                <thead>
-                  <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">Subject</th>
-                    <th scope="col">Subject Code</th>
-                    <th scope="col">Attendance %</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {AttendanceData.map((x, i) => {
-                    return (
-                      <tr key={Math.random()}>
-                        <th scope="row">{i + 1}</th>
-                        <td>{x.subject_name}</td>
-                        <td>{x.subject_code}</td>
-                        <td>{x.percentage}</td>
-                      </tr>
-                    );
-                  })}
-                </tbody>
-              </table>
-
-              <div className="graph">
-                <Bar options={options} data={AttendanceChartData} />
-              </div>
+              <Tabs
+                value={atab}
+                onChange={(e, newValue) => setAtab(newValue)}
+                TabIndicatorProps={{
+                  style: {
+                    backgroundColor: "#000000",
+                    color: "#000000",
+                  },
+                }}
+                className={`${Styles.tabs} `}
+              >
+                <Tab
+                  label={<span style={{ color: "black" }}>Table</span>}
+                  index={0}
+                />
+                <Tab
+                  label={<span style={{ color: "black" }}>Graph</span>}
+                  index={1}
+                />
+              </Tabs>
+              <TabPanel value={atab} index={0}>
+                <Tabs
+                  value={subTabs}
+                  onChange={(e, newValue) => setSubTabs(newValue)}
+                  TabIndicatorProps={{
+                    style: {
+                      backgroundColor: "#000000",
+                      color: "#000000",
+                    },
+                  }}
+                  className={`${Styles.tabs} `}
+                >
+                  <Tab
+                    label={<span style={{ color: "black" }}>All</span>}
+                    index={0}
+                  />
+                  <Tab
+                    label={<span style={{ color: "black" }}>Shortage</span>}
+                    index={1}
+                  />
+                </Tabs>
+                <TabPanel value={subTabs} index={0}>
+                  <Table
+                    thead={["#", "Subject", "Subject Code", "Attendance %"]}
+                    tbody={setAttendanceTableData(filteredAttendanceData)}
+                  />
+                </TabPanel>
+                <TabPanel value={subTabs} index={1}>
+                  <Table
+                    thead={["#", "Subject", "Subject Code", "Attendance %"]}
+                    tbody={setAttendanceTableData(
+                      filteredAttendanceData.filter((x) => x.percentage < 75)
+                    )}
+                  />
+                </TabPanel>
+              </TabPanel>
+              <TabPanel value={atab} index={1}>
+                <div className="graph">
+                  <Bar options={options} data={AttendanceChartData} />
+                </div>
+              </TabPanel>
             </TabPanel>
           </div>
         </div>

@@ -276,6 +276,7 @@ const removeStudentsFromTeaches = async (req, res) => {
 const deleteTeaches = async (req, res) => {
   try {
     const teaches = await Teaches.findById(req.params.id);
+
     if (teaches) {
       await teaches.remove();
       res.status(200).json({ message: "Teaches deleted" });

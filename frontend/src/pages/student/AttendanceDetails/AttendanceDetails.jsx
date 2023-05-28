@@ -36,17 +36,18 @@ const AttendanceDetails = () => {
           .then((att) => {
             var count = 0;
             var present = 0;
+            var total = 0;
             att.data.forEach((x) => {
               if (x.present) {
-                present++;
+                present += parseInt(x.class.duration);
               }
-              count++;
+              total += parseInt(x.class.duration);
             });
-            var percentage = (present / count) * 100;
+            var percentage = (present / total) * 100;
             setReportData({
-              noOfClasses: count,
+              noOfClasses: total,
               present: present,
-              absent: count - present,
+              absent: total - present,
               percentage: percentage,
             });
             setAttendance(att.data);
@@ -91,6 +92,9 @@ const AttendanceDetails = () => {
 
   return (
     <div>
+      <div className="header">
+        <Title title="Attendance" />
+      </div>
       <div className={`${Styles.subjectData}`}>
         <SubjectData courseData={teaches} />
       </div>
@@ -173,6 +177,7 @@ const AttendanceDetails = () => {
                         <th scope="col">Date</th>
                         <th scope="col">Time</th>
                         <th scope="col">Present</th>
+                        <th scope="col">Topic</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -180,6 +185,7 @@ const AttendanceDetails = () => {
                         <td>{new Date(x.class.date).toLocaleDateString()}</td>
                         <td>{x.class.time}</td>
                         <td>{x.present ? "Present" : "Absent"}</td>
+                        <td>{x.class.topic}</td>
                       </tr>
                     </tbody>
                   </table>

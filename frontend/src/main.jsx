@@ -56,7 +56,7 @@ import Logout from "./pages/Logout/Logout";
 import Chat from "./pages/student/Chat/Chat";
 import ViewDiscussions from "./pages/student/ViewDiscussions/ViewDiscussions";
 import ViewDiscusssionsTeacher from "./pages/teacher/ViewDiscussions/ViewDiscussions";
-
+import ViewTeachers from "./pages/admin/ViewTeachers/ViewTeachers";
 import CourseDetails from "./pages/student/CourseDetails/CourseDetails";
 import CreateChat from "./pages/Chat/CreateChat/CreateChat";
 import ViewStudentAttendance from "./pages/student/ViewStudentAttendance/ViewStudentAttendance";
@@ -187,6 +187,10 @@ const router = createBrowserRouter([
         path: "teacher",
         element: <TeacherLayout />,
         children: [
+          {
+            path: "all",
+            element: <ViewTeachers />,
+          },
           {
             path: "profile",
             element: <TeacherProfile />,
