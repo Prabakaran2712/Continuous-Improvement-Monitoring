@@ -102,22 +102,39 @@ const getMarkByTeaches = async (req, res) => {
         path: "exam",
         populate: {
           path: "teaches",
-          populate: { path: "teacher", populate: "address department" },
+          populate: {
+            path: "teacher",
+            populate: { path: "department address" },
+          },
         },
       })
       .populate({
         path: "exam",
-        populate: { path: "teaches", populate: { path: "batch" } },
+        populate: {
+          path: "teaches",
+          populate: {
+            path: "students",
+            populate: { path: "department batch" },
+          },
+        },
       })
       .populate({
-        path: "student",
-        populate: { path: "department batch" },
-      });
+        path: "exam",
+        populate: {
+          path: "teaches",
+          populate: { path: "batch" },
+        },
+      })
+      .populate({ path: "student", populate: { path: "department batch" } });
+
     //filter exams with teaches _id equals to req.params.id
-    const filteredMarks = mark.filter((m) => {
-      return m.exam.teaches._id == req.params.id;
-    });
-    res.status(200).json(filteredMarks);
+
+    // const filteredMarks = mark.filter((m) => {
+    //   console.log(m);
+    //   return m.exam.teaches._id == req.params.id;
+    // });
+
+    res.status(200).json(mark);
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
@@ -138,7 +155,6 @@ const getMarkByTeacherStaffId = async (req, res) => {
         path: "exam",
         populate: {
           path: "teaches",
-
           populate: {
             path: "teacher",
             populate: "address department",
@@ -149,7 +165,6 @@ const getMarkByTeacherStaffId = async (req, res) => {
         path: "exam",
         populate: {
           path: "teaches",
-
           populate: { path: "batch" },
         },
       })

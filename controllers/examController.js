@@ -139,11 +139,10 @@ const updateExam = async (req, res) => {
 const publishExam = async (req, res) => {
   try {
     const exam = await Exam.findById(req.params.id);
-    if (exam) {
-      exam.published = req.body.published;
-      const updatedExam = await exam.save();
-      res.status(200).json(updatedExam);
-    }
+    exam.published = true;
+    const updatedExam = await exam.save();
+
+    res.status(200).json(updatedExam);
   } catch (error) {
     res.status(500).json({ message: error.message });
   }

@@ -31,7 +31,7 @@ const SubjectData = (props) => {
   ];
   return (
     <div className={`${Styles.subjectDetails}`}>
-      <div className="row mx-sm-auto mx-md-5">
+      <div className="row  ">
         <div className="col-lg-6 col-md-12">
           {options.map((option, indx) => {
             if (indx < options.length / 2)

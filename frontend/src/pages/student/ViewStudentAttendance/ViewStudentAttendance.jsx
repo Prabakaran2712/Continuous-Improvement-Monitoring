@@ -4,7 +4,7 @@ import axios from "axios";
 import Container from "../../../components/Container/Container";
 import Title from "../../../components/forms/Title/Title";
 import { useParams } from "react-router-dom";
-
+import Styles from "./ViewStudentAttendance.module.css";
 import { useAuthContext } from "../../../hooks/useAuthContext";
 import {
   Chart as ChartJS,
@@ -19,6 +19,8 @@ import { Bar } from "react-chartjs-2";
 import Select from "../../../components/Select/Select";
 import Loading from "../../../components/Loading/Loading";
 import Table from "../../../components/Table/Table";
+import TabPanel from "../../../components/TabPanel/TabPanel";
+import { Tab, Tabs, Box, Typography } from "@mui/material";
 
 ChartJS.register(
   CategoryScale,
@@ -54,28 +56,23 @@ const ViewStudentAttendance = () => {
 
   const [AttendanceData, setAttendanceData] = useState([]);
   const [AttendanceChartData, setAttendanceChartData] = useState([]);
+  const [tabs, setTabs] = useState(0);
 
   const navigate = useNavigate();
 
   const setTableData = (data) => {
-    return [data.subject_name, data.subject_code, data.percentage, () => {}];
-  };
-  const setFilteredAttendanceChartData = (data) => {
-    var attendance = [];
-    data.forEach((x) => {
-      var obj = {
-        subject_name: x.course.name,
-        subject_code: x.course.subject_code,
-        percentage: x.percentage,
-        semester: x.course.semester,
-        teaches: x.teaches,
-      };
-      attendance.push(obj);
-    });
+    var tableData = [];
 
+    data.forEach((x) => {
+      tableData.push([x.subject_name, x.subject_code, x.percentage, () => {}]);
+    });
+    return tableData;
+  };
+
+  const setChartData = (data) => {
     var attendanceLabels = [],
       attendanceData = [];
-    attendance.forEach((x) => {
+    data.forEach((x) => {
       attendanceLabels.push(x.subject_name);
       attendanceData.push(x.percentage);
     });
@@ -123,9 +120,11 @@ const ViewStudentAttendance = () => {
 
                 uniqueSubjects.forEach((x) => {
                   var obj = {
-                    course: x,
+                    subject_name: x.name,
+                    subject_code: x.subject_code,
                     percentage: "NA",
                     teaches: x._id,
+                    semester: x.semester,
                   };
                   res.data.forEach((y) => {
                     if (y.teaches == x._id) {
@@ -137,6 +136,7 @@ const ViewStudentAttendance = () => {
                 console.log("attendance");
                 console.log(attendance);
                 setAttendanceData(attendance);
+                setChartData(attendance);
                 setData(setTableData(attendance));
                 setLoading(false);
               })
@@ -159,11 +159,13 @@ const ViewStudentAttendance = () => {
     return <Loading />;
   } else {
     return (
-      <div>
-        <Title title="Attendance" />
+      <div className="mx-lg-2">
+        <div className="title ">
+          <Title title="Attendance" />
+        </div>
 
-        <div className="analytics-body my-5 mx-auto w-75">
-          <div className="optionPane my-5">
+        <div className="analytics-body ">
+          <div className="optionPane my-lg-2 ">
             <Select
               options={[
                 "All",
@@ -178,27 +180,60 @@ const ViewStudentAttendance = () => {
               ]}
               values={["All", "1", "2", "3", "4", "5", "6", "7", "8"]}
               onChange={(e) => {
-                const semester = e.target.value;
+                var semester = e.target.value;
                 if (semester === "All") {
                   setData(setTableData(AttendanceData));
+                  setChartData(AttendanceData);
                 } else {
                   const filteredAttendanceData = AttendanceData.filter(
                     (x) => x.semester == semester
                   );
+                  console.log(semester);
+                  console.log(filteredAttendanceData);
                   setData(setTableData(filteredAttendanceData));
+                  setChartData(filteredAttendanceData);
                 }
               }}
             />
           </div>
+          <Tabs
+            value={tabs}
+            onChange={(e, newValue) => setTabs(newValue)}
+            TabIndicatorProps={{
+              style: {
+                backgroundColor: "#000000",
+                color: "#000000",
+              },
+            }}
+            className={`${Styles.tabs}  `}
+          >
+            <Tab
+              label={
+                <span style={{ color: "black" }} className={Styles.tab}>
+                  Table
+                </span>
+              }
+              index={0}
+            />
+            <Tab
+              label={<span style={{ color: "black" }}>Graphs</span>}
+              index={1}
+            />
+          </Tabs>
           <div className="dataSection row align-items-center">
-            <div className="AttendanceTable col-6">
-              <Table
-                thead={["#", "Subject", "Subject Code", "Attendance %"]}
-                tbody={data}
-              />
-            </div>
-
-            <div className="graph col-6"></div>
+            <TabPanel value={tabs} index={0}>
+              <div className="AttendanceTable ">
+                <Table
+                  thead={["#", "Subject", "Subject Code", "Attendance %"]}
+                  tbody={data}
+                />
+              </div>
+            </TabPanel>
+            <TabPanel value={tabs} index={1}>
+              <div className="graph ">
+                <Bar data={AttendanceChartData} options={options} />
+              </div>
+            </TabPanel>
           </div>
         </div>
       </div>

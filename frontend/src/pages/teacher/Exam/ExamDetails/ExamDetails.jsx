@@ -129,9 +129,9 @@ const ExamDetails = () => {
         student: x.student._id,
         exam: x.exam,
         mark: x.mark,
-        published: x.published,
       };
     });
+
     axios
       .post("/api/marks/marks", data)
       .then((res) => {

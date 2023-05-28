@@ -1,0 +1,42 @@
+@media screen and (max-width: 1200px) {
+  .tab {
+    font-size: 0.75rem;
+    margin: 15px 0;
+    width: 100%;
+  }
+  .tab th,
+  .tab td {
+    padding: 10px 12px;
+  }
+}
+@media screen and (max-width: 768px) {
+  .tab {
+    font-size: 0.75rem;
+    margin: 10px 0;
+  }
+  .tab th,
+  .tab td {
+    padding: 5px 7px;
+  }
+}
+
+@media screen and (max-width: 576px) {
+  .tab {
+    font-size: 0.75rem;
+    margin: 5px 0;
+  }
+  .tab th,
+  .tab td {
+    padding: 2px 4px;
+  }
+}
+@media screen and (max-width: 400px) {
+  .tab {
+    font-size: 0.6rem;
+    margin: 3px 0;
+  }
+  .tab th,
+  .tab td {
+    padding: 2px 3px;
+  }
+}

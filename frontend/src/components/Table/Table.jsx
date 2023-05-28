@@ -38,36 +38,37 @@ const Table = (props) => {
           </tr>
         </thead>
         <tbody>
-          {props.tbody.map((exam, indx) => {
-            var rowsize = exam.length;
-            if (props.tooltip != false) {
-              return (
-                <Tooltip
-                  title="Click to find more details"
-                  arrow
-                  key={Math.random()}
-                >
-                  <tr onClick={props.tbody[indx][exam.length - 1]}>
+          {props.tbody &&
+            props.tbody.map((exam, indx) => {
+              var rowsize = exam.length;
+              if (props.tooltip != false) {
+                return (
+                  <Tooltip
+                    title="Click to find more details"
+                    arrow
+                    key={Math.random()}
+                  >
+                    <tr onClick={props.tbody[indx][exam.length - 1]}>
+                      <td>{indx + 1}</td>
+                      {exam.map((data, indx) => {
+                        if (indx !== exam.length - 1)
+                          return <td key={Math.random()}>{data}</td>;
+                      })}
+                    </tr>
+                  </Tooltip>
+                );
+              } else {
+                return (
+                  <tr key={Math.random()}>
                     <td>{indx + 1}</td>
                     {exam.map((data, indx) => {
                       if (indx !== exam.length - 1)
                         return <td key={Math.random()}>{data}</td>;
                     })}
                   </tr>
-                </Tooltip>
-              );
-            } else {
-              return (
-                <tr key={Math.random()}>
-                  <td>{indx + 1}</td>
-                  {exam.map((data, indx) => {
-                    if (indx !== exam.length - 1)
-                      return <td key={Math.random()}>{data}</td>;
-                  })}
-                </tr>
-              );
-            }
-          })}
+                );
+              }
+            })}
         </tbody>
       </table>
     );

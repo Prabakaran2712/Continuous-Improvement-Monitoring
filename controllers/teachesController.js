@@ -236,11 +236,14 @@ const removeStudentsFromTeaches = async (req, res) => {
       //remove marks for the student in all exams with the teaches id
       const exams = await Exam.find({ teaches: updatedTeachesPopulated._id });
       exams.forEach(async (exam) => {
-        const marks = await Marks.findOne({
+        const marks = await Marks.find({
           student: req.body.student,
           exam: exam._id,
         });
-        await marks.remove();
+
+        marks.forEach(async (mark) => {
+          await mark.remove();
+        });
       });
       //remove attendance for the student in all classes with the teaches id
 

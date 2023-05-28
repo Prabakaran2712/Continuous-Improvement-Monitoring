@@ -35,8 +35,8 @@ const ExamSchema = new mongoose.Schema({
   published: {
     type: Boolean,
     default: false,
+    required: true,
   },
 });
-ExamSchema.index({ exam_type: 1, teaches: 1 }, { unique: true });
 
 module.exports = mongoose.model("Exam", ExamSchema);
