@@ -154,6 +154,15 @@ const updateTeacher = async (req, res) => {
       teacher.department = req.body.department;
       // teacher.address = req.body.address;
       teacher.courses = req.body.courses;
+      if (req.body.password) {
+        teacher.password = await bcrypt
+          .hash(req.body.password, 10)
+          .then((data) => {
+            return data;
+          });
+      } else {
+        teacher.password = teacher.password;
+      }
       const updatedTeacher = await teacher.save();
       res.status(200).json(updatedTeacher);
     } else {
@@ -252,7 +261,14 @@ const loginTeacher = async (req, res) => {
               .json({ success: true, user: exists, userType: userType });
           }
         } else {
-          throw new Error("Invalid Login Credentials");
+          try {
+            throw new Error("Invalid Login Credentials");
+          } catch (error) {
+            res.status(401).json({
+              success: false,
+              message: error.message,
+            });
+          }
         }
       });
     }
