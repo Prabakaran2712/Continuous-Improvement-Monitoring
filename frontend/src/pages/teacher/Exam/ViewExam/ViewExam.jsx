@@ -180,7 +180,7 @@ const ViewExam = () => {
           <div className="title">
             <Title title="Exams" />
           </div>
-          <div className="options d-flex flex-row justify-content-end m-lg-2">
+          <div className="options d-flex flex-row justify-content-end mx-lg-2">
             <CreateButton
               onClick={() => {
                 console.log("clicked");

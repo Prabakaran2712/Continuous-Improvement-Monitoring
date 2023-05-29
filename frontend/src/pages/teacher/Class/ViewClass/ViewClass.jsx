@@ -114,8 +114,8 @@ const ViewClass = () => {
   }
 
   return (
-    <Container>
-      <div className="header d-flex flex-row justify-content-between mt-lg-3 mt-sm-1 mx-lg-5">
+    <div className="m-2">
+      <div className="header d-flex flex-row justify-content-between">
         <div className="title">
           <Title title="Your Classes" />
         </div>
@@ -159,7 +159,7 @@ const ViewClass = () => {
           </div>
         </div>
       </div>
-    </Container>
+    </div>
   );
 };
 

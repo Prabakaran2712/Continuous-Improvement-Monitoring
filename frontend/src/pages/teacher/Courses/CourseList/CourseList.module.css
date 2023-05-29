@@ -5,7 +5,7 @@
 }
 .table {
   overflow-x: auto;
-  margin: 10px;
+
   width: 65%;
   overflow: scroll;
   height: 70vh;

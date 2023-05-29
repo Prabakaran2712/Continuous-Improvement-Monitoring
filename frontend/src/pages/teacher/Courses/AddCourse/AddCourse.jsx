@@ -4,7 +4,7 @@ import { useParams } from "react-router";
 import { Store } from "react-notifications-component";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
-
+import Loading from "../../../../components/Loading/Loading";
 import Container from "../../../../components/Container/Container";
 import Title from "../../../../components/forms/Title/Title";
 import Input from "../../../../components/forms/Input/Input";
@@ -126,51 +126,42 @@ const AddCourse = () => {
       });
   };
 
-  if (loading)
-    return (
-      <div className="  w-50 mx-2  my-5 ">
-        <div className="option-pane">
-          <Title title="Loading"></Title>
-        </div>
-      </div>
-    );
+  if (loading) return <Loading />;
   else
     return (
-      <div className="col-10 h-100 overflow-scroll">
-        <div className="  w-100 mx-auto my-5 ">
-          <div className="option-pane">
-            <Title title="Add a New course"></Title>
-          </div>
-
-          <form onSubmit={handleSubmit(onSubmit)}>
-            <Select
-              options={batchName}
-              values={batchValue}
-              label={"Batch"}
-              name="batch"
-              register={register}
-            />
-
-            <Select
-              options={courseName}
-              values={courseValue}
-              label={"Course"}
-              name="course"
-              register={register}
-            />
-            <Select
-              options={[1, 2, 3, 4, 5, 6, 7, 8]}
-              values={[1, 2, 3, 4, 5, 6, 7, 8]}
-              label={"Semester"}
-              name="semester"
-              register={register}
-            />
-
-            <div className="mx-auto my-5 text-center w-50">
-              <Submit name={"Add"} />
-            </div>
-          </form>
+      <div className="  w-100  m-2 ">
+        <div className="option-pane">
+          <Title title="Add a New course"></Title>
         </div>
+
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <Select
+            options={batchName}
+            values={batchValue}
+            label={"Batch"}
+            name="batch"
+            register={register}
+          />
+
+          <Select
+            options={courseName}
+            values={courseValue}
+            label={"Course"}
+            name="course"
+            register={register}
+          />
+          <Select
+            options={[1, 2, 3, 4, 5, 6, 7, 8]}
+            values={[1, 2, 3, 4, 5, 6, 7, 8]}
+            label={"Semester"}
+            name="semester"
+            register={register}
+          />
+
+          <div className="mx-auto my-5 text-center w-50">
+            <Submit name={"Add"} />
+          </div>
+        </form>
       </div>
     );
 };

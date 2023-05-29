@@ -224,12 +224,12 @@ const CourseDetails = () => {
   };
 
   if (loading) return <Loading />;
-  const buttons = [<UpdateButton />, <DeleteButton />];
+  const buttons = [];
 
   return (
-    <Container>
+    <div className="  ">
       <Header title="Course Details" buttons={buttons} />
-      <div className="body my-3 my-lg-5 ">
+      <div className="body my-3 my-lg-3 ">
         <SubjectData courseData={course} />
       </div>
       <div className={`${Styles.body} my-3 mx-lg-5`}>
@@ -306,7 +306,7 @@ const CourseDetails = () => {
           </div>
         </div>
       </div>
-    </Container>
+    </div>
   );
 };
 

@@ -157,20 +157,22 @@ const TeacherChatCreate = () => {
   return (
     <Container>
       <div className="  ">
-        <div className={`${Styles.title} mx-5`}>
+        <div className={`${Styles.title} `}>
           <Title title="Create Discussion" />
         </div>
-        <div className={`${Styles.form}`}>
+        <div className={`${Styles.form} `}>
           <form onSubmit={handleSubmit(onSubmit)}>
             <div className="row">
-              <div className="col">
-                <Input
-                  name="title"
-                  label="Tile"
-                  register={register}
-                  type="text"
-                  conditions={{ required: true, maxLength: 100 }}
-                />
+              <div className="col ">
+                <div className="">
+                  <Input
+                    name="title"
+                    label="Tile"
+                    register={register}
+                    type="text"
+                    conditions={{ required: true, maxLength: 100 }}
+                  />
+                </div>
 
                 <Select
                   name="teaches"

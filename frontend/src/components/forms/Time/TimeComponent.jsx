@@ -2,7 +2,7 @@ import { MobileTimePicker } from "@mui/x-date-pickers";
 import Styles from "./TimeComponent.module.css";
 const TimeComponent = (props) => {
   return (
-    <div className="form-group mx-5 my-3">
+    <div className="form-group ">
       <label className={`my-3 ${Styles.label}`}>{props.label}</label>
       <br />
       <MobileTimePicker

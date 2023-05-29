@@ -72,6 +72,23 @@ const ViewChats = () => {
           />,
         ]}
       />
+      <div className="filter">
+        <Select
+          label="Status"
+          options={["All", "Closed", "Open"]}
+          values={["All", "Closed", "Open"]}
+          onChange={(e) => {
+            if (e.target.value === "All") {
+              setCurrentChats(chats);
+            } else if (e.target.value === "Closed") {
+              setCurrentChats(chats.filter((chat) => chat.isClosed === true));
+            } else if (e.target.value === "Open") {
+              setCurrentChats(chats.filter((chat) => chat.isClosed === false));
+            }
+          }}
+        />
+      </div>
+
       <div className={`${Styles.chatContainer}`}>
         {currentChats.map((chat, indx) => (
           <div key={Math.random()}>

@@ -139,7 +139,7 @@ const ClassDetails = () => {
   }
 
   return (
-    <Container>
+    <div className="m-2">
       <Confirm
         title="Delete Exam"
         content="Are you sure you want to delete this Class?"
@@ -222,9 +222,9 @@ const ClassDetails = () => {
               />
             </div>
           </div>
-          <div className="student-list m-2">
-            <div className="table-responsive p-md-5">
-              <div className="header mb-lg-3 m-2">
+          <div className="student-list my-5">
+            <div className="table-responsive ">
+              <div className="header mb-lg-3 ">
                 <Title title="Students" />
               </div>
               <div className={`${Styles.body}`}>
@@ -268,7 +268,7 @@ const ClassDetails = () => {
           </div>
         </form>
       </div>
-    </Container>
+    </div>
   );
 };
 

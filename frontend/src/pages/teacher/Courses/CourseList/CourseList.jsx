@@ -104,12 +104,12 @@ const CourseList = () => {
   if (loading) return <Loading />;
 
   return (
-    <Container>
-      <div className="header d-flex flex-row justify-content-between my-lg-3 mt-sm-1 mx-lg-5">
+    <div className="m-2">
+      <div className="header d-flex flex-row justify-content-between ">
         <div className="title ">
-          <Title title="Your Subjects" />
+          <Title title="Your Courses" />
         </div>
-        <div className="options d-flex flex-row justify-content-end m-lg-2">
+        <div className="options d-flex flex-row justify-content-end   ">
           <CreateButton onClick={() => navigate("/teacher/courses/add")} />
         </div>
       </div>
@@ -152,7 +152,7 @@ const CourseList = () => {
           </div>
         </div>
       </div>
-    </Container>
+    </div>
   );
 };
 

@@ -3,7 +3,7 @@ import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import Styles from "./DateComponent.module.css";
 const DateComponent = (props) => {
   return (
-    <div className="form-group mx-5 my-3">
+    <div className="form-group ">
       <label className={`my-3 ${Styles.label}`}>{props.label}</label>
       <br />
       <DatePicker

@@ -54,11 +54,6 @@ const Header = () => {
                     Teacher
                   </NavLink>
                 </li>
-                <li>
-                  <NavLink className="dropdown-item" to="auth/admin/signin">
-                    Admin
-                  </NavLink>
-                </li>
               </ul>
             </li>
             <li className="nav-item dropdown mx-2 ">
@@ -88,11 +83,6 @@ const Header = () => {
                 <li>
                   <NavLink className="dropdown-item" to="auth/teacher/signup">
                     Teacher
-                  </NavLink>
-                </li>
-                <li>
-                  <NavLink className="dropdown-item" to="auth/admin/signup">
-                    Admin
                   </NavLink>
                 </li>
               </ul>

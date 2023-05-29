@@ -148,9 +148,9 @@ const UpdateExam = () => {
   }
 
   return (
-    <Container>
+    <div className="m-2">
       <div className="  w-100 mx-auto my-2 ">
-        <div className="mx-5">
+        <div className="">
           <Title title="Update Exam" />
         </div>
         <div className={`${Styles.formBody}`}>
@@ -217,7 +217,7 @@ const UpdateExam = () => {
           </form>
         </div>
       </div>
-    </Container>
+    </div>
   );
 };
 

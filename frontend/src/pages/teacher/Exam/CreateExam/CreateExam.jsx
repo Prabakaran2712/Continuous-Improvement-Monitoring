@@ -166,8 +166,8 @@ const CreateExam = () => {
 
   return (
     <Container>
-      <div className="  w-100 mx-auto my-2 ">
-        <div className="mx-5">
+      <div className="  w-100 mx-auto m-2 ">
+        <div className="">
           <Title title="Create Exam" />
         </div>
         <div className={`${Styles.formBody}`}>

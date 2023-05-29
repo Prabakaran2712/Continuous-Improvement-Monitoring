@@ -147,12 +147,12 @@ const CreateClass = () => {
     return <Loading />;
   }
   return (
-    <Container>
-      <div className="  w-100 mx-auto my-lg-4  my-sm-3 ">
-        <div className="header mx-5">
+    <div className="m-2">
+      <div className="  w-100  ">
+        <div className="header ">
           <Title title="Create Class" />
         </div>
-        <div className="form-body w-lg-75  mx-lg-5 my-lg-3 my-sm-2">
+        <div className="form-body  ">
           <form onSubmit={handleSubmit(onSubmit)}>
             <div className="row">
               <div className="col-lg-6 col-md-12">
@@ -207,7 +207,7 @@ const CreateClass = () => {
           </form>
         </div>
       </div>
-    </Container>
+    </div>
   );
 };
 

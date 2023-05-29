@@ -153,7 +153,7 @@ const ExamDetails = () => {
   };
   if (loading) return <Loading />;
   return (
-    <Container>
+    <div className="m-2">
       <Confirm
         title="Delete Exam"
         content="Are you sure you want to delete this exam?"
@@ -163,9 +163,7 @@ const ExamDetails = () => {
         setOpen={setOpen}
         onSuccess={deleteExam}
       />
-      <div
-        className={`header d-flex flex-row justify-content-between my-lg-4 my-sm-2 mx-md-5 mx-sm-4`}
-      >
+      <div className={`header d-flex flex-row justify-content-between `}>
         <Title title="Exam Details" />
         <div
           className={`d-flex flex-row justify-content-end px-3 align-items-center ${Styles.options}}`}
@@ -292,9 +290,9 @@ const ExamDetails = () => {
               />
             </div>
           </div>
-          <div className="student-list m-2">
-            <div className="table-responsive p-md-5">
-              <div className="header mb-lg-3 m-2">
+          <div className="student-list my-5">
+            <div className="table-responsive ">
+              <div className="header mb-lg-3 ">
                 <Title title="Students" />
               </div>
               <div className={`${Styles.body}`}>
@@ -307,7 +305,7 @@ const ExamDetails = () => {
                         x.student.name,
                         <input
                           type="number"
-                          className="form-control w-50  mx-auto"
+                          className="form-control w-25 text-center   mx-auto"
                           name="marks"
                           value={x.mark}
                           max={totalMarks}
@@ -355,7 +353,7 @@ const ExamDetails = () => {
           </div>
         </form>
       </div>
-    </Container>
+    </div>
   );
 };
 

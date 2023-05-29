@@ -4,6 +4,9 @@
   margin-right: auto;
   margin-bottom: 2rem;
 }
+.options {
+  margin: 1rem;
+}
 .chatContainer {
   margin: 2rem;
   margin-bottom: 0.2rem;
