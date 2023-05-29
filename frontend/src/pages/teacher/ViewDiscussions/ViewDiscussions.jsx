@@ -46,6 +46,11 @@ const ViewChats = () => {
     axios.get(`/api/discussions/teacher/${auth.user._id}`).then((res) => {
       console.log(res.data);
       setChats(res.data);
+      //filter chats with teacher id
+      res.data = res.data.filter(
+        (chat) => chat.teaches.teacher._id === auth.user._id
+      );
+
       setCurrentChats(res.data.slice(startIndex, endIndex));
       setStartIndex((page - 1) * itemsPerPage);
       setEndIndex(page * itemsPerPage);

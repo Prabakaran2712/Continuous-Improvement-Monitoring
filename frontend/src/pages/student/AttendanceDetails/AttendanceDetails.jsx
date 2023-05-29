@@ -91,15 +91,15 @@ const AttendanceDetails = () => {
   if (loading) return <Loading />;
 
   return (
-    <div>
-      <div className="header">
+    <div className="m-2">
+      <div className="header my-3">
         <Title title="Attendance" />
       </div>
-      <div className={`${Styles.subjectData}`}>
+      <div className={`${Styles.subjectData} `}>
         <SubjectData courseData={teaches} />
       </div>
       <div className="row  mx-auto align-items-center my-5">
-        <div className="report w-75 mx-auto ">
+        <div className="report w-50 mx-auto ">
           <AttendanceReport reportData={reportData} />
         </div>
         <div className="calendarOptions row align-items-center mx-auto">

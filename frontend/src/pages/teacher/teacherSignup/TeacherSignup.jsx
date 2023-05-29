@@ -184,31 +184,21 @@ const TeacherSignup = () => {
               type="text"
               conditions={{ required: true, maxLength: 100 }}
             ></Input>
+            <Input
+              register={register}
+              name="address_line_2"
+              label="Address Line-2"
+              type="text"
+              conditions={{ required: true, maxLength: 100 }}
+            ></Input>
+            <Input
+              register={register}
+              name="phone_number"
+              label="Phone Number"
+              type="text"
+              conditions={{ required: true, maxLength: 100 }}
+            ></Input>
 
-            <div className="form-group  mx-5 my-3">
-              <label className="my-3">Address Line-1</label>
-              <input
-                type="text"
-                className="  form-control "
-                {...register("address_line_1", { required: true })}
-              />
-            </div>
-            <div className="form-group  mx-5 my-3">
-              <label className="my-3">Address Line-2</label>
-              <input
-                type="text"
-                className="form-control "
-                {...register("address_line_2", { required: true })}
-              />
-            </div>
-            <div className="form-group  mx-5 my-3">
-              <label className="my-3">Phone Number</label>
-              <input
-                type="text"
-                className="form-control "
-                {...register("phone_number", { required: true })}
-              />
-            </div>
             <Select
               options={departmentNames}
               values={departmentValues}
@@ -216,14 +206,6 @@ const TeacherSignup = () => {
               name="department"
               register={register}
               attr="dept_name"
-            />
-            <Select
-              options={courseNames}
-              values={courseValues}
-              label={"Courses"}
-              name="courses"
-              register={register}
-              attr="subject_code"
             />
           </div>
         </div>

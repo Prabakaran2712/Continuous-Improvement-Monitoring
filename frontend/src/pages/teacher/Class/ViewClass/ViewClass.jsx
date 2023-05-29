@@ -85,7 +85,12 @@ const ViewClass = () => {
     axios
       .get(`/api/classes/teacher/${user}`)
       .then((res) => {
+        res.data = res.data.filter((classData) => {
+          return classData.teaches.teacher._id === user;
+        });
         setDataValue(res.data);
+        //filter data with teacher id
+
         var temp = [];
         res.data.map((classData) => {
           temp.push(

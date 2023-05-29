@@ -13,6 +13,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuthContext } from "../../../hooks/useAuthContext";
 import Loading from "../../../components/Loading/Loading";
+import { set } from "mongoose";
 const calculateGPA = (grades) => {
   let totalCredits = 0;
   let totalPoints = 0;
@@ -32,7 +33,10 @@ const calculateGPA = (grades) => {
 
 const StudentDashboard = () => {
   const [gpa, setGpa] = useState(0);
+  const [courses, setCourses] = useState(0);
+  const [backlog, setBacklog] = useState(0);
   const [loading, setLoading] = useState(true);
+  const [attendance, setAttendance] = useState(0);
 
   const navigate = useNavigate();
   const auth = useAuthContext();
@@ -42,6 +46,23 @@ const StudentDashboard = () => {
       .get(`/api/grades/student/${auth.user._id}`)
       .then((res) => {
         setGpa(calculateGPA(res.data));
+
+        axios.get(`/api/teaches/student/${auth.user._id}`).then((res) => {
+          setCourses(res.data.length);
+          axios.get(`/api/grades/student/${auth.user._id}`).then((res) => {
+            setBacklog(res.data.filter((grade) => grade.grade == "RA").length);
+            axios
+              .get(`/api/attendances/student/${auth.user._id}/all/courses`)
+              .then((res) => {
+                setAttendance(
+                  res.data.filter((attendance) => attendance.percentage < 75)
+                    .length
+                );
+
+                setLoading(false);
+              });
+          });
+        });
         setLoading(false);
       })
       .catch((err) => {
@@ -58,34 +79,34 @@ const StudentDashboard = () => {
       icon: <FontAwesomeIcon icon={faUser} size="2x" />,
       color: "red",
       onClick: () => {
-        navigate("/teacher/students");
+        navigate("/student/grades");
       },
     },
     {
       name: "Courses",
-      value: gpa,
+      value: courses,
       icon: <FontAwesomeIcon icon={faPen} size="lg" />,
       color: "green",
       onClick: () => {
-        navigate("/teacher/exams");
+        navigate("/student/courses");
       },
     },
     {
       name: "Backlogs",
-      value: gpa,
+      value: backlog,
       icon: <FontAwesomeIcon icon={faBlackboard} size="lg" />,
       color: "blue",
       onClick: () => {
-        navigate("/teacher/class");
+        navigate("/student/grades");
       },
     },
     {
       name: "Attendace Shortage",
-      value: gpa,
+      value: attendance,
       icon: <FontAwesomeIcon icon={faGraduationCap} size="lg" />,
       color: "yellow",
       onClick: () => {
-        navigate("/teacher/courses");
+        navigate("/student/attendance");
       },
     },
   ];

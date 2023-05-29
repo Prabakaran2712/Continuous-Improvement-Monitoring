@@ -75,14 +75,6 @@ const StudentLayout = () => {
       link: "/student/courses",
       icon: <FontAwesomeIcon icon={faGraduationCap} />,
     },
-    {
-      name: "Logout",
-      type: "button",
-      action: () => {
-        logout();
-      },
-      icon: <FontAwesomeIcon icon={faSignOutAlt} />,
-    },
   ];
 
   const logout = () => {
